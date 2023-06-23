@@ -18,3 +18,25 @@ PHP microframework
 * Type hints everywhere.
 * Ugly URLs for routing. Named parameters are better.
 * Work on CLI, JSON, or HTML.
+
+## Page layout
+The body is a series of rows.
+
+<body id="pmBody">
+    <header id="pmHeader">
+        <div id="pmBanner">
+            <div id="pmLogo"></div>
+            <div id="pmSearchBar"></div>
+            <div id="pmIconBar"></div>
+        </div>
+        <nav id="pmMenu"></nav>
+    </header>
+    <nav id="pmLeftNav"></nav>
+    <main id="pmMain">
+        <section class="pmSection"></section>
+        ...
+    </main>
+    <nav id="pmRightNav"></nav>
+    <footer id="pmFooter"></footer>
+</body>
+
