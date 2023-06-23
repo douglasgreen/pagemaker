@@ -1,7 +1,14 @@
 {
     "name": "douglasgreen/pagemaker",
     "description": "PHP microframework",
+    "type": "library",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Douglas S. Green",
+            "email": "douglas@nurd.site"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "PageMaker\\": "src/"
