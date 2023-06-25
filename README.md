@@ -75,50 +75,50 @@ Only three queries:
 * Each CSS or JS in each element file starts with a top-level ID or class selector to prevent conflicts.
 
 ```
-assets/layout/pm_normalize.css
-assets/layout/pm_functions.js
+public/styles/pm_normalize.css
+public/scripts/pm_functions.js
 
-assets/layout/pm_page_styles.css
-assets/layout/pm_page_events.js
+public/styles/pm_page_styles.css
+public/scripts/pm_page_events.js
 
-assets/layout/pm_body_styles.css
-assets/layout/pm_body_events.js
+public/styles/pm_body_styles.css
+public/scripts/pm_body_events.js
 
-assets/layout/pm_header_styles.css
-assets/layout/pm_header_events.js
+public/styles/pm_header_styles.css
+public/scripts/pm_header_events.js
 
-assets/layout/pm_banner_styles.css
-assets/layout/pm_banner_events.js
+public/styles/pm_banner_styles.css
+public/scripts/pm_banner_events.js
 
-assets/layout/pm_logo_styles.css
-assets/layout/pm_logo_events.js
+public/styles/pm_logo_styles.css
+public/scripts/pm_logo_events.js
 
-assets/layout/pm_searchbar_styles.css
-assets/layout/pm_searchbar_events.js
+public/styles/pm_searchbar_styles.css
+public/scripts/pm_searchbar_events.js
 
-assets/layout/pm_iconbar_styles.css
-assets/layout/pm_iconbar_events.js
+public/styles/pm_iconbar_styles.css
+public/scripts/pm_iconbar_events.js
 
-assets/layout/pm_menu_styles.css
-assets/layout/pm_menu_events.js
+public/styles/pm_menu_styles.css
+public/scripts/pm_menu_events.js
 
-assets/layout/pm_leftnav_styles.css
-assets/layout/pm_leftnav_events.js
+public/styles/pm_leftnav_styles.css
+public/scripts/pm_leftnav_events.js
 
-assets/layout/pm_main_styles.css
-assets/layout/pm_main_events.js
+public/styles/pm_main_styles.css
+public/scripts/pm_main_events.js
 
-assets/layout/pm_section_styles.css
-assets/layout/pm_section_events.js
+public/styles/pm_section_styles.css
+public/scripts/pm_section_events.js
 
-assets/layout/pm_rightnav_styles.css
-assets/layout/pm_rightnav_events.js
+public/styles/pm_rightnav_styles.css
+public/scripts/pm_rightnav_events.js
 
-assets/layout/pm_footer_styles.css
-assets/layout/pm_footer_events.js
+public/styles/pm_footer_styles.css
+public/scripts/pm_footer_events.js
 
-assets/themes/pm_light_colors.css
-assets/themes/pm_dark_colors.css
+public/styles/pm_colors_light.css
+public/styles/pm_colors_dark.css
 ```
 
 ## Package structure
@@ -131,16 +131,16 @@ app/[packageY]/[classes]
 app/[packageZ]/[classes]
 app/[packageZ]/[subpackage]/[classes]
 ...
-assets/layout/[layouts]
-assets/themes/[themes]
-assets/[packageX]/layout/[layouts]
-assets/[packageX]/themes/[themes]
-assets/[packageY]/layout/[layouts]
-assets/[packageY]/themes/[themes]
-assets/[packageZ]/layout/[layouts]
-assets/[packageZ]/themes/[themes]
-assets/[packageZ]/[subpackage]/layout/[layouts]
-assets/[packageZ]/[subpackage]/themes/[themes]
+public/styles/[css]
+public/scripts/[js]
+public/[packageX]/styles/[css]
+public/[packageX]/scripts/[js]
+public/[packageY]/styles/[css]
+public/[packageY]/scripts/[js]
+public/[packageZ]/styles/[css]
+public/[packageZ]/scripts/[js]
+public/[packageZ]/[subpackage]/styles/[css]
+public/[packageZ]/[subpackage]/scripts/[js]
 ```
 
 ## Configuration
@@ -164,8 +164,8 @@ project/
 │   ├── database/
 │   └── mail/
 ├── public/
-│   ├── css/
-│   ├── js/
+│   ├── scripts/
+│   ├── styles/
 │   └── index.php
 ├── resources/
 │   ├── views/
