@@ -125,11 +125,11 @@ assets/themes/pm_dark_colors.css
 If a project is divided into packages X, Y, and Z, recreate the top-level directory structure in each package directory:
 
 ```
-src/[classes]
-src/[packageX]/[classes]
-src/[packageY]/[classes]
-src/[packageZ]/[classes]
-src/[packageZ]/[subpackage]/[classes]
+app/[classes]
+app/[packageX]/[classes]
+app/[packageY]/[classes]
+app/[packageZ]/[classes]
+app/[packageZ]/[subpackage]/[classes]
 ...
 assets/layout/[layouts]
 assets/themes/[themes]
@@ -190,7 +190,7 @@ Let's go through the main directories and their purposes:
   - `Models/`: Contains PHP classes that represent the application's data structures and interact with the database.
   - `Views/`: Contains templates or view files for rendering the user interface.
   - `Helpers/`: Contains reusable helper functions or classes.
-  - `Config/`: Contains configuration files for the application.
+  - `Config/`: Contains configuration file loaders for the application.
 
 - `config/`: This directory contains configuration files in INI format.
   - `app/`: Contains application configuration files.
