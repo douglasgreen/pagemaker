@@ -1,0 +1,127 @@
+@media (max-width: 599px) {
+	#pmBanner {
+		display: flex;
+		justify-content: space-between;
+		padding: 10px;
+	}
+
+	#pmFooter {
+		width: 100%;
+	}
+
+	#pmHeader {
+		width: 100%;
+	}
+
+	#pmLeftNav,
+    #pmRightNav {
+		display: none;
+	}
+
+	#pmLogo,
+    #pmIconBar,
+    #pmSearchBar {
+		flex: 1;
+	}
+
+	#pmMain {
+		padding: 10px;
+		width: 100%;
+	}
+
+	#pmMenu {
+		width: 100%;
+	}
+
+	.pmSection {
+		margin-bottom: 10px;
+	}
+}
+
+@media screen and (min-width: 600px) and (max-width: 1200px) {
+	#banner {
+		display: flex;
+		justify-content: space-between;
+		padding: 10px;
+	}
+
+	#footer {
+		clear: both;
+		width: 100%;
+	}
+
+	#header {
+		width: 100%;
+	}
+
+	#leftNav,
+    #rightNav {
+		display: block;
+		float: left;
+		width: 20%;
+	}
+
+	#logo,
+    #iconBar,
+    #searchBar {
+		flex: 1;
+	}
+
+	#main {
+		float: left;
+		padding: 10px;
+		width: 60%;
+	}
+
+	#menu {
+		width: 100%;
+	}
+
+	.section {
+		margin-bottom: 10px;
+	}
+}
+
+@media screen and (min-width: 1201px) {
+	#banner {
+		display: flex;
+		justify-content: space-between;
+		padding: 20px;
+	}
+
+	#footer {
+		clear: both;
+		width: 100%;
+	}
+
+	#header {
+		width: 100%;
+	}
+
+	#leftNav,
+    #rightNav {
+		display: block;
+		float: left;
+		width: 15%;
+	}
+
+	#logo,
+    #iconBar,
+    #searchBar {
+		flex: 1;
+	}
+
+	#main {
+		float: left;
+		padding: 20px;
+		width: 70%;
+	}
+
+	#menu {
+		width: 100%;
+	}
+
+	.section {
+		margin-bottom: 20px;
+	}
+}

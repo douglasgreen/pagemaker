@@ -1,0 +1,115 @@
+/* Set box-sizing to border-box for consistent sizing */
+*,
+::after,
+::before {
+	box-sizing: border-box;
+}
+
+/* Remove default margin */
+blockquote,
+body,
+dd,
+dl,
+figure,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+pre {
+	margin: 0;
+}
+
+/* Remove default padding */
+blockquote,
+body,
+dd,
+dl,
+figure,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+pre {
+	padding: 0;
+}
+
+/* Set base border style to none */
+blockquote,
+body,
+dd,
+dl,
+figure,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+pre {
+	border: 0;
+}
+
+/* Remove browser default styles on form elements */
+button,
+input,
+optgroup,
+select,
+textarea {
+	background: none;
+	border: 0;
+	color: inherit;
+	font-size: 100%;
+	line-height: 1.15;
+	margin: 0;
+	padding: 0;
+}
+
+/* Remove browser default list styles on ul and ol */
+ol,
+ul {
+	list-style: none;
+}
+
+/* Remove default outline on focused elements */
+:focus {
+	outline: none;
+}
+
+/* Set core body defaults */
+body {
+	line-height: 1.5;
+	scroll-behavior: smooth;
+	text-rendering: optimizeSpeed;
+}
+
+/* Inherit fonts for inputs and buttons */
+button,
+input,
+select,
+textarea {
+	font: inherit;
+}
+
+/* Remove text-decoration for links */
+a {
+	text-decoration: none;
+}
+
+/* Remove browser default styles on img */
+img {
+	display: block;
+	max-width: 100%;
+}
+
+/* Set a default background */
+body {
+	background-color: #fff;
+	color: #000;
+}
