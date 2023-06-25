@@ -22,21 +22,32 @@ PHP microframework
 ## Page layout
 The body is a series of rows.
 
-<body id="pmBody">
-    <header id="pmHeader">
-        <div id="pmBanner">
-            <div id="pmLogo"></div>
-            <div id="pmSearchBar"></div>
-            <div id="pmIconBar"></div>
+<body id="body">
+    <header id="header">
+        <div id="banner">
+            <div id="logo"></div>
+            <div id="searchBar"></div>
+            <div id="iconBar"></div>
         </div>
-        <nav id="pmMenu"></nav>
+        <nav id="menu"></nav>
     </header>
-    <nav id="pmLeftNav"></nav>
-    <main id="pmMain">
-        <section class="pmSection"></section>
+    <nav id="leftNav"></nav>
+    <main id="main">
+        <section class="section"></section>
+        <section class="section"></section>
         ...
     </main>
-    <nav id="pmRightNav"></nav>
-    <footer id="pmFooter"></footer>
+    <nav id="rightNav"></nav>
+    <footer id="footer"></footer>
 </body>
 
+## CSS
+Only three queries:
+* Small: < 600px
+* Medium: 600px - 1200px
+* Large: > 1200px
+
+## Router
+* Each namespace has its own front controller index.php.
+* Pass a parameter `route=name_action` like `route=customer_view`.
+* A class in that namespace will call the method CustomerController::getView() or CustomerController::postView().
