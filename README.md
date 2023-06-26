@@ -4,7 +4,6 @@ PHP microframework
 ## Design goals
 * All functions without $this are static.
 * Code is simple enough to read.
-* Container.
 * Dependency injection.
 * File location in hierarchy by generality (higher is more general).
 * Lightweight and efficient.
