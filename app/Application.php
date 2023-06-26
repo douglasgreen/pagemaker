@@ -21,7 +21,7 @@ class Application
         foreach ($this->plugins as $plugin) {
             try {
                 $output = $plugin->render();
-            } catch (Exception $e) {
+            } catch (Throwable $e) {
                 $output = "Error in " . $plugin->getName() . ": " . $e->getMessage();
             }
             // @todo Add to ID
