@@ -24,12 +24,13 @@ The body is a series of rows.
 
 <body id="body">
     <header id="header">
-        <div id="banner">
+        <div class="headerSection" id="banner">
             <div id="logo"></div>
             <div id="searchBar"></div>
             <div id="iconBar"></div>
         </div>
-        <nav id="menu"></nav>
+        <nav class="headerSection" id="menuBar"></nav>
+        <nav class="headerSection" id="errorBar"><!-- This section available to print errors in red. --></nav>
     </header>
     <nav id="leftNav">
         <section class="leftNavSection"></section>
@@ -73,6 +74,7 @@ Only three queries:
 * All colors go into the themes directory.
 * All functions go into `pm_functions.js`.
 * Each CSS or JS in each element file starts with a top-level ID or class selector to prevent conflicts.
+* JS has an event queue for structure.
 
 ```
 public/styles/pm_normalize.css
