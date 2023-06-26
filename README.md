@@ -19,9 +19,17 @@ PHP microframework
 * Ugly URLs for routing. Named parameters are better.
 * Work on CLI, JSON, or HTML.
 
+## Key concepts
+* The page CSS, JS and HTML are all laid out in predefined IDs allowing a modular approach to page building.
+* Each page ID is a container that is modular and extensible, allowing adding more sections with their own IDs.
+* The router is simple, doesn't require server config, and maps directly to the class structure.
+* The plugins provide for extensible units combining PHP, HTML, JS, and CSS where errors are isolated to each plugin.
+* The system is vaguely analogous to the WordPress system of plugins and page building but in simplified new code.
+
 ## Page layout
 The body is a series of rows.
 
+```
 <body id="body">
     <header id="header">
         <div class="headerSection" id="banner">
@@ -53,6 +61,7 @@ The body is a series of rows.
         ...
     </footer>
 </body>
+```
 
 ## Components
 Each component has a builder class to make a generic version.
