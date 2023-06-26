@@ -3,7 +3,8 @@
 namespace PageMaker;
 
 /**
- * Todo Add same styles to HtmlBuilder
+ * @Todo Add same styles to HtmlBuilder
+ * @todo Add Section builder using width/div/flex for each section.
  */
 class BodyBuilder {
     protected $tags = [
