@@ -62,13 +62,14 @@ class TemplateEngine
 
     /**
      * Magic setter for assigning values to template variables
+     * @todo Add automatic translation.
      *
      * @param string $key
      * @param mixed $value
      */
     public function __set($key, $value)
     {
-        $this->variables[$key] = $value;
+        $this->variables[$key] = htmlspecialchars($value);
     }
 
     /**
@@ -80,5 +81,9 @@ class TemplateEngine
     public function __get($key)
     {
         return array_key_exists($key, $this->variables) ? $this->variables[$key] : null;
+    }
+
+    public function setRaw($key, $value) {
+        $this->variables[$key] = $value;
     }
 }
