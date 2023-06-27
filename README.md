@@ -254,3 +254,9 @@ Let's go through the main directories and their purposes:
 This is just a starting point, and depending on the complexity of your project or any specific requirements, you may
 need to adjust or expand this structure. Remember, the goal is to maintain a clear separation of concerns, keep your
 code organized, and make it easy to navigate and maintain your PHP project.
+
+## Todo
+Rewrite header into generic sections.
+Finish plugins.
+Write a logger like Monolog that logs exceptions to daily rotated file.
+https://www.loggly.com/ultimate-guide/php-logging-basics/
