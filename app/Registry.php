@@ -1,6 +1,6 @@
 <?php
 
-class PageMaker;
+namespace PageMaker;
 
 class Registry
 {
