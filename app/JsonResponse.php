@@ -8,6 +8,15 @@ class JsonResponse extends Response
     private $statusCode;
     private $headers = ['Content-Type' => 'application/json'];
 
+    public static function sendError(string $message): void
+    {
+        http_response_code(400);
+        $data = [];
+        $data['status'] = 'error';
+        $data['message'] = $message;
+        echo json_encode($data);
+    }
+
     public function __construct(string $data = [], int $statusCode = 200, array $headers = [])
     {
         $this->data = $data;
@@ -42,14 +51,5 @@ class JsonResponse extends Response
 
         // Send content
         echo json_encode($this->data);
-    }
-
-    public function sendError(string $message): void
-    {
-        http_response_code(400);
-        $data = [];
-        $data['status'] = 'error';
-        $data['message'] = $message;
-        echo json_encode($data);
     }
 }

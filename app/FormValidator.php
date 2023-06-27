@@ -22,6 +22,21 @@ class FormValidator
 {
     private array $errors = [];
 
+    public static function sanitizeString(string $input): string
+    {
+        return filter_var($input, FILTER_SANITIZE_STRING);
+    }
+
+    public static function sanitizeEmail(string $input): string
+    {
+        return filter_var($input, FILTER_SANITIZE_EMAIL);
+    }
+
+    public static function sanitizeNumber(string $input): string
+    {
+        return filter_var($input, FILTER_SANITIZE_NUMBER_INT);
+    }
+
     public function validateNotEmpty(string $field, string $input): bool
     {
         if (empty($input)) {
@@ -72,20 +87,5 @@ class FormValidator
     public function hasErrors(): bool
     {
         return !empty($this->errors);
-    }
-
-    public function sanitizeString(string $input): string
-    {
-        return filter_var($input, FILTER_SANITIZE_STRING);
-    }
-
-    public function sanitizeEmail(string $input): string
-    {
-        return filter_var($input, FILTER_SANITIZE_EMAIL);
-    }
-
-    public function sanitizeNumber(string $input): string
-    {
-        return filter_var($input, FILTER_SANITIZE_NUMBER_INT);
     }
 }

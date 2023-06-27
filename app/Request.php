@@ -17,7 +17,7 @@ namespace PageMaker;
  * present in the superglobal, they return a default value.
  *
  * The isPost and isGet methods can be used to determine the HTTP method of the request. The filter_input function
- * sanitizes the input values. It's a private method used by the other methods to retrieve and sanitize values from the
+ * sanitizes the input values. It's a protected method used by the other methods to retrieve and sanitize values from the
  * superglobals.
  *
  * Remember to use more complex validation and sanitization logic for real applications. The filter_var function with
@@ -26,11 +26,16 @@ namespace PageMaker;
  */
 class Request
 {
-    private $get;
-    private $post;
-    private $server;
-    private $files;
-    private $cookies;
+    protected $get;
+    protected $post;
+    protected $server;
+    protected $files;
+    protected $cookies;
+    
+    public static function filter_input(array $input, string $key, $default)
+    {
+        return isset($input[$key]) ? filter_var($input[$key], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : $default;
+    }
 
     public function __construct()
     {
@@ -96,32 +101,27 @@ class Request
 
     public function get(string $key, $default = null)
     {
-        return $this->filter_input($this->get, $key, $default);
+        return self:filterInput($this->get, $key, $default);
     }
 
     public function post(string $key, $default = null)
     {
-        return $this->filter_input($this->post, $key, $default);
+        return self:filterInput($this->post, $key, $default);
     }
 
     public function server(string $key, $default = null)
     {
-        return $this->filter_input($this->server, $key, $default);
+        return self:filterInput($this->server, $key, $default);
     }
 
     public function files(string $key, $default = null)
     {
-        return $this->filter_input($this->files, $key, $default);
+        return self:filterInput($this->files, $key, $default);
     }
 
     public function cookies(string $key, $default = null)
     {
-        return $this->filter_input($this->cookies, $key, $default);
-    }
-
-    private function filter_input(array $input, string $key, $default)
-    {
-        return isset($input[$key]) ? filter_var($input[$key], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : $default;
+        return self:filterInput($this->cookies, $key, $default);
     }
 
     public function isPost(): bool

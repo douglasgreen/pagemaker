@@ -38,15 +38,15 @@ class Container
         }
         return self::$instance;
     }
+    
+    public static function make(string $concrete)
+    {
+        return new $concrete();
+    }
 
     public function bind(string $abstract, string $concrete): void
     {
-        $this->instances[$abstract] = $this->make($concrete);
-    }
-
-    public function make(string $concrete)
-    {
-        return new $concrete();
+        $this->instances[$abstract] = self::make($concrete);
     }
 
     public function resolve(string $abstract)

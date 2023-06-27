@@ -24,7 +24,7 @@ class HtmlHelper
      *
      * @return string Generated HTML input.
      */
-    public function generateInput(string $type, string $name, string $value = '', array $attributes = []): string
+    public static function generateInput(string $type, string $name, string $value = '', array $attributes = []): string
     {
         $html = '<input type="' . htmlspecialchars($type, ENT_QUOTES, 'UTF-8') . '"';
         $html .= ' name="' . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . '"';
@@ -45,7 +45,7 @@ class HtmlHelper
      *
      * @return string Generated HTML link.
      */
-    public function generateLink(string $url, string $text, array $attributes = []): string
+    public static function generateLink(string $url, string $text, array $attributes = []): string
     {
         $html = '<a href="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '"';
         foreach ($attributes as $attr => $val) {
@@ -62,7 +62,7 @@ class HtmlHelper
      *
      * @return string The escaped string.
      */
-    public function escapeHtmlEntities(string $string): string
+    public static function escapeHtmlEntities(string $string): string
     {
         return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
     }

@@ -19,7 +19,7 @@ class CookieManager
      * @param string $value
      * @param int $expiry in seconds
      */
-    public function setCookie(string $name, string $value, int $expiry = 3600)
+    public static function setCookie(string $name, string $value, int $expiry = 3600)
     {
         if (!isset($_COOKIE[$name])) {
             setcookie($name, $value, time() + $expiry, "/");
@@ -32,22 +32,9 @@ class CookieManager
      * @param string $name
      * @return string|null
      */
-    public function getCookie(string $name): ?string
+    public static function getCookie(string $name): ?string
     {
         return isset($_COOKIE[$name]) ? $_COOKIE[$name] : null;
-    }
-
-    /**
-     * Delete a cookie
-     *
-     * @param string $name
-     */
-    public function deleteCookie(string $name): void
-    {
-        if (isset($_COOKIE[$name])) {
-            // Set the cookie with a past expiration date to delete it
-            setcookie($name, "", time() - 3600, "/");
-        }
     }
 
     /**
@@ -57,11 +44,24 @@ class CookieManager
      * @param string $value
      * @param int $expiry in seconds
      */
-    public function updateCookie(string $name, string $value, int $expiry = 3600)
+    public static function updateCookie(string $name, string $value, int $expiry = 3600)
     {
         if (isset($_COOKIE[$name])) {
             // Set the cookie again with the new value and updated expiration time
             setcookie($name, $value, time() + $expiry, "/");
+        }
+    }
+
+    /**
+     * Delete a cookie
+     *
+     * @param string $name
+     */
+    public static function deleteCookie(string $name): void
+    {
+        if (isset($_COOKIE[$name])) {
+            // Set the cookie with a past expiration date to delete it
+            setcookie($name, "", time() - 3600, "/");
         }
     }
 }

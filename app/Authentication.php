@@ -14,10 +14,23 @@ namespace PageMaker;
  * follow best practices for user authentication. These include using secure password hashing algorithms (like bcrypt),
  * HTTPS for all traffic, prevention of SQL Injection, etc. This example does not include all these practices and is a
  * basic illustrative example.
+ *
+ * @todo Use session class.
  */
 class Authentication
 {
     private PDO $db;
+
+    public static function logout(): void
+    {
+        unset($_SESSION['user_id']);
+        session_destroy();
+    }
+
+    public static function isUserLoggedIn(): bool
+    {
+        return isset($_SESSION['user_id']);
+    }
 
     public function __construct(PDO $db)
     {
@@ -41,18 +54,6 @@ class Authentication
 
         return false;
     }
-
-    public function logout(): void
-    {
-        unset($_SESSION['user_id']);
-        session_destroy();
-    }
-
-    public function isUserLoggedIn(): bool
-    {
-        return isset($_SESSION['user_id']);
-    }
-
     public function hasUserAccessTo(string $resource): bool
     {
         if (!$this->isUserLoggedIn()) {

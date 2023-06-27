@@ -8,6 +8,13 @@ class HtmlResponse extends Response
     private $statusCode;
     private $headers;
 
+    public static function sendError(string $message, int $statusCode = 500): void
+    {
+        http_response_code(500);
+        echo $message;
+        exit;
+    }
+
     public function __construct(string $content = '', int $statusCode = 200, array $headers = [])
     {
         $this->content = $content;
@@ -42,12 +49,5 @@ class HtmlResponse extends Response
 
         // Send content
         echo $this->content;
-    }
-
-    public function sendError(string $message, int $statusCode = 500): void
-    {
-        http_response_code(500);
-        echo $message;
-        exit;
     }
 }

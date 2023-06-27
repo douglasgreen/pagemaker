@@ -14,7 +14,7 @@ class Session
     /**
      * Starts a new session if one hasn't already been started.
      */
-    public function __construct()
+    public static function construct()
     {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
@@ -27,7 +27,7 @@ class Session
      * @param string $key The key of the session variable.
      * @param string $value The value to be assigned to the session variable.
      */
-    public function set(string $key, string $value): void
+    public static function set(string $key, string $value): void
     {
         $_SESSION[$key] = $value;
     }
@@ -39,7 +39,7 @@ class Session
      * @param string|null $default The default value to be returned if the session variable doesn't exist.
      * @return string|null The value of the session variable, or the default value if it doesn't exist.
      */
-    public function get(string $key, string $default = null): ?string
+    public static function get(string $key, string $default = null): ?string
     {
         return isset($_SESSION[$key]) ? $_SESSION[$key] : $default;
     }
@@ -50,7 +50,7 @@ class Session
      * @param string $key The key of the session variable.
      * @return bool True if the session variable exists, false otherwise.
      */
-    public function exists(string $key): bool
+    public static function exists(string $key): bool
     {
         return isset($_SESSION[$key]);
     }
@@ -60,9 +60,9 @@ class Session
      *
      * @param string $key The key of the session variable to be removed.
      */
-    public function remove(string $key): void
+    public static function remove(string $key): void
     {
-        if ($this->exists($key)) {
+        if (self:exists($key)) {
             unset($_SESSION[$key]);
         }
     }
@@ -70,7 +70,7 @@ class Session
     /**
      * Destroys the entire session.
      */
-    public function destroy(): void
+    public static function destroy(): void
     {
         session_destroy();
     }
@@ -78,7 +78,7 @@ class Session
     /**
      * Regenerates the session ID to prevent session fixation attacks.
      */
-    public function regenerate(): void
+    public static function regenerate(): void
     {
         session_regenerate_id(true);
     }

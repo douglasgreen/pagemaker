@@ -27,6 +27,21 @@ class Logger
     const WARNING = 'WARNING';
     const ERROR = 'ERROR';
 
+    public static function info(string $message)
+    {
+        self::log(self::INFO, $message);
+    }
+
+    public static function warning(string $message)
+    {
+        self::log(self::WARNING, $message);
+    }
+
+    public static function error(string $message)
+    {
+        self::log(self::ERROR, $message);
+    }
+
     public function __construct(string $logPath)
     {
         $this->logPath = $logPath;
@@ -38,20 +53,5 @@ class Logger
         $log = sprintf("[%s] [%s]: %s" . PHP_EOL, $time, $level, $message);
 
         file_put_contents($this->logPath, $log, FILE_APPEND);
-    }
-
-    public function info(string $message)
-    {
-        self::log(self::INFO, $message);
-    }
-
-    public function warning(string $message)
-    {
-        self::log(self::WARNING, $message);
-    }
-
-    public function error(string $message)
-    {
-        self::log(self::ERROR, $message);
     }
 }
