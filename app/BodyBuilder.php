@@ -6,7 +6,8 @@ namespace PageMaker;
  * @Todo Add same styles to HtmlBuilder
  * @todo Add Section builder using width/div/flex for each section.
  */
-class BodyBuilder {
+class BodyBuilder
+{
     protected $tags = [
         'pmHeader' => [],
         'pmLeftNav' => [],
@@ -18,11 +19,13 @@ class BodyBuilder {
     /**
      * @todo Throw exception on dupe section ID
      */
-    public function addSection(string $partId, string $sectionId, string $content): void {
+    public function addSection(string $partId, string $sectionId, string $content): void
+    {
         $this->tags[$partId][$sectionId] = $content;
     }
 
-    public function render() {
+    public function render()
+    {
         extract($this->tags);
         $html = "<body id='pmBody'>";
         $html .= "<header id='pmHeader'>";
@@ -58,4 +61,3 @@ class BodyBuilder {
         return $html;
     }
 }
-

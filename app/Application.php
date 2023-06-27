@@ -13,11 +13,13 @@ class Application
         return php_sapi_name() === 'cli';
     }
 
-    public function registerPlugin(string $id, BasePlugin $plugin) {
+    public function registerPlugin(string $id, BasePlugin $plugin)
+    {
         $this->plugins[$id][] = $plugin;
     }
 
-    public function run() {
+    public function run()
+    {
         foreach ($this->plugins as $plugin) {
             try {
                 $output = $plugin->render();

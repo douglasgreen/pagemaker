@@ -19,19 +19,22 @@ namespace PageMaker;
  * $servicesMenu = $menu->add('Services')->submenu();
  * $servicesMenu->add('Consulting', '/services/consulting');
  * $servicesMenu->add('Support', '/services/support');
- * 
+ *
  * echo $menu->build();
  */
-class Menu {
+class Menu
+{
     private $items = array();
 
-    public function add($description, $link = null) {
+    public function add($description, $link = null)
+    {
         $item = new MenuItem($description, $link);
         array_push($this->items, $item);
         return $item;
     }
 
-    public function build() {
+    public function build()
+    {
         $output = "<ul>";
         foreach ($this->items as $item) {
             $output .= $item->build();

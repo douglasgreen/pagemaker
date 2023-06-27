@@ -9,5 +9,5 @@
         </properties>
     </rule>
 
-    <file>src/</file>
+    <file>app/</file>
 </ruleset>

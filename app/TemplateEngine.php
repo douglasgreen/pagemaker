@@ -83,7 +83,8 @@ class TemplateEngine
         return array_key_exists($key, $this->variables) ? $this->variables[$key] : null;
     }
 
-    public function setRaw($key, $value) {
+    public function setRaw($key, $value)
+    {
         $this->variables[$key] = $value;
     }
 }
