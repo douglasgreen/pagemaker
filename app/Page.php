@@ -2,113 +2,161 @@
 
 namespace PageMaker;
 
+use Exception;
+
+/*
+ * @todo Add Section builder using width/div/flex for each section.
+ */
 class Page
 {
-    protected $title;
-    protected $metadata = [];
-    protected $styleUrls = [];
-    protected $scriptUrls = [];
-    protected $inlineStyles = [];
-    protected $inlineScripts = [];
-    protected $body = '';
+    /** @var string Character set */
+    protected $charset = 'UTF-8';
 
-    public function setTitle($title)
+    /** @var array Page metadata */
+    protected $metadata = [
+        'http-equiv' => [
+            'content-type' => null,
+            'default-style' => null,
+            'refresh' => null
+        ],
+        'name' => [
+            'application-name' => null,
+            'author' => null,
+            'description' => null,
+            'generator' => null,
+            'keywords' => null
+        ]
+    ];
+
+    /** @var array IDs of top-level containers */
+    protected $sections = [
+        'pmHeader' => [],
+        'pmLeftNav' => [],
+        'pmMain' => [],
+        'pmRightNav' => [],
+        'pmFooter' => [],
+    ];
+
+    /** @var array Named script URLs */
+    protected $scriptUrls = [];
+
+    /** @var array Named style URLs */
+    protected $styleUrls = [];
+
+    /** @var string $title */
+    protected $title;
+
+    public function setCharset(string $charset): void
+    {
+        $this->charset = $charset;
+    }
+
+    public function setMeta(string $name, string $content): void
+    {
+        if (array_key_exists($this->metadata['http-equiv'], $name)) {
+            $this->metadata['http-equiv'][$name] = $content;
+            return;
+        }
+        if (array_key_exists($this->metadata['name'], $name)) {
+            $this->metadata['name'][$name] = $content;
+            return;
+        }
+        throw new Exception("Unrecognize meta name");
+    }
+
+    public function setScript(string $name, string $src): void
+    {
+        $this->scriptUrls[$name] = $src;
+    }
+
+    public function setStyle(string $name, string $href): void
+    {
+        $this->styleUrls[$name] = $href;
+    }
+
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /** @todo Replace with mandatory template? */
-    public function addBody($content)
+    /**
+     * Sections are organized by top-level container ID and section class.
+     */
+    public function addSection(string $partId, string $sectionClass, string $content): void
     {
-        $this->body .= $content;
+        $this->sections[$partId][$sectionClass] = $content;
     }
 
-    public function addMeta($name, $content)
-    {
-        $this->metadata[] = [
-            'name' => $name,
-            'content' => $content,
-        ];
-    }
-
-    public function addStyleClass($class, $cssProperties)
-    {
-        $class = '.' . ltrim($class, '.');
-        if (isset($this->inlineStyles[$class])) {
-            throw new Exception("Duplicate class");
-        }
-        $this->inlineStyles[$class] = $cssProperties;
-    }
-
-    public function addStyleId($id, $cssProperties)
-    {
-        $id = '#' . ltrim($id, '#');
-        if (isset($this->inlineStyles[$id])) {
-            throw new Exception("Duplicate id");
-        }
-        $this->inlineStyles[$id] = $cssProperties;
-    }
-
-    public function addScriptClass($class, $event, $function)
-    {
-        $class = '.' . ltrim($class, '.');
-        if (isset($this->inlineScripts[$class][$event])) {
-            throw new Exception("Duplicate class");
-        }
-        $this->inlineScripts[$class][$event] = $function;
-    }
-
-    public function addScriptId($id, $event, $function)
-    {
-        $id = '#' . ltrim($id, '#');
-        if (isset($this->inlineScripts[$id][$event])) {
-            throw new Exception("Duplicate id");
-        }
-        $this->inlineScripts[$id][$event] = $function;
-    }
-
-    public function addStyleUrl($href)
-    {
-        $this->styleUrls[] = $href;
-    }
-
-    public function addScript($src)
-    {
-        $this->scriptUrls[] = $src;
-    }
-
-    public function render()
+    public function render(): void
     {
         echo "<!DOCTYPE html>\n";
         echo "<html>\n";
         echo "<head>\n";
+
         echo "<title>{$this->title}</title>\n";
-        foreach ($this->metadata as $meta) {
-            echo "<meta name='{$meta['name']}' content='{$meta['content']}'>\n";
+
+        echo "<meta charset='$this->charset'>\n";
+
+        foreach ($this->metadata as $type => $values) {
+            foreach ($values as $name => $content) {
+                if ($content !== null) {
+                    echo "<meta $type='$name' content='$content'>\n";
+                }
+            }
         }
+
         foreach ($this->styleUrls as $href) {
             echo "<link rel='stylesheet' type='text/css' href='{$href}'>\n";
         }
-        if ($this->inlineStyles) {
-            echo "<style>\n";
-            foreach ($this->inlineStyles as $selector => $properties) {
-                echo "{$selector} {\n";
-                echo "  {$properties}\n";
-                echo "}\n";
-            }
-            echo "</style>\n";
-        }
-        echo "</head>\n";
-        echo "<body>\n";
-        echo $this->body;
+
         foreach ($this->scriptUrls as $src) {
             echo "<script src='{$src}'></script>\n";
         }
-        foreach ($this->inlineScripts as $selector => $functions) {
-            foreach ($functions as $event => $function) {
-                 echo "\$('{$selector}').on('$event', $function\n";
+
+        echo "</head>\n";
+
+        extract($this->sections);
+
+        echo "<body id='pmBody'>\n";
+
+        if ($pmHeader) {
+            echo "<header id='pmHeader'>\n";
+            foreach ($pmHeader as $sectionClass => $content) {
+                echo "<section class='$sectionClass'>$content</section>\n";
             }
+            echo "</header>\n";
         }
+
+        if ($pmLeftNav) {
+            echo "<nav id='pmLeftNav'>\n";
+            foreach ($pmLeftNav as $sectionClass => $content) {
+                echo "<section class='$sectionClass'>$content</section>\n";
+            }
+            echo "</nav>\n";
+        }
+
+        echo "<main id='pmMain'>\n";
+        foreach ($pmMain as $sectionClass => $content) {
+            echo "<section class='$sectionClass'>$content</section>\n";
+        }
+        echo "</main>\n";
+
+        if ($pmRightNav) {
+            echo "<nav id='pmRightNav'>\n";
+            foreach ($pmRightNav as $sectionClass => $content) {
+                echo "<section class='$sectionClass'>$content</section>\n";
+            }
+            echo "</nav>\n";
+        }
+
+        if ($pmFooter) {
+            echo "<footer id='pmFooter'>\n";
+            foreach ($pmFooter as $sectionClass => $content) {
+                echo "<section class='$sectionClass'>$content</section>\n";
+            }
+            echo "</footer>\n";
+        }
+
         echo "</body>\n";
         echo "</html>\n";
     }
