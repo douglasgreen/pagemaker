@@ -260,3 +260,7 @@ Rewrite header into generic sections.
 Finish plugins.
 Write a logger like Monolog that logs exceptions to daily rotated file.
 https://www.loggly.com/ultimate-guide/php-logging-basics/
+* Does output support text, HTML, and JSON?
+* Add debug mode with detailed exceptions.
+* How to bundle assets with widgets like images?
+* Support internal JS/CSS

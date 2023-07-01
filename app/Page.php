@@ -38,13 +38,40 @@ class Page
     ];
 
     /** @var array Named script URLs */
-    protected $scriptUrls = [];
+    protected $scripts = [];
 
     /** @var array Named style URLs */
-    protected $styleUrls = [];
+    protected $styles = [];
 
     /** @var string $title */
     protected $title;
+
+    /**
+     * Sections are organized by top-level container ID and section class.
+     */
+    public function addSection(string $partId, string $sectionClass, string $content): void
+    {
+        $this->sections[$partId][$sectionClass] = $content;
+    }
+
+    /**
+     * Widgets are like sections but self-contained with JS and CSS.
+     */
+    public function addWidget(string $partId, string $sectionClass, Widget $widget): void
+    {
+        foreach ($widget->getScripts as $name => $script) {
+            $this->setScript($name, $script);
+        }
+        foreach ($widget->getStyles as $name => $style) {
+            $this->setStyle($name, $style);
+        }
+        try {
+            $content = $widget->render();
+        } catch (Throwable $e) {
+            $content = '<p style="color: red">Error rendering ' . $widget->getName() . '</p>';
+        }
+        $this->addSection($partId, $sectionClass, $content);
+    }
 
     public function setCharset(string $charset): void
     {
@@ -66,25 +93,17 @@ class Page
 
     public function setScript(string $name, string $src): void
     {
-        $this->scriptUrls[$name] = $src;
+        $this->scripts[$name] = $src;
     }
 
     public function setStyle(string $name, string $href): void
     {
-        $this->styleUrls[$name] = $href;
+        $this->styles[$name] = $href;
     }
 
     public function setTitle(string $title): void
     {
         $this->title = $title;
-    }
-
-    /**
-     * Sections are organized by top-level container ID and section class.
-     */
-    public function addSection(string $partId, string $sectionClass, string $content): void
-    {
-        $this->sections[$partId][$sectionClass] = $content;
     }
 
     public function render(): void
@@ -105,11 +124,11 @@ class Page
             }
         }
 
-        foreach ($this->styleUrls as $href) {
+        foreach ($this->styles as $href) {
             echo "<link rel='stylesheet' type='text/css' href='{$href}'>\n";
         }
 
-        foreach ($this->scriptUrls as $src) {
+        foreach ($this->scripts as $src) {
             echo "<script src='{$src}'></script>\n";
         }
 
