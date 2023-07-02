@@ -57,7 +57,8 @@ class EmailSender
     /**
      * Send the message.
      */
-    public function send() {
+    public function send()
+    {
         if ($this->attachment) {
             $this->sendEmailWithAttachment();
         } elseif ($this->useHtml) {

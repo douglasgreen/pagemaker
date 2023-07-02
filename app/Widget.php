@@ -54,15 +54,18 @@ class Widget
         $this->styles[$name] = $href;
     }
 
-    public function getName() {
+    public function getName()
+    {
         return $this->content;
     }
 
-    public function getScripts() {
+    public function getScripts()
+    {
         return $this->scripts;
     }
 
-    public function getStyles() {
+    public function getStyles()
+    {
         return $this->styles;
     }
 }

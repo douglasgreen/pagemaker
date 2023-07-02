@@ -31,7 +31,7 @@ class Request
     protected $server;
     protected $files;
     protected $cookies;
-    
+
     public static function filter_input(array $input, string $key, $default)
     {
         return isset($input[$key]) ? filter_var($input[$key], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : $default;

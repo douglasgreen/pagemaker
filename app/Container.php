@@ -38,7 +38,7 @@ class Container
         }
         return self::$instance;
     }
-    
+
     public static function make(string $concrete)
     {
         return new $concrete();
