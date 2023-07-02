@@ -37,6 +37,21 @@ class Authentication
         $this->db = $db;
     }
 
+    public function hasUserAccessTo(string $resource): bool
+    {
+        if (!$this->isUserLoggedIn()) {
+            return false;
+        }
+
+        // Assuming a permission system, where you link user id to resources they can access
+        $stmt = $this->db->prepare("SELECT * FROM permissions WHERE user_id = :user_id AND resource = :resource");
+        $stmt->bindParam(":user_id", $_SESSION['user_id']);
+        $stmt->bindParam(":resource", $resource);
+        $stmt->execute();
+
+        return $stmt->rowCount() > 0;
+    }
+
     public function login(string $username, string $password): bool
     {
         $stmt = $this->db->prepare("SELECT * FROM users WHERE username = :username");
@@ -53,19 +68,5 @@ class Authentication
         }
 
         return false;
-    }
-    public function hasUserAccessTo(string $resource): bool
-    {
-        if (!$this->isUserLoggedIn()) {
-            return false;
-        }
-
-        // Assuming a permission system, where you link user id to resources they can access
-        $stmt = $this->db->prepare("SELECT * FROM permissions WHERE user_id = :user_id AND resource = :resource");
-        $stmt->bindParam(":user_id", $_SESSION['user_id']);
-        $stmt->bindParam(":resource", $resource);
-        $stmt->execute();
-
-        return $stmt->rowCount() > 0;
     }
 }
