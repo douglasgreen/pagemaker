@@ -12,7 +12,7 @@ class TableHandler
     protected $fqtn;
     protected $primaryKey;
 
-    public static function buildUpdateList(array $fields): return string
+    public static function buildUpdateList(array $fields): string
     {
         if (!$fields) {
             throw new Exception('Fields required');
@@ -26,7 +26,7 @@ class TableHandler
         return $updateList;
     }
 
-    public static function buildWhereClause(array $fields, string $op = 'AND'): return string
+    public static function buildWhereClause(array $fields, string $op = 'AND'): string
     {
         if (!$fields) {
             return '';
@@ -74,7 +74,7 @@ class TableHandler
     {
         $fields = array_keys($data);
         $values = array_values($data);
-        $markedFields = self:markFields($fields);
+        $markedFields = self::markFields($fields);
 
         $fieldsStr = implode(', ', $fields);
         $paramStr = implode(', ', $markedFields);
@@ -84,7 +84,7 @@ class TableHandler
         $stmt = $this->pdo->prepare($query);
 
         $markedData = array_combine($markedFields, $values);
-        $stmt->execute($data);
+        $stmt->execute($markedData);
 
         $newId = $this->pdo->lastInsertId();
         return $newId;
@@ -109,9 +109,9 @@ class TableHandler
     {
         $fields = array_keys($data);
         $values = array_values($data);
-        $markedFields = self:markFields($fields);
+        $markedFields = self::markFields($fields);
 
-        $whereClause = self:buildWhereClause($fields, $op);
+        $whereClause = self::buildWhereClause($fields, $op);
 
         $query = "DELETE FROM $this->fqtn $whereClause";
 
@@ -155,9 +155,9 @@ class TableHandler
     {
         $fields = array_keys($data);
         $values = array_values($data);
-        $markedFields = self:markFields($fields);
+        $markedFields = self::markFields($fields);
 
-        $whereClause = self:buildWhereClause($fields, $op);
+        $whereClause = self::buildWhereClause($fields, $op);
 
         $query = "SELECT * FROM $this->fqtn $whereClause";
 
@@ -177,9 +177,9 @@ class TableHandler
 
         $fields = array_keys($data);
         $values = array_values($data);
-        $markedFields = self:markFields($fields);
+        $markedFields = self::markFields($fields);
 
-        $updateList = self:buildUpdateList($fields);
+        $updateList = self::buildUpdateList($fields);
 
         $markedKey = ':' . $this->primaryKey;
 
@@ -195,15 +195,15 @@ class TableHandler
     {
         $fields = array_keys($data);
         $values = array_values($data);
-        $markedFields = self:markFields($fields);
+        $markedFields = self::markFields($fields);
 
         $whereFields = array_keys($whereData);
         $whereValues = array_values($whereData);
-        $whereMarkedFields = self:markFields($whereFields, $fields);
+        $whereMarkedFields = self::markFields($whereFields, $fields);
 
-        $updateList = self:buildUpdateList($fields);
+        $updateList = self::buildUpdateList($fields);
 
-        $whereClause = self:buildWhereClause($whereFields, $op);
+        $whereClause = self::buildWhereClause($whereFields, $op);
 
         $query = "UPDATE $this->fqtn SET $updateList $whereClause";
 

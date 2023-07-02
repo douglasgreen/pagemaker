@@ -20,11 +20,11 @@ namespace PageMaker;
 class Encryption
 {
     protected $cipherMethod;
+    protected $iv;
     protected $key;
     protected $options;
-    protected $iv;
 
-    public function __construct(string $cipherMethod = 'AES-128-CBC', string $key, int $options = 0, string $iv)
+    public function __construct(string $cipherMethod, string $key, string $iv, int $options = 0)
     {
         if (empty($key) || empty($iv)) {
             throw new Exception('Both key and iv are required');
@@ -32,8 +32,8 @@ class Encryption
 
         $this->cipherMethod = $cipherMethod;
         $this->key = $key;
-        $this->options = $options;
         $this->iv = $iv;
+        $this->options = $options;
     }
 
     public function encrypt(string $data): string

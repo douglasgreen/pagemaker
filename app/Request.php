@@ -5,10 +5,10 @@ namespace PageMaker;
 /**
  * @class Request handler
  *
- * Here's a very simple example of a Request class that wraps the PHP superglobals. It uses the filter_input function
+ * Here's a very simple example of a Request class that wraps the PHP superglobals. It uses the filterInput function
  * to sanitize the input values.
  *
- * Please note that the filter_input function is a simplistic way to sanitize input and may not be appropriate for all
+ * Please note that the filterInput function is a simplistic way to sanitize input and may not be appropriate for all
  * situations. You should use more comprehensive validation and sanitization techniques depending on the specific needs
  * of your application.
  *
@@ -16,7 +16,7 @@ namespace PageMaker;
  * get, post, server, files, and cookies methods retrieve a value from the corresponding superglobal. If the key is not
  * present in the superglobal, they return a default value.
  *
- * The isPost and isGet methods can be used to determine the HTTP method of the request. The filter_input function
+ * The isPost and isGet methods can be used to determine the HTTP method of the request. The filterInput function
  * sanitizes the input values. It's a protected method used by the other methods to retrieve and sanitize values from the
  * superglobals.
  *
@@ -32,7 +32,7 @@ class Request
     protected $files;
     protected $cookies;
 
-    public static function filter_input(array $input, string $key, $default)
+    public static function filterInput(array $input, string $key, $default)
     {
         return isset($input[$key]) ? filter_var($input[$key], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : $default;
     }
@@ -101,27 +101,27 @@ class Request
 
     public function get(string $key, $default = null)
     {
-        return self:filterInput($this->get, $key, $default);
+        return self::filterInput($this->get, $key, $default);
     }
 
     public function post(string $key, $default = null)
     {
-        return self:filterInput($this->post, $key, $default);
+        return self::filterInput($this->post, $key, $default);
     }
 
     public function server(string $key, $default = null)
     {
-        return self:filterInput($this->server, $key, $default);
+        return self::filterInput($this->server, $key, $default);
     }
 
     public function files(string $key, $default = null)
     {
-        return self:filterInput($this->files, $key, $default);
+        return self::filterInput($this->files, $key, $default);
     }
 
     public function cookies(string $key, $default = null)
     {
-        return self:filterInput($this->cookies, $key, $default);
+        return self::filterInput($this->cookies, $key, $default);
     }
 
     public function isPost(): bool

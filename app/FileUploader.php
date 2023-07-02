@@ -50,6 +50,7 @@ class FileUploader
 
         // DO NOT TRUST $file['mime'] VALUE !!
         // Check MIME Type by yourself.
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
         $fileExtensionMap = [
             'jpg' => 'image/jpeg',
             'png' => 'image/png',

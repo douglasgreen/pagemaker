@@ -10,7 +10,7 @@ class HtmlResponse extends Response
 
     public static function sendError(string $message, int $statusCode = 500): void
     {
-        http_response_code(500);
+        http_response_code($statusCode);
         echo $message;
         exit;
     }

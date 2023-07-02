@@ -62,7 +62,7 @@ class Session
      */
     public static function remove(string $key): void
     {
-        if (self:exists($key)) {
+        if (self::exists($key)) {
             unset($_SESSION[$key]);
         }
     }

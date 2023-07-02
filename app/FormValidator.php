@@ -20,7 +20,7 @@ namespace PageMaker;
  */
 class FormValidator
 {
-    protected array $errors = [];
+    protected $errors = [];
 
     public static function sanitizeString(string $input): string
     {

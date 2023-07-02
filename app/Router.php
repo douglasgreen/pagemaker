@@ -22,7 +22,7 @@ class Router
     protected $request;
     protected $allowedHttpMethods = ['get', 'post'];
 
-    function __construct(Request $request, string $namespace = null)
+    public function __construct(Request $request, string $namespace = null)
     {
         $this->request = $request;
         $this->page = $request->page ?? 'home';
@@ -36,7 +36,7 @@ class Router
         $this->namespace = $namespace;
     }
 
-    function route(string $namespace = null): Response
+    public function route(): Response
     {
         // Create the class and method names
         $className = ucfirst(strtolower($this->page)) . 'Controller';

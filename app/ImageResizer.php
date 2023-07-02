@@ -17,8 +17,8 @@ namespace PageMaker;
  */
 class ImageResizer
 {
-    protected string $imagePath;
-    protected array $imageInfo;
+    protected $imagePath;
+    protected $imageInfo;
     protected $image;
 
     public function __construct(string $imagePath)
@@ -49,10 +49,33 @@ class ImageResizer
         }
     }
 
-    public function resize(int $targetWidth, int $targetHeight): void
+    /**
+     * Omit the height to preserve aspect ratio.
+     */
+    public function resize(int $targetWidth, int $targetHeight = -1): void
     {
         $originalWidth = imagesx($this->image);
         $originalHeight = imagesy($this->image);
+
+        $scaledImage = imagescale($this->image, $targetWidth, $targetHeight);
+        if (!$scaledImage) {
+            throw new RuntimeException('Failed to resize the image: ' . $this->imagePath);
+        }
+
+        $this->image = $scaledImage;
+    }
+
+    public function resizeByPercent(int $percent): void
+    {
+        if ($percent <= 0 || $percent > 100) {
+            throw new InvalidArgumentException('Percent must be between 1 and 100');
+        }
+
+        $originalWidth = imagesx($this->image);
+        $originalHeight = imagesy($this->image);
+
+        $targetWidth = $originalWidth * ($percent / 100);
+        $targetHeight = $originalHeight * ($percent / 100);
 
         $scaledImage = imagescale($this->image, $targetWidth, $targetHeight);
         if (!$scaledImage) {

@@ -19,7 +19,7 @@ namespace PageMaker;
  */
 class Authentication
 {
-    protected PDO $db;
+    protected $db;
 
     public static function logout(): void
     {
