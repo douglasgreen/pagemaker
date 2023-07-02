@@ -4,9 +4,9 @@ namespace PageMaker;
 
 class HtmlResponse extends Response
 {
-    private $content;
-    private $statusCode;
-    private $headers;
+    protected $content;
+    protected $statusCode;
+    protected $headers;
 
     public static function sendError(string $message, int $statusCode = 500): void
     {

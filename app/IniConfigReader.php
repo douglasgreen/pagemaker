@@ -15,7 +15,7 @@ namespace PageMaker;
  */
 class IniConfigReader
 {
-    private array $configData;
+    protected array $configData;
 
     /**
      * ConfigReader constructor.

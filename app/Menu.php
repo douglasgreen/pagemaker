@@ -24,7 +24,7 @@ namespace PageMaker;
  */
 class Menu
 {
-    private $items = array();
+    protected $items = array();
 
     public function add($description, $link = null)
     {

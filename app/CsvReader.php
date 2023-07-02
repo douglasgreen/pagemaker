@@ -4,10 +4,10 @@ namespace PageMaker;
 
 class CSVReader
 {
-    private $file;
-    private $delimiter;
-    private $length;
-    private $headers;
+    protected $file;
+    protected $delimiter;
+    protected $length;
+    protected $headers;
 
     public function __construct(string $file, string $delimiter = ',', int $length = 1000)
     {

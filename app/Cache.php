@@ -14,7 +14,7 @@ namespace PageMaker;
  */
 class Cache
 {
-    private $cachePath;
+    protected $cachePath;
 
     public function __construct(string $cachePath = '/tmp/cache/')
     {
@@ -56,7 +56,7 @@ class Cache
         file_put_contents($filePath, serialize($data));
     }
 
-    private function getFilePath(string $key)
+    protected function getFilePath(string $key)
     {
         return $this->cachePath . md5($key);
     }

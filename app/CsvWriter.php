@@ -4,8 +4,8 @@ namespace PageMaker;
 
 class CSVWriter
 {
-    private $file;
-    private $delimiter;
+    protected $file;
+    protected $delimiter;
 
     public function __construct(string $file, string $delimiter = ',')
     {

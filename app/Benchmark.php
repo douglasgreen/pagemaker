@@ -29,10 +29,10 @@ namespace PageMaker;
  */
 class Benchmark
 {
-    private float $startTime;
-    private float $endTime;
-    private int $startMemory;
-    private int $endMemory;
+    protected float $startTime;
+    protected float $endTime;
+    protected int $startMemory;
+    protected int $endMemory;
 
     public static function getPeakMemoryUsage(): int
     {

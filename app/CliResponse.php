@@ -7,20 +7,21 @@ namespace PageMaker;
  */
 class CliResponse extends Response
 {
-    private $content;
+    protected $content;
 
     public function __construct(string $content = '')
     {
-        echo $content;
+        $this->content = $content;
     }
 
     public function addContent(string $content): void
     {
-        echo $content;
+        $this->content .= $content;
     }
 
     public function send(): void
     {
+        echo $this->content;
     }
 
     public function sendError(string $message, int $exitCode = 1): void

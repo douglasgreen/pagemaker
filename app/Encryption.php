@@ -19,10 +19,10 @@ namespace PageMaker;
  */
 class Encryption
 {
-    private $cipherMethod;
-    private $key;
-    private $options;
-    private $iv;
+    protected $cipherMethod;
+    protected $key;
+    protected $options;
+    protected $iv;
 
     public function __construct(string $cipherMethod = 'AES-128-CBC', string $key, int $options = 0, string $iv)
     {

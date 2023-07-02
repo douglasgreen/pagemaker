@@ -4,9 +4,9 @@ namespace PageMaker;
 
 class MenuItem
 {
-    private $description;
-    private $link;
-    private $submenu;
+    protected $description;
+    protected $link;
+    protected $submenu;
 
     public function __construct($description, $link = null)
     {

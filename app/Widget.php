@@ -4,6 +4,7 @@ namespace PageMaker;
 
 /**
  * A widget extends this class. It adds scripts, add styles, and output.
+ * The purpose of widget architecture is separation of features and error checking
  */
 class Widget
 {

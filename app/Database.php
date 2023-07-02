@@ -20,7 +20,7 @@ namespace PageMaker;
  */
 class Database
 {
-    private PDO $connection;
+    protected PDO $connection;
 
     public function __construct(
         string $host = 'localhost',

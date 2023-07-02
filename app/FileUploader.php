@@ -13,7 +13,7 @@ namespace PageMaker;
 
 class FileUploader
 {
-    private $destinationDir;
+    protected $destinationDir;
 
     public function __construct(string $destinationDir)
     {

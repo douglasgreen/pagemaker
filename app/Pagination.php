@@ -4,9 +4,9 @@ namespace PageMaker;
 
 class Pagination
 {
-    private $data;
-    private $dataPerPage;
-    private $currentPage;
+    protected $data;
+    protected $dataPerPage;
+    protected $currentPage;
 
     public function __construct(array $data, int $dataPerPage = 10, int $currentPage = 1)
     {

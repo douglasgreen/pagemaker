@@ -29,10 +29,10 @@ namespace PageMaker;
 class Localization
 {
     // The current locale
-    private string $locale;
+    protected string $locale;
 
     // Array to hold translations
-    private array $translations = [];
+    protected array $translations = [];
 
     // Construct the Localization with a default locale
     public function __construct(string $locale = 'en_US')

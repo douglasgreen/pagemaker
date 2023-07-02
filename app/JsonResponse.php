@@ -4,9 +4,9 @@ namespace PageMaker;
 
 class JsonResponse extends Response
 {
-    private $data;
-    private $statusCode;
-    private $headers = ['Content-Type' => 'application/json'];
+    protected $data;
+    protected $statusCode;
+    protected $headers = ['Content-Type' => 'application/json'];
 
     public static function sendError(string $message): void
     {

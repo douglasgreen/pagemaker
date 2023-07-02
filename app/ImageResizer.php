@@ -17,9 +17,9 @@ namespace PageMaker;
  */
 class ImageResizer
 {
-    private string $imagePath;
-    private array $imageInfo;
-    private $image;
+    protected string $imagePath;
+    protected array $imageInfo;
+    protected $image;
 
     public function __construct(string $imagePath)
     {
@@ -32,7 +32,7 @@ class ImageResizer
         $this->loadImage();
     }
 
-    private function loadImage(): void
+    protected function loadImage(): void
     {
         switch ($this->imageInfo[2]) {
             case IMAGETYPE_JPEG:
