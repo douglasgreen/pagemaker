@@ -4,7 +4,7 @@ namespace PageMaker;
 
 class Registry
 {
-    protected $registry = array();
+    protected $registry = [];
 
     public function set($key, $value)
     {

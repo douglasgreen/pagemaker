@@ -50,18 +50,16 @@ class FileUploader
 
         // DO NOT TRUST $file['mime'] VALUE !!
         // Check MIME Type by yourself.
-        $finfo = new finfo(FILEINFO_MIME_TYPE);
-        if (
-            false === $ext = array_search(
-                $finfo->file($file['tmp_name']),
-                array(
-                'jpg' => 'image/jpeg',
-                'png' => 'image/png',
-                'gif' => 'image/gif',
-                ),
-                true
-            )
-        ) {
+        $fileExtensionMap = [
+            'jpg' => 'image/jpeg',
+            'png' => 'image/png',
+            'gif' => 'image/gif',
+        ];
+
+        $uploadedFile = $finfo->file($file['tmp_name']);
+        $ext = array_search($uploadedFile, $fileExtensionMap, true);
+
+        if (false === $ext) {
             throw new RuntimeException('Invalid file format.');
         }
 

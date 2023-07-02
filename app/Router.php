@@ -20,7 +20,7 @@ class Router
     protected $page;
     protected $action;
     protected $request;
-    protected $allowedHttpMethods = array('get', 'post');
+    protected $allowedHttpMethods = ['get', 'post'];
 
     function __construct(Request $request, string $namespace = null)
     {

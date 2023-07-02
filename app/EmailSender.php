@@ -106,7 +106,7 @@ class EmailSender
     /**
      * Function to send an email with an attachment
      *
-     * @return array - An array with success or error message
+     * @return array An array with success or error message
      */
     protected function sendEmailWithAttachment()
     {
@@ -144,9 +144,9 @@ class EmailSender
 
         // Send the email and return success or error message
         if (mail($this->to, $this->subject, $body, $headers)) {
-            return array('success' => true);
+            return ['success' => true];
         } else {
-            return array('error' => error_get_last());
+            return ['error' => error_get_last()];
         }
     }
 
@@ -164,9 +164,9 @@ class EmailSender
 
         // Send the email and return success or error message
         if (mail($this->to, $this->subject, $message, $headers)) {
-            return array('success' => true);
+            return ['success' => true];
         } else {
-            return array('error' => error_get_last());
+            return ['error' => error_get_last()];
         }
     }
 
@@ -184,9 +184,9 @@ class EmailSender
 
         // Send the email and return success or error message
         if (mail($this->to, $this->subject, $message, $headers)) {
-            return array('success' => true);
+            return ['success' => true];
         } else {
-            return array('error' => error_get_last());
+            return ['error' => error_get_last()];
         }
     }
 
