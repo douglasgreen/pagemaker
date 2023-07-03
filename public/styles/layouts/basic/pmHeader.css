@@ -1,0 +1,50 @@
+/* Layout CSS */
+/* @Todo make responsive */
+#pmHeader .menuBar li {
+    position: relative;
+}
+
+#pmHeader .menuBar li a,
+#pmHeader .menuBar li span {
+    display: block;
+    text-decoration: none;
+    color: #000;
+    background-color: #ddd;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+/* Layout for the top level menu */
+#pmHeader .menuBar ul li {
+    float: left;
+    width: 100px;
+}
+
+/* Reset float for child menus */
+#pmHeader .menuBar ul li ul {
+    float: none;
+}
+
+/* Hide the child menus */
+#pmHeader .menuBar ul li ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+}
+
+/* Show child menus on hover */
+#pmHeader .menuBar ul li:hover > ul {
+    display: block;
+}
+
+/* Style for nested ul */
+#pmHeader .menuBar ul ul ul {
+    left: 100%;
+    top: 0;
+}
+
+/* Show nested ul on hover */
+#pmHeader .menuBar ul ul li:hover > ul {
+    display: block;
+}
+
