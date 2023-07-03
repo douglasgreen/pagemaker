@@ -20,6 +20,12 @@
     text-decoration: none;
 }
 
+#pmHeader .menuBar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
 /* Layout for the top level menu */
 #pmHeader .menuBar ul li {
     float: left;
