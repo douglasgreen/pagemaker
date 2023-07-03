@@ -1,17 +1,18 @@
 /* Layout CSS */
 /* @Todo make responsive */
+
 #pmHeader .menuBar li {
     position: relative;
 }
 
 #pmHeader .menuBar li a,
 #pmHeader .menuBar li span {
-    display: block;
-    text-decoration: none;
-    color: #000;
     background-color: #ddd;
-    padding: 10px;
     border: 1px solid #ccc;
+    color: #000;
+    display: block;
+    padding: 10px;
+    text-decoration: none;
 }
 
 /* Layout for the top level menu */
@@ -47,4 +48,3 @@
 #pmHeader .menuBar ul ul li:hover > ul {
     display: block;
 }
-
