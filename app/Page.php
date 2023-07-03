@@ -15,6 +15,9 @@ class Page
     /** @var string Favicon */
     protected $favicon;
 
+    /** @var string Language */
+    protected $lang = 'en';
+
     /** @var array Page metadata */
     protected $metadata = [
         'http-equiv' => [
@@ -94,6 +97,11 @@ class Page
         $this->favicon = $favicon;
     }
 
+    public function setLanguage(string $lang): void
+    {
+        $this->lang = $lang;
+    }
+
     public function setMeta(string $name, string $content): void
     {
         if (array_key_exists($this->metadata['http-equiv'], $name)) {
@@ -125,7 +133,7 @@ class Page
     public function render(): string
     {
         $output = "<!DOCTYPE html>\n";
-        $output .= "<html>\n";
+        $output .= "<html lang='$this->lang'>\n";
         $output .= "<head>\n";
 
         $output .= "<title>{$this->title}</title>\n";
