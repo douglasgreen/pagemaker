@@ -12,6 +12,9 @@ class Page
     /** @var string Character set */
     protected $charset = 'UTF-8';
 
+    /** @var string Favicon */
+    protected $favicon;
+
     /** @var array Page metadata */
     protected $metadata = [
         'http-equiv' => [
@@ -86,6 +89,11 @@ class Page
         $this->charset = $charset;
     }
 
+    public function setFavicon(string $favicon): void
+    {
+        $this->favicon = $favicon;
+    }
+
     public function setMeta(string $name, string $content): void
     {
         if (array_key_exists($this->metadata['http-equiv'], $name)) {
@@ -130,6 +138,10 @@ class Page
                     $output .= "<meta $type='$name' content='$content'>\n";
                 }
             }
+        }
+
+        if ($this->favicon) {
+            $output .= "<link rel='icon' href='$this->favicon' type='image/x-icon'>";
         }
 
         foreach ($this->styles as $href) {
