@@ -1,0 +1,19 @@
+@media (max-width: 599px) {
+    #pmFooter {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width: 1200px) {
+    #pmFooter {
+        clear: both;
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 1201px) {
+    #pmFooter {
+        clear: both;
+        width: 100%;
+    }
+}

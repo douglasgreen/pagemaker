@@ -1,5 +1,10 @@
 /* Layout CSS */
-/* @Todo make responsive */
+/* @todo make responsive */
+/* @todo Move colors to themes */
+
+#pmHeader .menuBar {
+    width: 100%;
+}
 
 #pmHeader .menuBar li {
     position: relative;
@@ -47,4 +52,58 @@
 /* Show nested ul on hover */
 #pmHeader .menuBar ul ul li:hover > ul {
     display: block;
+}
+
+@media (max-width: 599px) {
+    #pmHeader {
+        width: 100%;
+    }
+
+    #pmHeader .pmBanner {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+    }
+
+    #pmHeader .pmLogo,
+    #pmHeader .pmIconBar,
+    #pmHeader .pmSearchBar {
+        flex: 1;
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width: 1200px) {
+    #pmHeader {
+        width: 100%;
+    }
+
+    #pmHeader .pmBanner {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+    }
+
+    #pmHeader .pmLogo,
+    #pmHeader .pmIconBar,
+    #pmHeader .pmSearchBar {
+        flex: 1;
+    }
+}
+
+@media screen and (min-width: 1201px) {
+    #pmHeader {
+        width: 100%;
+    }
+
+    #pmHeader .pmBanner {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+    }
+
+    #pmHeader .pmLogo,
+    #pmHeader .pmIconBar,
+    #pmHeader .pmSearchBar {
+        flex: 1;
+    }
 }

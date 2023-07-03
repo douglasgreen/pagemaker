@@ -1,4 +1,6 @@
 /* Default styling for list and links */
+/* @todo Move colors to themes */
+
 #pmLeftNav .menuNav li {
     position: relative;
 }
@@ -45,4 +47,38 @@
 /* Show nested ul on hover */
 #pmLeftNav .menuNav ul ul li:hover > ul {
     display: block;
+}
+
+@media (max-width: 599px) {
+    #pmLeftNav section {
+        margin-bottom: 10px;
+    }
+
+    #pmLeftNav {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width: 1200px) {
+    #pmLeftNav section {
+        margin-bottom: 10px;
+    }
+
+    #pmLeftNav {
+        display: block;
+        float: left;
+        width: 20%;
+    }
+}
+
+@media screen and (min-width: 1201px) {
+    #pmLeftNav section {
+        margin-bottom: 20px;
+    }
+
+    #pmLeftNav {
+        display: block;
+        float: left;
+        width: 15%;
+    }
 }

@@ -9,6 +9,11 @@
 }
 
 @media screen and (max-width: 599px) {
+    #pmMain {
+        padding: 10px;
+        width: 100%;
+    }
+
     #pmMain .pmFormWrapper {
         max-width: 100%;
         padding: 20px;
@@ -52,6 +57,12 @@
 }
 
 @media screen and (min-width: 600px) and (max-width: 1200px) {
+    #pmMain {
+        float: left;
+        padding: 10px;
+        width: 60%;
+    }
+
     #pmMain .pmFormWrapper {
         margin: 0 auto;
         max-width: 500px;
@@ -96,6 +107,12 @@
 }
 
 @media screen and (min-width: 1201px) {
+    #pmMain {
+        float: left;
+        padding: 20px;
+        width: 70%;
+    }
+
     #pmMain .pmFormWrapper {
         margin: 0 auto;
         max-width: 800px;
