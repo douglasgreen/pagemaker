@@ -21,18 +21,19 @@ class MenuItem
         return $this->submenu;
     }
 
-    public function build()
+    public function build($indentLevel = 0)
     {
-        $output = "<li>";
+        $output = str_repeat(' ', $indentLevel * 4) . "<li>";
         if ($this->link) {
-            $output .= "<a href=\"{$this->link}\">{$this->description}</a>";
+            $output .= "<a href='$this->link'>$this->description</a>";
         } else {
-            $output .= $this->description;
+            $output .= "<span>$this->description</span>";
         }
         if ($this->submenu) {
-            $output .= $this->submenu->build();
+            $output .= "\n" . $this->submenu->build($indentLevel + 1);
+            $output .= str_repeat(' ', $indentLevel * 4);
         }
-        $output .= "</li>";
+        $output .= "</li>\n";
         return $output;
     }
 }

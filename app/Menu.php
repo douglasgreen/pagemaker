@@ -5,6 +5,8 @@ namespace PageMaker;
 /**
  * @class Menu
  *
+ * @todo Make this a subclass of Widget.
+ *
  * In this script, we have two classes: Menu and MenuItem. Menu is responsible for managing an array of menu items,
  * which can be either links or other Menu objects (for submenus). MenuItem represents a single item in the menu, which
  * may be a link or a submenu. Each MenuItem object has a submenu method which can be used to add a submenu to the
@@ -33,13 +35,13 @@ class Menu
         return $item;
     }
 
-    public function build()
+    public function build($indentLevel = 0)
     {
-        $output = "<ul>";
+        $output = str_repeat(' ', $indentLevel * 4) . "<ul>\n";
         foreach ($this->items as $item) {
-            $output .= $item->build();
+            $output .= $item->build($indentLevel + 1);
         }
-        $output .= "</ul>";
+        $output .= str_repeat(' ', $indentLevel * 4) . "</ul>\n";
         return $output;
     }
 }

@@ -4,6 +4,7 @@ PHP microframework
 ## Design goals
 * All functions without $this are static.
 * All timed JS functions must be added to a queue.
+* Avoid internal and inline JS and CSS because hard to replace.
 * Class attributes all protected, functions all public or protected, static functions all public.
 * Code is simple enough to read.
 * Dependency injection.
