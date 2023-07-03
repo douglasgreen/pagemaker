@@ -47,6 +47,14 @@ class Page
     protected $title;
 
     /**
+     * Set the page title.
+     */
+    public function __construct(string $title)
+    {
+        $this->title = $title;
+    }
+
+    /**
      * Sections are organized by top-level container ID and section class.
      */
     public function addSection(string $partId, string $sectionClass, string $content): void
@@ -59,10 +67,10 @@ class Page
      */
     public function addWidget(string $partId, string $sectionClass, Widget $widget): void
     {
-        foreach ($widget->getScripts as $name => $script) {
+        foreach ($widget->getScripts() as $name => $script) {
             $this->setScript($name, $script);
         }
-        foreach ($widget->getStyles as $name => $style) {
+        foreach ($widget->getStyles() as $name => $style) {
             $this->setStyle($name, $style);
         }
         try {
@@ -106,77 +114,78 @@ class Page
         $this->title = $title;
     }
 
-    public function render(): void
+    public function render(): string
     {
-        echo "<!DOCTYPE html>\n";
-        echo "<html>\n";
-        echo "<head>\n";
+        $output = "<!DOCTYPE html>\n";
+        $output .= "<html>\n";
+        $output .= "<head>\n";
 
-        echo "<title>{$this->title}</title>\n";
+        $output .= "<title>{$this->title}</title>\n";
 
-        echo "<meta charset='$this->charset'>\n";
+        $output .= "<meta charset='$this->charset'>\n";
 
         foreach ($this->metadata as $type => $values) {
             foreach ($values as $name => $content) {
                 if ($content !== null) {
-                    echo "<meta $type='$name' content='$content'>\n";
+                    $output .= "<meta $type='$name' content='$content'>\n";
                 }
             }
         }
 
         foreach ($this->styles as $href) {
-            echo "<link rel='stylesheet' type='text/css' href='{$href}'>\n";
+            $output .= "<link rel='stylesheet' type='text/css' href='{$href}'>\n";
         }
 
         foreach ($this->scripts as $src) {
-            echo "<script src='{$src}'></script>\n";
+            $output .= "<script src='{$src}'></script>\n";
         }
 
-        echo "</head>\n";
+        $output .= "</head>\n";
 
         extract($this->sections);
 
-        echo "<body id='pmBody'>\n";
+        $output .= "<body id='pmBody'>\n";
 
         if ($pmHeader) {
-            echo "<header id='pmHeader'>\n";
+            $output .= "<header id='pmHeader'>\n";
             foreach ($pmHeader as $sectionClass => $content) {
-                echo "<section class='$sectionClass'>$content</section>\n";
+                $output .= "<section class='$sectionClass'>$content</section>\n";
             }
-            echo "</header>\n";
+            $output .= "</header>\n";
         }
 
         if ($pmLeftNav) {
-            echo "<nav id='pmLeftNav'>\n";
+            $output .= "<nav id='pmLeftNav'>\n";
             foreach ($pmLeftNav as $sectionClass => $content) {
-                echo "<section class='$sectionClass'>$content</section>\n";
+                $output .= "<section class='$sectionClass'>$content</section>\n";
             }
-            echo "</nav>\n";
+            $output .= "</nav>\n";
         }
 
-        echo "<main id='pmMain'>\n";
+        $output .= "<main id='pmMain'>\n";
         foreach ($pmMain as $sectionClass => $content) {
-            echo "<section class='$sectionClass'>$content</section>\n";
+            $output .= "<section class='$sectionClass'>$content</section>\n";
         }
-        echo "</main>\n";
+        $output .= "</main>\n";
 
         if ($pmRightNav) {
-            echo "<nav id='pmRightNav'>\n";
+            $output .= "<nav id='pmRightNav'>\n";
             foreach ($pmRightNav as $sectionClass => $content) {
-                echo "<section class='$sectionClass'>$content</section>\n";
+                $output .= "<section class='$sectionClass'>$content</section>\n";
             }
-            echo "</nav>\n";
+            $output .= "</nav>\n";
         }
 
         if ($pmFooter) {
-            echo "<footer id='pmFooter'>\n";
+            $output .= "<footer id='pmFooter'>\n";
             foreach ($pmFooter as $sectionClass => $content) {
-                echo "<section class='$sectionClass'>$content</section>\n";
+                $output .= "<section class='$sectionClass'>$content</section>\n";
             }
-            echo "</footer>\n";
+            $output .= "</footer>\n";
         }
 
-        echo "</body>\n";
-        echo "</html>\n";
+        $output .= "</body>\n";
+        $output .= "</html>\n";
+        return $output;
     }
 }

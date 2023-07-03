@@ -10,12 +10,10 @@ class Widget
 {
     protected $data;
     protected $name;
-    protected $inlineScripts = [];
-    protected $inlineStyles = [];
     protected $scripts = [];
     protected $styles = [];
 
-    public function __construct(string $name, ?array $data)
+    public function __construct(string $name, array $data = null)
     {
         $this->name = $name;
         $this->data = $data;
@@ -31,17 +29,6 @@ class Widget
             $output .= "$key: " . var_export($value, true) . "<br>\n";
         }
         return $output;
-    }
-
-    /** @todo Support inlines in Page. How to select JS? */
-    public function addInlineScript(string $script): void
-    {
-        $this->inlineScripts[] = $script;
-    }
-
-    public function addInlineStyle(string $style): void
-    {
-        $this->inlineStyles[] = $style;
     }
 
     public function setScript(string $name, string $src): void

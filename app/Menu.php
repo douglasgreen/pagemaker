@@ -5,43 +5,62 @@ namespace PageMaker;
 /**
  * @class Menu
  *
- * @todo Make this a subclass of Widget.
- *
- * In this script, we have two classes: Menu and MenuItem. Menu is responsible for managing an array of menu items,
- * which can be either links or other Menu objects (for submenus). MenuItem represents a single item in the menu, which
- * may be a link or a submenu. Each MenuItem object has a submenu method which can be used to add a submenu to the
- * item, which returns the new Menu object for you to add items to. The build methods in both classes are responsible
- * for generating the HTML for the menu.
- *
- *
  * // Example usage
  * $menu = new Menu();
- * $menu->add('Home', '/');
- * $menu->add('About', '/about');
- * $servicesMenu = $menu->add('Services')->submenu();
- * $servicesMenu->add('Consulting', '/services/consulting');
- * $servicesMenu->add('Support', '/services/support');
+ * $menu->addLink('Home', '/');
+ * $menu->addLink('About', '/about');
+ * $servicesMenu = $menu->addSubmenu('Services');
+ * $servicesMenu->addLink('Consulting', '/services/consulting');
+ * $servicesMenu->addLink('Support', '/services/support');
  *
- * echo $menu->build();
+ * echo $menu->render();
  */
-class Menu
+class Menu extends Widget
 {
+    protected $name;
     protected $items = [];
 
-    public function add($description, $link = null)
+    /**
+     * Add raw HTML as a menu item.
+     */
+    public function addHtml(string $name, string $html): void
     {
-        $item = new MenuItem($description, $link);
-        array_push($this->items, $item);
-        return $item;
+        $this->items[$name] = $html;
     }
 
-    public function build($indentLevel = 0)
+    /**
+     * Add a link.
+     */
+    public function addLink(string $name, string $link): void
     {
-        $output = str_repeat(' ', $indentLevel * 4) . "<ul>\n";
-        foreach ($this->items as $item) {
-            $output .= $item->build($indentLevel + 1);
+        $this->items[$name] = "<a href='$link'>$name</a>";
+    }
+
+    /**
+     * Add a submenu.
+     */
+    public function addSubmenu(string $name): Menu
+    {
+        $submenu = new Menu($name);
+        $this->items[$name] = $submenu;
+        return $submenu;
+    }
+
+    public function render(): string
+    {
+        $output = '<ul>';
+        foreach ($this->items as $name => $item) {
+            $output .= "<li>";
+            if (is_string($item)) {
+                $output .= $item;
+            } else {
+                $output .= "<span>$name</span>";
+                $output .= $item->render();
+            }
+            $output .= "</li>";
         }
-        $output .= str_repeat(' ', $indentLevel * 4) . "</ul>\n";
+        $output .= '</ul>';
         return $output;
     }
 }
+
