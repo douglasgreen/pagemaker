@@ -2,10 +2,12 @@
 PHP microframework 
 
 ## Design goals
+* All code, no GUI builders.
 * All functions without $this are static.
 * All timed JS functions must be added to a queue.
 * Avoid internal and inline JS and CSS because hard to replace.
 * Class attributes all protected, functions all public or protected, static functions all public.
+* CMS where pages are stored in PHTML templates in version control.
 * Code is simple enough to read.
 * Dependency injection.
 * File location in hierarchy by generality (higher is more general).
@@ -17,12 +19,14 @@ PHP microframework
 * No writable static properties.
 * Organized JS and CSS by class or ID.
 * Prefab components.
+* Separate layout and color themes.
 * Support UUID, versioning, and uploads in database.
 * Type hints everywhere.
 * Ugly URLs for routing. Named parameters are better.
 * Work on CLI, JSON, or HTML.
 
 ## Key concepts
+* This is a micro-CMS more than a microframework, since you're given prebuilt page elements.
 * The page CSS, JS and HTML are all laid out in predefined IDs allowing a modular approach to page building.
 * Each page ID is a container that is modular and extensible, allowing adding more sections with their own IDs.
 * The router is simple, doesn't require server config, and maps directly to the class structure.
@@ -263,5 +267,9 @@ Write a logger like Monolog that logs exceptions to daily rotated file.
 https://www.loggly.com/ultimate-guide/php-logging-basics/
 * Does output support text, HTML, and JSON?
 * Add debug mode with detailed exceptions.
+* Add error logging to JS.
+* Remove jQuery as dependency.
 * How to bundle assets with widgets like images?
-* Support internal JS/CSS
+* Use transactions.
+* How to handle z-index problems?
+* How to handle JS queing conflicts?
