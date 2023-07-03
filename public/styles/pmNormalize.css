@@ -5,41 +5,7 @@
 	box-sizing: border-box;
 }
 
-/* Remove default margin */
-blockquote,
-body,
-dd,
-dl,
-figure,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-pre {
-	margin: 0;
-}
-
-/* Remove default padding */
-blockquote,
-body,
-dd,
-dl,
-figure,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-pre {
-	padding: 0;
-}
-
-/* Set base border style to none */
+/* Remove default border, margin, and padding */
 blockquote,
 body,
 dd,
@@ -54,6 +20,8 @@ h6,
 p,
 pre {
 	border: 0;
+	margin: 0;
+	padding: 0;
 }
 
 /* Remove browser default styles on form elements */
