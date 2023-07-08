@@ -1,56 +1,5 @@
-#pmMain button {
-    border-radius: 5px;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 14px;
-    text-align: center;
-    text-decoration: none;
-    transition: background .3s ease;
-}
-
 @media screen and (max-width: 599px) {
     #pmMain {
-        padding: 10px;
-        width: 100%;
-    }
-
-    #pmMain .pmFormWrapper {
-        max-width: 100%;
-        padding: 20px;
-        width: 100%;
-    }
-
-    #pmMain button {
-        padding: 10px 20px;
-    }
-
-    #pmMain form {
-        display: flex;
-        flex-direction: column;
-    }
-
-    #pmMain form input[type="text"],
-    #pmMain form input[type="email"],
-    #pmMain form input[type="password"],
-    #pmMain form textarea {
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 16px;
-        margin-bottom: 20px;
-        padding: 10px;
-        width: 100%;
-    }
-
-    #pmMain form label {
-        font-weight: 700;
-        margin-bottom: 5px;
-    }
-
-    #pmMain form select {
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 16px;
-        margin-bottom: 20px;
         padding: 10px;
         width: 100%;
     }
@@ -62,48 +11,6 @@
         padding: 10px;
         width: 60%;
     }
-
-    #pmMain .pmFormWrapper {
-        margin: 0 auto;
-        max-width: 500px;
-        padding: 20px;
-        width: 80%;
-    }
-
-    #pmMain button {
-        padding: 15px 30px;
-    }
-
-    #pmMain form {
-        display: flex;
-        flex-direction: column;
-    }
-
-    #pmMain form input[type="text"],
-    #pmMain form input[type="email"],
-    #pmMain form input[type="password"],
-    #pmMain form textarea {
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 18px;
-        margin-bottom: 20px;
-        padding: 10px;
-        width: 100%;
-    }
-
-    #pmMain form label {
-        font-weight: 700;
-        margin-bottom: 5px;
-    }
-
-    #pmMain form select {
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 18px;
-        margin-bottom: 20px;
-        padding: 10px;
-        width: 100%;
-    }
 }
 
 @media screen and (min-width: 1201px) {
@@ -111,47 +18,5 @@
         float: left;
         padding: 20px;
         width: 70%;
-    }
-
-    #pmMain .pmFormWrapper {
-        margin: 0 auto;
-        max-width: 800px;
-        padding: 30px;
-        width: 60%;
-    }
-
-    #pmMain button {
-        padding: 20px 40px;
-    }
-
-    #pmMain form {
-        display: flex;
-        flex-direction: column;
-    }
-
-    #pmMain form input[type="text"],
-    #pmMain form input[type="email"],
-    #pmMain form input[type="password"],
-    #pmMain form textarea {
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 20px;
-        margin-bottom: 20px;
-        padding: 15px;
-        width: 100%;
-    }
-
-    #pmMain form label {
-        font-weight: 700;
-        margin-bottom: 5px;
-    }
-
-    #pmMain form select {
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 20px;
-        margin-bottom: 20px;
-        padding: 15px;
-        width: 100%;
     }
 }

@@ -1,6 +1,3 @@
-/* Default styling for list and links */
-/* @todo Move colors to themes */
-
 @media (max-width: 599px) {
     #pmLeftNav section {
         margin-bottom: 5px;

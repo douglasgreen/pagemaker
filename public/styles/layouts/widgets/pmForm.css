@@ -1,0 +1,146 @@
+.pmForm button {
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    transition: background .3s ease;
+}
+
+@media screen and (max-width: 599px) {
+    .pmForm {
+        max-width: 100%;
+        padding: 20px;
+        width: 100%;
+    }
+
+    .pmForm button {
+        padding: 10px 20px;
+    }
+
+    .pmForm form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .pmForm form input[type="text"],
+    .pmForm form input[type="email"],
+    .pmForm form input[type="password"],
+    .pmForm form textarea {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        margin-bottom: 20px;
+        padding: 10px;
+        width: 100%;
+    }
+
+    .pmForm form label {
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .pmForm form select {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        margin-bottom: 20px;
+        padding: 10px;
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width: 1200px) {
+    .pmForm {
+        float: left;
+        margin: 0 auto;
+        max-width: 500px;
+        padding: 10px;
+        padding: 20px;
+        width: 60%;
+        width: 80%;
+    }
+
+    .pmForm button {
+        padding: 15px 30px;
+    }
+
+    .pmForm form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .pmForm form input[type="text"],
+    .pmForm form input[type="email"],
+    .pmForm form input[type="password"],
+    .pmForm form textarea {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 18px;
+        margin-bottom: 20px;
+        padding: 10px;
+        width: 100%;
+    }
+
+    .pmForm form label {
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .pmForm form select {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 18px;
+        margin-bottom: 20px;
+        padding: 10px;
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 1201px) {
+    .pmForm {
+        float: left;
+        margin: 0 auto;
+        max-width: 800px;
+        padding: 20px;
+        padding: 30px;
+        width: 70%;
+        width: 60%;
+    }
+
+    .pmForm button {
+        padding: 20px 40px;
+    }
+
+    .pmForm form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .pmForm form input[type="text"],
+    .pmForm form input[type="email"],
+    .pmForm form input[type="password"],
+    .pmForm form textarea {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 20px;
+        margin-bottom: 20px;
+        padding: 15px;
+        width: 100%;
+    }
+
+    .pmForm form label {
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .pmForm form select {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 20px;
+        margin-bottom: 20px;
+        padding: 15px;
+        width: 100%;
+    }
+}
