@@ -7,7 +7,7 @@ An HTML page consists of:
 * An open-ended set of body tags, that can be separated into independent widgets, like menu or side nav. These should represent independent units of CSS and JS that don't add style or events to anything else on the page.
 * Third-party components like HTML/CSS exported from Figma or JS templates used by Vue.
 
-A page builder should represent these basic facts. It should allow the widgets to be billed as separate components and catch their errors to make the page more robust. The basic plan is:
+A page builder should represent these basic facts. It should allow the widgets to be built as separate components and catch their errors to make the page more robust. The basic plan is:
 * Use IDs for the top-level semantic tags like pmHeader and pmFooter, and represent the layout with one stylesheet and the theme with another stylesheet so they can be freely separated.
 * Build each top level in terms of sections with class names, and separate their layouts and styles into files with the class name.
 * Organize the third-party components according to their own rules. Having a well-defined system for the rest of the CSS and JS ensures that these other components will not be interfered with. It also allows the development of portable components that can be copied from project to project as long as they use the same page builder.
