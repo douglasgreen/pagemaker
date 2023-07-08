@@ -1,0 +1,32 @@
+/* Default styling for list and links */
+/* @todo Move colors to themes */
+
+@media (max-width: 599px) {
+    #pmLeftNav section {
+        margin-bottom: 5px;
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width: 1200px) {
+    #pmLeftNav section {
+        margin-bottom: 10px;
+    }
+
+    #pmLeftNav {
+        display: block;
+        float: left;
+        width: 20%;
+    }
+}
+
+@media screen and (min-width: 1201px) {
+    #pmLeftNav section {
+        margin-bottom: 20px;
+    }
+
+    #pmLeftNav {
+        display: block;
+        float: left;
+        width: 15%;
+    }
+}

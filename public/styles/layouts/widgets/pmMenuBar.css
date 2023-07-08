@@ -1,0 +1,66 @@
+.pmMenuBar {
+    width: 100%;
+}
+
+.pmMenuBar li {
+    position: relative;
+}
+
+.pmMenuBar li a,
+.pmMenuBar li span {
+    background-color: #ddd;
+    border: 1px solid #ccc;
+    color: #000;
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+}
+
+.pmMenuBar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Layout for the top level menu */
+.pmMenuBar ul li {
+    float: left;
+    width: 100px;
+}
+
+/* Reset float for child menus */
+.pmMenuBar ul li ul {
+    float: none;
+}
+
+/* Hide the child menus */
+.pmMenuBar ul li ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+}
+
+/* Show child menus on hover */
+.pmMenuBar ul li:hover > ul {
+    display: block;
+}
+
+/* Style for nested ul */
+.pmMenuBar ul ul ul {
+    left: 100%;
+    top: 0;
+}
+
+/* Show nested ul on hover */
+.pmMenuBar ul ul li:hover > ul {
+    display: block;
+}
+
+@media (max-width: 599px) {
+}
+
+@media screen and (min-width: 600px) and (max-width: 1200px) {
+}
+
+@media screen and (min-width: 1201px) {
+}
