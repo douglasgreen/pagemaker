@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker;
+namespace PageMaker\Widgets;
 
 /**
  * A widget extends this class. It adds scripts, add styles, and output.

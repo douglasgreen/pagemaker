@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker;
+namespace PageMaker\Widgets;
 
 /**
  * @class Footer navigation links

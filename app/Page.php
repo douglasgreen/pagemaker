@@ -3,6 +3,7 @@
 namespace PageMaker;
 
 use Exception;
+use PageMaker\Widgets\Widget;
 
 /*
  * @class Page builder
