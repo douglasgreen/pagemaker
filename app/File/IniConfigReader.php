@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker;
+namespace PageMaker\File;
 
 /**
  * @class A simple PHP class that reads INI files with section support.

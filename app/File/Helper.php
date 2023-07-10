@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker;
+namespace PageMaker\File;
 
 use Exception;
 
@@ -23,7 +23,7 @@ use Exception;
  * and sanitize all inputs to these functions, and ensure that they can only be used to manipulate files in a way that
  * is safe and conforms to your application's requirements.
  */
-class FileHelper
+class Helper
 {
     public static function findProjectRoot(): string
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker;
+namespace PageMaker\Database;
 
 /**
  * @class Database handler
@@ -18,7 +18,7 @@ namespace PageMaker;
  * Please note that this is a basic example and doesn't cover many things you'll probably need in a real-world
  * application, such as connection pooling, query logging, error handling, prepared statements, etc.
  */
-class Database
+class Connection
 {
     protected $connection;
 

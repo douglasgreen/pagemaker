@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker;
+namespace PageMaker\File;
 
 /**
  * @class File uploader.
@@ -11,7 +11,7 @@ namespace PageMaker;
  * uploaded files.
  */
 
-class FileUploader
+class Uploader
 {
     protected $destinationDir;
 
