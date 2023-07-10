@@ -5,9 +5,11 @@ namespace PageMaker;
 /**
  * A widget extends this class. It adds scripts, add styles, and output.
  * The purpose of widget architecture is separation of features and error checking
+ * @todo Add section builder to add divs to section?
  */
 class Widget
 {
+    protected $content = '';
     protected $data;
     protected $name;
     protected $scripts = [];
@@ -54,5 +56,13 @@ class Widget
     public function getStyles()
     {
         return $this->styles;
+    }
+
+    /**
+     * You can add content directly to $content but should call this function instead.
+     */
+    protected function addDiv(string $divContent): void
+    {
+        $this->content .= "<div>$divContent</div>\n";
     }
 }

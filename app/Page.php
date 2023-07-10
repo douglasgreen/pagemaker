@@ -5,7 +5,7 @@ namespace PageMaker;
 use Exception;
 
 /*
- * @todo Add Section builder using width/div/flex for each section.
+ * @class Page builder
  */
 class Page
 {
@@ -65,7 +65,10 @@ class Page
      */
     public function addSection(string $partId, string $sectionClass, string $content): void
     {
-        $this->sections[$partId][$sectionClass] = $content;
+        $content = trim($content);
+        if ($content) {
+            $this->sections[$partId][$sectionClass][] = $content;
+        }
     }
 
     /**
@@ -165,47 +168,29 @@ class Page
         extract($this->sections);
 
         $output .= "<body id='pmBody'>\n";
-
-        if ($pmHeader) {
-            $output .= "<header id='pmHeader'>\n";
-            foreach ($pmHeader as $sectionClass => $content) {
-                $output .= "<section class='$sectionClass'>$content</section>\n";
-            }
-            $output .= "</header>\n";
-        }
-
-        if ($pmLeftNav) {
-            $output .= "<nav id='pmLeftNav'>\n";
-            foreach ($pmLeftNav as $sectionClass => $content) {
-                $output .= "<section class='$sectionClass'>$content</section>\n";
-            }
-            $output .= "</nav>\n";
-        }
-
-        $output .= "<main id='pmMain'>\n";
-        foreach ($pmMain as $sectionClass => $content) {
-            $output .= "<section class='$sectionClass'>$content</section>\n";
-        }
-        $output .= "</main>\n";
-
-        if ($pmRightNav) {
-            $output .= "<nav id='pmRightNav'>\n";
-            foreach ($pmRightNav as $sectionClass => $content) {
-                $output .= "<section class='$sectionClass'>$content</section>\n";
-            }
-            $output .= "</nav>\n";
-        }
-
-        if ($pmFooter) {
-            $output .= "<footer id='pmFooter'>\n";
-            foreach ($pmFooter as $sectionClass => $content) {
-                $output .= "<section class='$sectionClass'>$content</section>\n";
-            }
-            $output .= "</footer>\n";
-        }
-
+        $output .= $this->renderSections('header', 'pmHeader');
+        $output .= $this->renderSections('nav', 'pmLeftNav');
+        $output .= $this->renderSections('main', 'pmMain');
+        $output .= $this->renderSections('nav', 'pmRightNav');
+        $output .= $this->renderSections('footer', 'pmFooter');
         $output .= "</body>\n";
         $output .= "</html>\n";
+
+        return $output;
+    }
+
+    protected function renderSections(string $tag, string $partId): string
+    {
+        if (!$this->sections[$partId]) {
+            return '';
+        }
+        $output = "<$tag id='$partId'>\n";
+        foreach ($this->sections[$partId] as $sectionClass => $contents) {
+            foreach ($contents as $content) {
+                $output .= "<section class='$sectionClass'>$content</section>\n";
+            }
+        }
+        $output .= "</header>\n";
         return $output;
     }
 }
