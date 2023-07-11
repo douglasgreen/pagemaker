@@ -170,18 +170,18 @@ class Page
         $output .= "</head>\n";
 
         $output .= "<body id='pmBody'>\n";
-        $output .= $this->renderSections('header', 'pmHeader');
-        $output .= $this->renderSections('nav', 'pmLeftNav');
-        $output .= $this->renderSections('main', 'pmMain');
-        $output .= $this->renderSections('nav', 'pmRightNav');
-        $output .= $this->renderSections('footer', 'pmFooter');
+        $output .= $this->renderSection('header', 'pmHeader');
+        $output .= $this->renderSection('nav', 'pmLeftNav');
+        $output .= $this->renderSection('main', 'pmMain');
+        $output .= $this->renderSection('nav', 'pmRightNav');
+        $output .= $this->renderSection('footer', 'pmFooter');
         $output .= "</body>\n";
         $output .= "</html>\n";
 
         return $output;
     }
 
-    protected function renderSections(string $tag, string $partId): string
+    protected function renderSection(string $tag, string $partId): string
     {
         if (!$this->sections[$partId]) {
             return '';
