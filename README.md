@@ -282,3 +282,8 @@ https://www.loggly.com/ultimate-guide/php-logging-basics/
 * How to handle z-index problems?
 * How to handle JS queing conflicts?
 * Add back link outline on focus and underline on hover.
+
+## References
+* https://www.elinext.com/blog/modular-web-design/
+* https://www.designrush.com/agency/website-design-development/trends/modular-web-design
+* https://www.wearediagram.com/blog/modular-web-design-designing-with-components
