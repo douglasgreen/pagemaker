@@ -30,7 +30,7 @@ PHP microframework
 * The page CSS, JS and HTML are all laid out in predefined IDs allowing a modular approach to page building.
 * Each page ID is a container that is modular and extensible, allowing adding more sections with their own IDs.
 * The router is simple, doesn't require server config, and maps directly to the class structure.
-* The plugins provide for extensible units combining PHP, HTML, JS, and CSS where errors are isolated to each plugin.
+* The plugins provide for extensible units combining PHP, HTML, JS, and CSS, and a templater like Twig or PHPTAL where errors are isolated to each plugin.
 * The system is vaguely analogous to the WordPress system of plugins and page building but in simplified new code.
 
 ## Philosophy
@@ -52,32 +52,32 @@ architecture. So why bother to install them?
 The body is a series of rows.
 
 ```
-<body id="body">
-    <header id="header">
-        <div class="headerSection" id="banner">
+<body id="pmBody">
+    <header id="pmHeader">
+        <section class="headerSection" id="banner">
             <div id="logo"></div>
             <div id="searchBar"></div>
             <div id="iconBar"></div>
-        </div>
-        <nav class="headerSection" id="menuBar"></nav>
-        <nav class="headerSection" id="errorBar"><!-- This section available to print errors in red. --></nav>
+        </section>
+        <section class="headerSection" id="menuBar"></section>
+        <section class="headerSection" id="errorBar"><!-- This section available to print errors in red. --></section>
     </header>
-    <nav id="leftNav">
+    <nav id="pmLeftNav">
         <section class="leftNavSection"></section>
         <section class="leftNavSection"></section>
         ...
     </nav>
-    <main id="main">
+    <main id="pmMain">
         <section class="mainSection"></section>
         <section class="mainSection"></section>
         ...
     </main>
-    <nav id="rightNav">
+    <nav id="pmRightNav">
         <section class="rightNavSection"></section>
         <section class="rightNavSection"></section>
         ...
     </nav>
-    <footer id="footer">
+    <footer id="pmFooter">
         <section class="footerSection"></section>
         <section class="footerSection"></section>
         ...
@@ -85,7 +85,15 @@ The body is a series of rows.
 </body>
 ```
 
-## Components
+## Layered and modular design
+The page has a layered design:
+* The top level is the header/nav/main/footer tags identified by IDs and styled in a grid.
+* The medium level is a set of sections, identified by classes, which are built as widgets including a separate unit JS/CSS/HTML.
+* The bottom level is whatever is in a widget, such as div or p contents.
+
+The page also has a modular design, because each widget and its errors are self-contained.
+
+## Widget
 Each component has a builder class to make a generic version.
 
 ## CSS
