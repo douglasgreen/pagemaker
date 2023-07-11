@@ -1,10 +1,33 @@
+#pmBody {
+    display: grid;
+    gap: 5px;
+    grid-template-columns: 200px 1fr 200px;
+}
+
 #pmFooter {
     clear: both;
-    width: 100%;
+    grid-column: 1/4;
+    grid-row: 3/4;
 }
 
 #pmHeader {
-    width: 100%;
+    grid-column: 1/4;
+    grid-row: 1/2;
+}
+
+#pmLeftNav {
+    grid-column: 1/2;
+    grid-row: 2/3;
+}
+
+#pmMain {
+    grid-column: 2/3;
+    grid-row: 2/3;
+}
+
+#pmRightNav {
+    grid-column: 3/4;
+    grid-row: 2/3;
 }
 
 @media (max-width: 599px) {
@@ -14,11 +37,6 @@
 
     #pmMain {
         padding: 10px;
-        width: 100%;
-    }
-
-    #pmRightNav {
-        display: none;
     }
 
     #pmRightNav section {
@@ -27,26 +45,12 @@
 }
 
 @media screen and (min-width: 600px) and (max-width: 1200px) {
-    #pmLeftNav {
-        display: block;
-        float: left;
-        width: 20%;
-    }
-
     #pmLeftNav section {
         margin-bottom: 10px;
     }
 
     #pmMain {
-        float: left;
         padding: 10px;
-        width: 60%;
-    }
-
-    #pmRightNav {
-        display: block;
-        float: left;
-        width: 20%;
     }
 
     #pmRightNav section {
@@ -55,26 +59,12 @@
 }
 
 @media screen and (min-width: 1201px) {
-    #pmLeftNav {
-        display: block;
-        float: left;
-        width: 15%;
-    }
-
     #pmLeftNav section {
         margin-bottom: 20px;
     }
 
     #pmMain {
-        float: left;
         padding: 20px;
-        width: 70%;
-    }
-
-    #pmRightNav {
-        display: block;
-        float: left;
-        width: 15%;
     }
 
     #pmRightNav section {

@@ -68,6 +68,9 @@ class Page
     {
         $content = trim($content);
         if ($content) {
+            if (!isset($this->sections[$partId])) {
+                throw new Exception('Bad part');
+            }
             $this->sections[$partId][$sectionClass][] = $content;
         }
     }
@@ -166,8 +169,6 @@ class Page
 
         $output .= "</head>\n";
 
-        extract($this->sections);
-
         $output .= "<body id='pmBody'>\n";
         $output .= $this->renderSections('header', 'pmHeader');
         $output .= $this->renderSections('nav', 'pmLeftNav');
@@ -191,7 +192,7 @@ class Page
                 $output .= "<section class='$sectionClass'>$content</section>\n";
             }
         }
-        $output .= "</header>\n";
+        $output .= "</$tag>\n";
         return $output;
     }
 }
