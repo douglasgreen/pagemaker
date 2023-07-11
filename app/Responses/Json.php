@@ -8,11 +8,12 @@ class Json extends Response
     protected $statusCode;
     protected $headers = ['Content-Type' => 'application/json'];
 
+    // @todo Use https://datatracker.ietf.org/doc/html/rfc7807#section-3.1 format and allow more error codes.
     public static function sendError(string $message): void
     {
         http_response_code(400);
         $data = [];
-        $data['status'] = 'error';
+        $data['status'] = 400;
         $data['message'] = $message;
         echo json_encode($data);
     }
