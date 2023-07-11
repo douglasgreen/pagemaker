@@ -2,7 +2,7 @@
 
 namespace PageMaker\Responses;
 
-class HtmlResponse extends Response
+class Html extends Response
 {
     protected $content;
     protected $statusCode;

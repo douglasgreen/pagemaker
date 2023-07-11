@@ -5,7 +5,7 @@ namespace PageMaker\Responses;
 /**
  * Use this class for CLI response.
  */
-class CliResponse extends Response
+class Cli extends Response
 {
     protected $content;
 

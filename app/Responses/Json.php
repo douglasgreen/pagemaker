@@ -2,7 +2,7 @@
 
 namespace PageMaker\Responses;
 
-class JsonResponse extends Response
+class Json extends Response
 {
     protected $data;
     protected $statusCode;
