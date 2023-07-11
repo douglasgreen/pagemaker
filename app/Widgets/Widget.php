@@ -9,7 +9,6 @@ namespace PageMaker\Widgets;
  */
 class Widget
 {
-    protected $content = '';
     protected $data;
     protected $name;
     protected $scripts = [];
@@ -45,7 +44,7 @@ class Widget
 
     public function getName()
     {
-        return $this->content;
+        return $this->name;
     }
 
     public function getScripts()
@@ -56,13 +55,5 @@ class Widget
     public function getStyles()
     {
         return $this->styles;
-    }
-
-    /**
-     * You can add content directly to $content but should call this function instead.
-     */
-    protected function addDiv(string $divContent): void
-    {
-        $this->content .= "<div>$divContent</div>\n";
     }
 }
