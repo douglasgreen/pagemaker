@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="gleim/php">
+<ruleset name="pagemaker/php">
     <arg name="warning-severity" value="8" />
     <arg name="extensions" value="php" />
 
