@@ -38,7 +38,6 @@ class Page
     /** @var array Top-level containers (parts) that hold sections */
     protected $sections = [
         'pmHeader' => [],
-        'pmNav' => [],
         'pmMain' => [],
         'pmFooter' => [],
     ];
@@ -162,7 +161,6 @@ class Page
 
         $output .= "<body id='pmBody'>\n";
         $output .= $this->renderSection('header', 'pmHeader');
-        $output .= $this->renderSection('nav', 'pmNav');
         $output .= $this->renderSection('main', 'pmMain');
         $output .= $this->renderSection('footer', 'pmFooter');
         $output .= "</body>\n";
