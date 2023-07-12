@@ -14,32 +14,34 @@ class Widget
     protected $scripts = [];
     protected $styles = [];
 
+    /** @var string Semantic version of this class and its CSS/JS files */
+    protected $version = "0.1.0";
+
     public function __construct(string $name, array $data = null)
     {
         $this->name = $name;
         $this->data = $data;
     }
 
-    /**
-     * Subclass and override this function for custom widgets.
-     */
-    public function render(): string
-    {
-        $output = "Debug Mode<br>\n";
-        foreach ($this->data as $key => $value) {
-            $output .= "$key: " . var_export($value, true) . "<br>\n";
-        }
-        return $output;
-    }
-
     public function setScript(string $name, string $src): void
     {
+        if (strpos($src, '?') === false) {
+            $src .= '?version=' . $this->version;
+        }
         $this->scripts[$name] = $src;
     }
 
     public function setStyle(string $name, string $href): void
     {
+        if (strpos($href, '?') === false) {
+            $href .= '?version=' . $this->version;
+        }
         $this->styles[$name] = $href;
+    }
+
+    public function setVersion(string $version): void
+    {
+        $this->version = $version;
     }
 
     public function getName()
@@ -55,5 +57,17 @@ class Widget
     public function getStyles()
     {
         return $this->styles;
+    }
+
+    /**
+     * Subclass and override this function for custom widgets.
+     */
+    public function render(): string
+    {
+        $output = "Debug Mode<br>\n";
+        foreach ($this->data as $key => $value) {
+            $output .= "$key: " . var_export($value, true) . "<br>\n";
+        }
+        return $output;
     }
 }

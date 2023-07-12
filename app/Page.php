@@ -53,6 +53,9 @@ class Page
     /** @var string $title */
     protected $title;
 
+    /** @var string Semantic version of this class and its CSS/JS files */
+    protected $version = "0.1.0";
+
     /**
      * Set the page title.
      */
@@ -124,17 +127,28 @@ class Page
 
     public function setScript(string $name, string $src): void
     {
+        if (strpos($src, '?') === false) {
+            $src .= '?version=' . $this->version;
+        }
         $this->scripts[$name] = $src;
     }
 
     public function setStyle(string $name, string $href): void
     {
+        if (strpos($href, '?') === false) {
+            $href .= '?version=' . $this->version;
+        }
         $this->styles[$name] = $href;
     }
 
     public function setTitle(string $title): void
     {
         $this->title = $title;
+    }
+
+    public function setVersion(string $version): void
+    {
+        $this->version = $version;
     }
 
     public function render(): string
