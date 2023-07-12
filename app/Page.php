@@ -35,8 +35,8 @@ class Page
         ]
     ];
 
-    /** @var array Top-level containers */
-    protected $containers = [
+    /** @var array Top-level containers (parts) that hold sections */
+    protected $sections = [
         'pmHeader' => [],
         'pmNav' => [],
         'pmMain' => [],
@@ -64,14 +64,14 @@ class Page
     }
 
     /**
-     * Sections are organized by top-level container ID and section class.
+     * Add a section to the top-level part.
      */
-    public function addContainer(string $partId, Container $container): void
+    public function addSection(string $partId, Section $section): void
     {
-        if (!isset($this->containers[$partId])) {
-            throw new Exception('Bad top-level container');
+        if (!isset($this->sections[$partId])) {
+            throw new Exception('Bad top-level part');
         }
-        $this->containers[$partId][] = $container;
+        $this->sections[$partId][] = $section;
     }
 
     public function setCharset(string $charset): void
@@ -173,26 +173,26 @@ class Page
 
     protected function renderSection(string $tag, string $partId): string
     {
-        if (!$this->containers[$partId]) {
+        if (!$this->sections[$partId]) {
             throw new Exception('Bad part ID');
         }
         $output = "<$tag id='$partId'>\n";
-        foreach ($this->containers[$partId] as $container) {
-            $containerTag = $container->getTag();
-            $containerClass = $container->getClass();
-            $widgets = $container->getWidgets();
-            $output .= "<$containerTag class='$containerClass'>\n";
+        foreach ($this->sections[$partId] as $section) {
+            $sectionTag = $section->getTag();
+            $sectionClass = $section->getClass();
+            $widgets = $section->getWidgets();
+            $output .= "<$sectionTag class='$sectionClass'>\n";
             foreach ($widgets as $widget) {
-                $output .= $this->addWidget($partId, $containerClass, $widget);
+                $output .= $this->addWidget($partId, $sectionClass, $widget);
             }
-            $output .= "</$containerTag>\n";
+            $output .= "</$sectionTag>\n";
         }
         $output .= "</$tag>\n";
         return $output;
     }
 
     /**
-     * Widgets are like containers but self-contained with JS and CSS.
+     * Render a widget and add its JS/CSS to the page.
      */
     protected function renderWidget(string $partId, string $sectionClass, Widget $widget): string
     {

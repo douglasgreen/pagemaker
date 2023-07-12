@@ -4,7 +4,7 @@ namespace PageMaker;
 
 use Exception;
 
-class Container
+class Section
 {
     protected static $validTags = [
         'article',
