@@ -92,6 +92,29 @@ Only three queries:
 * Pass a parameter `route=name_action` like `route=customer_view`.
 * A class in that namespace will call the method CustomerController::getView() or CustomerController::postView().
 
+## REST APIs
+REST APIs are widely abused as a design feature. They are a unit of network architecture, not a unit of code architecture.
+
+In the old days, we used to make PHP monoliths that were unstructured. Then we replaced them with REST APIs. What we should have replaced them with his namespaces and autoloading, which are the proper code structural tools that PHP started to supply with its newer versions.
+
+The benefits of REST APIs are:
+* They can be called by different programming languages.
+* They can be used for interactive page features without reloading the page.
+* They can split your services between more than one server if your server is maxed out.
+
+The drawbacks of REST APIs are:
+* They are much slower than direct database access.
+* They require extra code layers to produce the API and consume it.
+* They introduce network delays and reliability problems.
+* Your databases are needlessly fragmented between different servers and APIs.
+
+The drawbacks are substantial, so you should consider not using a REST API if:
+* You are just using one server-side programming language, like PHP.
+* You are just trying to give your application a modular structure, which you can do with namespaces and autoloading.
+* You just need versioning, which you can accomplish with Composer versioning or content versioning.
+* You are just doing a database lookup of some associated value, which can be accomplished directly with SQL joins.
+* It is your database that is maxed out, which you can fix by using multiple database hosts, not multiple service hosts.
+
 ## Assets
 * JavaScript and CSS assets are laid out by page element.
 * Element layouts go into the layout directory.
