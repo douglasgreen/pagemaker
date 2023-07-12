@@ -3,8 +3,11 @@
 require 'vendor/autoload.php';
 
 use PageMaker\Page;
+use PageMaker\Request;
 use PageMaker\Widgets\Menu;
 use PageMaker\Widgets\FooterNav;
+
+$request = new Request();
 
 $page = new Page('Testing');
 $page->setStyle('pmNormalize', 'public/styles/pmNormalize.css');

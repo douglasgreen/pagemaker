@@ -23,27 +23,32 @@ $footerNav->addLink(3, 'Blog', '/blog');
 
 $page->addWidget('pmFooter', 'footerNav', $footerNav);
 */
-class FooterNav extends Widget {
+class FooterNav extends Widget
+{
     protected $columns = [];
 
-    public function addHtml(string $column, string $html): void {
+    public function addHtml(string $column, string $html): void
+    {
         $this->columns[$column][] = $html;
     }
 
-    public function addLink(string $column, string $text, string $url): void {
+    public function addLink(string $column, string $text, string $url): void
+    {
         $link = "<a href='$url'>$text</a>";
         $this->columns[$column][] = $link;
     }
 
-    public function addHeading(string $column, string $label): void {
+    public function addHeading(string $column, string $label): void
+    {
         $heading = "<h4>$label</h4>";
         $this->columns[$column][] = $heading;
     }
 
-    public function render(): string {
+    public function render(): string
+    {
         ksort($this->columns);
-      
-        $html = ''; 
+
+        $html = '';
         foreach ($this->columns as $column) {
             $html .= "<div class='footer-column'>\n" . implode("<br>\n", $column) . "</div>\n";
         }

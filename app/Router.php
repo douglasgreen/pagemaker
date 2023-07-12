@@ -8,7 +8,7 @@ use Exception;
  * @class Router
  *
  * This router assumes that you have a corresponding controller for each page. For instance, if you route to
- * page=users&action=show, it expects to have a UsersController class with a getShow or postShow method, depending on
+ * page=user&action=show, it expects to have a UserController class with a getShow or postShow method, depending on
  * the HTTP method.
  *
  * Remember to autoload your classes, so they're available when you need them, or use a PSR-4 autoloader such as the
@@ -17,23 +17,28 @@ use Exception;
  */
 class Router
 {
-    protected $page;
     protected $action;
+    protected $namespace;
+    protected $page;
+    protected $registry;
     protected $request;
-    protected $allowedHttpMethods = ['get', 'post'];
 
-    public function __construct(Request $request, string $namespace = null)
+    public function __construct(Request $request)
     {
         $this->request = $request;
         $this->page = $request->page ?? 'home';
         $this->action = $request->action ?? 'view';
-        $this->method = $request->method ?? 'get';
+        $this->method = $request->server('REQUEST_METHOD') ?? 'get';
+    }
 
-        if (!in_array($this->method, $this->allowedHttpMethods)) {
-            throw new Exception('Unexpected HTTP method');
-        }
-
+    public function setNamespace(string $namespace): void
+    {
         $this->namespace = $namespace;
+    }
+
+    public function setRegistry(Registry $registry): void
+    {
+        $this->registry = $registry;
     }
 
     public function route(): Response
@@ -43,7 +48,6 @@ class Router
         if ($this->namespace) {
             $className = $this->namespace . '\\' . $className;
         }
-        $methodName = strtolower($this->method) . ucfirst(strtolower($this->action));
 
         // Check if the class exists
         if (!class_exists($className)) {
@@ -52,13 +56,19 @@ class Router
 
         $object = new $className();
 
+        $object->setRequest($this->request);
+        if ($this->registry) {
+            $object->setRegistry($this->registry);
+        }
+
         // Check if the method exists
+        $methodName = strtolower($this->method) . ucfirst(strtolower($this->action));
         if (!method_exists($object, $methodName)) {
             throw new Exception("Method '$methodName' not found in class '$className'");
         }
 
         // Call the method
-        $response = $object->$methodName($this->request);
+        $response = $object->$methodName();
 
         return $response;
     }

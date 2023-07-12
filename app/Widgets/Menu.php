@@ -63,4 +63,3 @@ class Menu extends Widget
         return $output;
     }
 }
-
