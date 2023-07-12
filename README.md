@@ -11,7 +11,7 @@ Web apps are built out of web pages. A web page should be built with a logical d
 ### Top-level containers
 The top level of the page is a set of typical containers built by the Page class.
 * &lt;header&gt; tag, which might contain logo, search bar, icon links, and menu
-* left &lt;nav&gt; and &lt;right&gt; nav tags
+* left and right &lt;nav&gt; nav tags
 * &lt;main&gt; tag, which is the main content of the page
 * &lt;footer&gt; tag, which probably contains some columns with links and a copyright
 
