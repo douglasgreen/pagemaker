@@ -6,7 +6,7 @@ Web apps are built out of web pages. A web page should be built with a logical d
 * Layered design, into top-level page containers, medium-level widgets, and small level features of widgets.
 * Modular design, where the app is split into widgets each with their own CSS, JS, and HTML templates in their own namespace.
 * Plug-in architecture, where the widgets are executed independently so that their errors can be caught.
-* Clear file organization, where each widget is its own set of JS, CSS, and HTML template files.
+* Clear file organization, where each widget is its own set of CSS, JS, and HTML template files.
 
 ## Page design
 ### Top-level containers and sections
@@ -54,7 +54,7 @@ Typical web design is:
 * Not layered, so there is no clean separation of different webpage features at different scales.
 * Not modular, so JS and CSS are all mixed together, making individual features hard to separate for replacement or redesign.
 * Not robust, because errors and individual page components are typically not caught or rendered as a whole page error.
-* Not clearly organized, because there are no guidelines about what files to put JS, CSS, and HTML code into.
+* Not clearly organized, because there are no guidelines about what files to put CSS, JS, and HTML code into.
 
 The absence of clear design leads to a disorganized mess of code that is hard to maintain and enhance.
 
