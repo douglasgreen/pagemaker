@@ -11,7 +11,7 @@ Web apps are built out of web pages. A web page should be built with a logical d
 ### Top-level containers
 The top level of the page is a set of typical containers built by the Page class.
 * &lt;header&gt; tag, which might contain logo, search bar, icon links, and menu
-* left and right &lt;nav&gt; nav tags
+* left and right &lt;nav&gt; sidebar tags
 * &lt;main&gt; tag, which is the main content of the page
 * &lt;footer&gt; tag, which probably contains some columns with links and a copyright
 
@@ -23,6 +23,8 @@ The containers are identified with IDs:
 * &lt;footer id="pmFooter"&gt;
 
 These are laid out with a grid and other CSS styles in a file that should be called pmPage.css.
+
+The use of standard IDs is a signal that the project's organization scheme is being used. CSS and JS should explicitly target the ID rather than the generic tag to avoid styling elements when not requested. So a well-designed pmPage.css file should consist only of top-level styles that target these container IDs.
 
 ### Medium-level widgets
 The medium level of the page consists of a series of widgets. The widgets extend the Widget class and are render as &lt;section class="myWidget"&gt; tags where myWidget is the name of the widget.
