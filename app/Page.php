@@ -35,12 +35,11 @@ class Page
         ]
     ];
 
-    /** @var array IDs of top-level containers */
-    protected $sections = [
+    /** @var array Top-level containers */
+    protected $containers = [
         'pmHeader' => [],
-        'pmLeftNav' => [],
+        'pmNav' => [],
         'pmMain' => [],
-        'pmRightNav' => [],
         'pmFooter' => [],
     ];
 
@@ -67,34 +66,12 @@ class Page
     /**
      * Sections are organized by top-level container ID and section class.
      */
-    public function addSection(string $partId, string $sectionClass, string $content): void
+    public function addContainer(string $partId, Container $container): void
     {
-        $content = trim($content);
-        if ($content) {
-            if (!isset($this->sections[$partId])) {
-                throw new Exception('Bad part');
-            }
-            $this->sections[$partId][$sectionClass][] = $content;
+        if (!isset($this->containers[$partId])) {
+            throw new Exception('Bad top-level container');
         }
-    }
-
-    /**
-     * Widgets are like sections but self-contained with JS and CSS.
-     */
-    public function addWidget(string $partId, string $sectionClass, Widget $widget): void
-    {
-        foreach ($widget->getScripts() as $name => $script) {
-            $this->setScript($name, $script);
-        }
-        foreach ($widget->getStyles() as $name => $style) {
-            $this->setStyle($name, $style);
-        }
-        try {
-            $content = $widget->render();
-        } catch (Throwable $e) {
-            $content = '<p style="color: red">Error rendering ' . $widget->getName() . '</p>';
-        }
-        $this->addSection($partId, $sectionClass, $content);
+        $this->containers[$partId][] = $container;
     }
 
     public function setCharset(string $charset): void
@@ -185,9 +162,8 @@ class Page
 
         $output .= "<body id='pmBody'>\n";
         $output .= $this->renderSection('header', 'pmHeader');
-        $output .= $this->renderSection('nav', 'pmLeftNav');
+        $output .= $this->renderSection('nav', 'pmNav');
         $output .= $this->renderSection('main', 'pmMain');
-        $output .= $this->renderSection('nav', 'pmRightNav');
         $output .= $this->renderSection('footer', 'pmFooter');
         $output .= "</body>\n";
         $output .= "</html>\n";
@@ -197,16 +173,40 @@ class Page
 
     protected function renderSection(string $tag, string $partId): string
     {
-        if (!$this->sections[$partId]) {
-            return '';
+        if (!$this->containers[$partId]) {
+            throw new Exception('Bad part ID');
         }
         $output = "<$tag id='$partId'>\n";
-        foreach ($this->sections[$partId] as $sectionClass => $contents) {
-            foreach ($contents as $content) {
-                $output .= "<section class='$sectionClass'>$content</section>\n";
+        foreach ($this->containers[$partId] as $container) {
+            $containerTag = $container->getTag();
+            $containerClass = $container->getClass();
+            $widgets = $container->getWidgets();
+            $output .= "<$containerTag class='$containerClass'>\n";
+            foreach ($widgets as $widget) {
+                $output .= $this->addWidget($partId, $containerClass, $widget);
             }
+            $output .= "</$containerTag>\n";
         }
         $output .= "</$tag>\n";
         return $output;
+    }
+
+    /**
+     * Widgets are like containers but self-contained with JS and CSS.
+     */
+    protected function renderWidget(string $partId, string $sectionClass, Widget $widget): string
+    {
+        foreach ($widget->getScripts() as $name => $script) {
+            $this->setScript($name, $script);
+        }
+        foreach ($widget->getStyles() as $name => $style) {
+            $this->setStyle($name, $style);
+        }
+        try {
+            $content = $widget->render();
+        } catch (Throwable $e) {
+            $content = '<p style="color: red">Error rendering ' . $widget->getName() . '</p>';
+        }
+        return $content . "\n";
     }
 }
