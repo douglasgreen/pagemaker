@@ -54,6 +54,13 @@ Typical web design is:
 
 The absence of clear design leads to a disorganized mess of code that is hard to maintain and enhance.
 
+### Benefits of this design
+This design allows:
+* Top-level responsive design templates to be shared between pages and projects.
+* Medium-level widgets to be shared between pages and projects.
+* Easier comprehension of the project layout and modification process.
+* Reduce ad-hoc modifications and tedious bug fixes when adding or changing features.
+
 ## Q&A
 ### Why not use single-page apps?
 
