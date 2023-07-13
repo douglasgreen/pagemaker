@@ -1,78 +1,70 @@
-# pagemaker
-PHP microframework 
+# Introducing PageMaker
+A Revolutionary PHP Microframework
 
-## Introduction
-Web apps are built out of web pages. A web page should be built with a logical design. This involves:
-* Layered design, into top-level page containers, medium-level widgets, and small level features of widgets.
-* Modular design, where the app is split into widgets each with their own CSS, JS, and HTML templates in their own namespace.
-* Plug-in architecture, where the widgets are executed independently so that their errors can be caught.
-* Clear file organization, where each widget is its own set of CSS, JS, and HTML template files.
+## Overview
+Web applications are fundamentally a collection of web pages. A well-structured web page is a product of a thoughtful and logical design approach. This includes:
+* Hierarchical design: Top-level page containers, intermediate-level widgets, and small-scale widget features.
+* Modular architecture: Divide the application into independent widgets, each encapsulating its own CSS, JS, and HTML templates.
+* Plug-in architecture: Widgets operate independently, allowing their errors to be identified and handled separately.
+* Unambiguous file organization: Each widget is represented by its distinct set of CSS, JS, and HTML template files.
 
-## Page design
-### Top-level containers and sections
-The top level of the page is a set of typical containers built by the Page class.
-* &lt;header&gt; tag, which might contain logo, search bar, icon links, and menu navbar
-* &lt;main&gt; tag, which is the main content of the page
-* &lt;footer&gt; tag, which probably contains some columns with links and a copyright
+## Building Pages with PageMaker
+### Top-Level Containers and Sections
+The PageMaker microframework facilitates the construction of a web page's top-level structure via the Page class, which generates standard containers:
+* `<header>`: Potential housing for logo, search bar, icon links, and menu navbar.
+* `<main>`: The primary content of the page.
+* `<footer>`: Likely contains link columns and copyright information.
 
-The containers are identified with IDs:
-* &lt;header id="pmHeader"&gt;
-* &lt;main id="pmMain"&gt;
-* &lt;footer id="pmFooter"&gt;
+These containers are identified through unique IDs: `pmHeader`, `pmMain`, `pmFooter`. They are organized using a grid layout and stylized with CSS in a `pmPage.css` file. 
 
-These are laid out with a grid and other CSS styles in a file that should be called pmPage.css.
+Our emphasis on standard IDs is a testament to PageMaker's commitment to clear, project-specific organization. CSS and JS should target these IDs to avoid unwanted styling. Thus, a well-constructed `pmPage.css` file should only contain top-level styles targeting these container IDs.
 
-The use of standard IDs is a signal that the project's organization scheme is being used. CSS and JS should explicitly target the ID rather than the generic tag to avoid styling elements when not requested. So a well-designed pmPage.css file should consist only of top-level styles that target these container IDs.
+Top-level containers can be further divided into sections, each denoted with their semantic HTML tag and identified with a class name:
+* `<article>`
+* `<aside>`
+* `<nav>`
+* `<section>`
 
-The top-level containers are broken down into sections, each identified with a class. These include:
-* article
-* aside
-* nav
-* section
+### Intermediate-Level Widgets
+PageMaker's middle layer comprises various widgets that extend the Widget class. These widgets are rendered as `<section class="myWidget">` tags, with 'myWidget' being the widget's name. 
 
-### Medium-level widgets
-The medium level of the page consists of a series of widgets. The widgets extend the Widget class and are render as &lt;section class="myWidget"&gt; tags where myWidget is the name of the widget.
+We treat each widget as a plug-in; its rendering errors are caught and displayed within the widget's section. This approach makes the page modular and resilient.
 
-The widget is treated as a plug-in. When the widget is rendered, its errors are caught and displayed in the widget section so the page is modular and robust.
+Every widget houses its own JS, CSS, and HTML template files, such as Twig, PHPTAL, or basic PHP HTML (`.phtml`). They are organized in distinct files named after each widget:
+* `myWidget.js`
+* `myWidget.css`
+* `myWidget.phtml` or `myWidget.twig`
 
-The widget contains its own JS and CSS code files along with any HTML templates such as Twig or PHPTAL templates or basic PHP HTML (.phtml) templates. They are organized into separate files for each widget:
-* myWidget.js
-* myWidget.css
-* myWidget.phtml or myWidget.twig
+A well-organized JS and CSS file's top-level selector is `.myWidget`, mirroring the widget class name applied to its `<section class="myWidget">` tag.
 
-The JS and CSS files are considered well-designed when their top-level selector is .myWidget, which is the name of the widget class applied to its &lt;section class="myWidget&gt; tag.
+Our approach cultivates independent and modular widgets, minimizing conflicts. The modularity enables widget swapping, altering, and replicating across different projects, provided they adhere to the same page-building scheme. Furthermore, because the widget is a mere wrapper, it can execute any third-party code, including rendering third-party components.
 
-This arrangements makes the widgets independent and modular and minimizes conflicts. You can rearrange widgets in a page, change them, or replace them freely. You should also be able to copy widgets from project to project as long as they use the same page-building scheme.
+### Low-Level Divs
+Each widget comprises one or more divs rendered within its container using a flexbox. The widget itself performs the rendering because it pertains to local concerns.
 
-Because the widget is actually just a thin wrapper, it can execute any sort of third-party code including the rendering of third-party components.
+### Comparison with Typical Design
+The conventional web design lacks:
+* Layering: Absence of clear separation of various webpage features at different scales.
+* Modularity: JS and CSS often intermingle, making individual features hard to isolate for replacement or redesign.
+* Robustness: Errors within individual page components are typically not isolated, resulting in full-page errors.
+* Clear organization: Guidelines for CSS, JS, and HTML code file organization are often missing.
 
-### Low-level divs
-Each widget should consist of one or more divs rendered with a flexbox inside its container. The rendering is done by the widget itself because it is a local concern.
+The lack of clear design often leads to a disordered codebase, which is challenging to maintain and enhance.
 
-### Comparison with typical design
-Typical web design is:
-* Not layered, so there is no clean separation of different webpage features at different scales.
-* Not modular, so JS and CSS are all mixed together, making individual features hard to separate for replacement or redesign.
-* Not robust, because errors and individual page components are typically not caught or rendered as a whole page error.
-* Not clearly organized, because there are no guidelines about what files to put CSS, JS, and HTML code into.
+### Benefits of PageMaker
+Our design approach offers:
+* Shared top-level responsive design templates across pages and projects.
+* Shareable medium-level widgets between pages and projects.
+* Enhanced understanding of project layout and modification procedures.
+* Fewer ad-hoc modifications and arduous bug fixes when adding or altering features.
 
-The absence of clear design leads to a disorganized mess of code that is hard to maintain and enhance.
+## CSS Design with PageMaker
+We recommend segmenting CSS files into:
+* Layouts: To control positioning and spacing.
+* Themes: To manage color schemes.
 
-### Benefits of this design
-This design allows:
-* Top-level responsive design templates to be shared between pages and projects.
-* Medium-level widgets to be shared between pages and projects.
-* Easier comprehension of the project layout and modification process.
-* Reduce ad-hoc modifications and tedious bug fixes when adding or changing features.
-
-## CSS design
-The CSS files should be split into:
-* Layouts, that control position and spacing
-* Themes, that control color
-
-## Q&A
+## Frequently Asked Questions
 ### Why not use single-page apps?
+Most applications do not fit the single-page app model. Forcing them into such a design eliminates the advantage of stateless page loads, akin to stuffing all your code into a single object. 
 
-Most apps don't fit the single-page app profile. If you force them into a single-page design, you lose the benefit of having stateless page loads. That's like putting all your code into a God object.
-
-It is better to decompose your app into naturally separate pages and give them a menu or state machine that moves the user between pages in an organized manner.
+PageMaker encourages you to decompose your application into separate, naturally occurring pages, managed through a menu or state machine, offering a well-structured user navigation experience.
