@@ -307,6 +307,11 @@ https://www.loggly.com/ultimate-guide/php-logging-basics/
 * Don't get into specificity fights. In a well-designed system, you shouldn't have to overwrite other styles.
 * Don't use the !important tag because it's the worst kind of specificity fight.
 
+## File copying
+I need to invent an actual plug-in mechanism to copy widgets between projects. And I need to be able to version them as well.
+
+I'm thinking of a directory into which all of the CSS, JS, Twig, PHTML, font, and asset files can go. Then a manifest file to describe it all.
+
 ## References
 * https://www.elinext.com/blog/modular-web-design/
 * https://www.designrush.com/agency/website-design-development/trends/modular-web-design
