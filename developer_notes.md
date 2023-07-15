@@ -302,6 +302,11 @@ https://www.loggly.com/ultimate-guide/php-logging-basics/
 * Add back link outline on focus and underline on hover.
 * Make comparisons with the other CSS systems in https://css-tricks.com/methods-organize-css/
 
+## Things to avoid
+* Don't use base rules that style individual tags like ul. Tags are always reused for different purposes and your base rules will inevitably lead to conflict.
+* Don't get into specificity fights. In a well-designed system, you shouldn't have to overwrite other styles.
+* Don't use the !important tag because it's the worst kind of specificity fight.
+
 ## References
 * https://www.elinext.com/blog/modular-web-design/
 * https://www.designrush.com/agency/website-design-development/trends/modular-web-design
