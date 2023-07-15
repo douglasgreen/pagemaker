@@ -68,3 +68,18 @@ We recommend segmenting CSS files into:
 Most applications do not fit the single-page app model. Forcing them into such a design eliminates the advantage of stateless page loads, akin to stuffing all your code into a single object. 
 
 PageMaker encourages you to decompose your application into separate, naturally occurring pages, managed through a menu or state machine, offering a well-structured user navigation experience.
+
+### How is PageMaker like object-oriented CSS?
+[Object-oriented CSS](https://github.com/stubbornella/oocss/wiki) is a system of CSS organization developed by Nicole Sullivan in 2009. In her design, a CSS object consists of:
+* HTML nodes in the DOM
+* CSS declarations about those nodes
+* Related components like images
+* JavaScript associated with the object
+
+The CSS declarations all begin with the class name of the wrapper node. We both have similar ideas about building web pages from modular, reusable CSS. Some differences include:
+* Her ideas are intended for graphical designers to use when hand-coding CSS. My ideas are intended to use as a conceptual and practical framework developers when coding pages for complex projects.
+* She doesn't use IDs for any content, including top-level page containers, under the theory that someone might what to have more than one header or footer. I specify the use of particular IDs for top-level containers because top-level containers need to be styled as a page layout and because a header or footer is now a semantic HTML tag that can consist of one or more sections, so we don't need multiple headers or footers.
+* Her ideas are about sharing styles within a single project. My ideas are to allow the same thing as well as sharing components within multiple projects. This is enabled by the layered architecture which separates the top-level page organization from the widgets and by the complete separation of the widgets.
+* As a designer, she doesn't specify anything about JavaScript organization. I specify the same wrapper class requirement for JavaScript code as the CSS.
+* As a designer, she doesn't specify anything about the file organization of the CSS, JS, or HTML. I specified that files are independent units with the widget name, which allows versioning, replacing, and sharing content by the clean separation of files.
+* As a designer, she doesn't specify how the HTML content is built. I specify a widget-builder class that can use templating systems to build each independent unit of HTML while catching its errors.
