@@ -64,6 +64,12 @@ We recommend segmenting CSS files into:
 * Themes: To manage color schemes.
 
 ## Frequently Asked Questions
+### Why not use Symfony or some other framework?
+Why not opt for Symfony or a similar framework? While powerful in their own right, tools like Symfony aren't explicitly aimed at addressing the page-specific challenges that PageMaker seeks to solve. Symfony lacks an inbuilt page builder, likely because it anticipates developers will create their own page structures. As such, PageMaker's page layout solution should be compatible with Symfony. Each component of PageMaker is designed to function independently, making them amenable to customisation or co-use with other frameworks like Symfony.
+
+### Why not use Twig or PHPTAL for page layout?
+So, why not use Twig or PHPTAL for page layout? In this architecture, PageMaker is employed to construct the page, primarily because it's merely a simple collection of top-level HTML5 semantic tags. You're free to use Twig or PHPTAL to structure the content of each widget or simply lay them out as HTML using PHP's inherent templating feature. PageMaker presents an advancement over using Twig directly, as it assists in arranging the JavaScript, CSS, and templates in a more organized manner than Twig alone offers. Twig anticipates that you'll handle your own organization, but PageMaker simplifies that process.
+
 ### Why not use single-page apps?
 Most applications do not fit the single-page app model. Forcing them into such a design eliminates the advantage of stateless page loads, akin to stuffing all your code into a single object. 
 
