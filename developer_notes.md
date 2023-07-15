@@ -115,6 +115,16 @@ The drawbacks are substantial, so you should consider not using a REST API if:
 * You are just doing a database lookup of some associated value, which can be accomplished directly with SQL joins.
 * It is your database that is maxed out, which you can fix by using multiple database hosts, not multiple service hosts.
 
+## JavaScript
+JavaScript is widely used as a component and page builder nowadays. I don't like it though and I don't like the JavaScript ecosystem.
+* JavaScript is architecturally poor because it starts on the output layer with accidental details about how the document is presented.
+* JavaScript runs in the browser which leads to poor error reporting and browser incompatibilities.
+* JavaScript always drags in a giant pile of dependencies to maintain.
+* Typical JavaScript is lacking in the features of well-designed modularity and typing that enable scalable, well-organized programming.
+* The JavaScript language itself was hastily designed and polished by committee. It's endless feature enhancements make it more complex without making it more attractive. It's the only language I know that has a book that describes the good parts and all of the bad parts that you should avoid.
+
+My basic concept of JavaScript is that it should be used to update the page but not to render the page. Thus I use it only where local page updates are required. The initial page load should always be pure PHP. This also implies that I avoid depending on REST APIs for basic page rendering so that page loads are monolithic and fast.
+
 ## Assets
 * JavaScript and CSS assets are laid out by page element.
 * Element layouts go into the layout directory.
