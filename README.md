@@ -70,16 +70,17 @@ Most applications do not fit the single-page app model. Forcing them into such a
 PageMaker encourages you to decompose your application into separate, naturally occurring pages, managed through a menu or state machine, offering a well-structured user navigation experience.
 
 ### How is PageMaker like object-oriented CSS?
-[Object-oriented CSS](https://github.com/stubbornella/oocss/wiki) is a system of CSS organization developed by Nicole Sullivan in 2009. In her design, a CSS object consists of:
+[Object-oriented CSS (OOCSS)](https://github.com/stubbornella/oocss/wiki) is a method of organizing CSS introduced by Nicole Sullivan in 2009. According to Sullivan's design, a CSS object is comprised of:
 * HTML nodes in the DOM
-* CSS declarations about those nodes
-* Related components like images
-* JavaScript associated with the object
+* CSS declarations for these nodes
+* Relevant components like images
+* JavaScript connected with the object
 
-The CSS declarations all begin with the class name of the wrapper node. We both have similar ideas about building web pages from modular, reusable CSS. Some differences include:
-* Her ideas are intended for graphical designers to use when hand-coding CSS. My ideas are intended to use as a conceptual and practical framework developers when coding pages for complex projects.
-* She doesn't use IDs for any content, including top-level page containers, under the theory that someone might what to have more than one header or footer. I specify the use of particular IDs for top-level containers because top-level containers need to be styled as a page layout and because a header or footer is now a semantic HTML tag that can consist of one or more sections, so we don't need multiple headers or footers.
-* Her ideas are about sharing styles within a single project. My ideas are to allow the same thing as well as sharing components within multiple projects. This is enabled by the layered architecture which separates the top-level page organization from the widgets and by the complete separation of the widgets.
-* As a designer, she doesn't specify anything about JavaScript organization. I specify the same wrapper class requirement for JavaScript code as the CSS.
-* As a designer, she doesn't specify anything about the file organization of the CSS, JS, or HTML. I specified that files are independent units with the widget name, which allows versioning, replacing, and sharing content by the clean separation of files.
-* As a designer, she doesn't specify how the HTML content is built. I specify a widget-builder class that can use templating systems to build each independent unit of HTML while catching its errors.
+All CSS declarations in OOCSS begin with the wrapper node's class name. There is a degree of overlap between Sullivan's OOCSS and our PageMaker's philosophy, especially in building web pages using modular and reusable CSS. However, several key differences separate our design approach:
+
+* **Target Audience**: OOCSS is designed for graphic designers hand-coding CSS, whereas PageMaker is intended for developers working on complex projects, providing both a conceptual and practical framework.
+* **Usage of IDs**: OOCSS does not employ IDs for any content, including top-level page containers, to allow multiple headers or footers. In contrast, PageMaker specifies IDs for top-level containers, as these require unique styling for page layouts. Also, with the semantic HTML tags, a header or footer can comprise multiple sections, eliminating the need for multiple headers or footers.
+* **Style Sharing**: Sullivan's OOCSS focuses on sharing styles within a single project. PageMaker extends this concept, allowing not just intra-project style sharing, but also inter-project component sharing. This is facilitated by our layered architecture that separates top-level page organization from the widgets and ensures their complete isolation.
+* **JavaScript Organization**: As a designer, Sullivan's OOCSS does not outline any specifications for JavaScript organization. Conversely, PageMaker applies the same wrapper class requirement to JavaScript code as it does to CSS.
+* **File Organization**: OOCSS does not provide guidelines on the organization of CSS, JS, or HTML files. In contrast, PageMaker prescribes an unambiguous file organization strategy, where files are standalone units named after the widget they represent, thus allowing easier versioning, replacement, and content sharing through clean separation of files.
+* **HTML Content Construction**: In OOCSS, no instructions are provided for building HTML content. PageMaker, on the other hand, defines a widget-builder class that employs templating systems to construct each independent HTML unit while managing its error handling.
