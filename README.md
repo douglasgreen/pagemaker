@@ -1,5 +1,5 @@
 # Introducing PageMaker
-A Revolutionary PHP Microframework
+An innovative PHP microframework.
 
 ## Overview
 Web applications are fundamentally collections of web pages. A well-structured web page is a product of a philosophical and logical design approach. This includes:
@@ -19,7 +19,7 @@ The PageMaker microframework facilitates the construction of a web page's top-le
 
 These containers are identified through unique classes: `pmBody`, `pmHeader`, `pmMain`, and `pmFooter`. Unique class names are used instead of the HTML tag names to show that styles are only being applied on request in a specific system.
 
-The containers should be organized using a grid layout. Either header or footer or can be omitted. Because only the three top-level containers are provided, they can always be styled in a sequence where each one occupies 100% width. This prevents you from having to make decisions about how to lay out sidebars at the top level.
+The containers should be organized using a grid layout. Either header or footer or can be omitted. Because only the three top-level containers are provided in the body, they can always be styled in a sequence where each one occupies 100% width. This prevents you from having to make decisions about how to lay out sidebars at the top level.
 
 Class names are used instead of ID names to make it possible to override general page styles inside more specific widgets.
 
@@ -55,6 +55,8 @@ Every widget houses its own JS, CSS, and HTML template files, such as Twig or PH
 * `pmMenuWidget.phtml` or `pmMenuWidget.twig`
 
 A well-organized JS and CSS file's top-level selector is `.pmMenuWidget`, mirroring the widget class name applied to its `<section class="pmMenuWidget">` tag.
+
+The widget files should be collected into subdirectories of a `widgets` directory. Each subdirectory should be given the name of the widget, such as `widgets\menuWidget`.  If color themes are required, they can be split into subfiles like `pmMenuWidgetLight.css` and `pmMenuWidgetDark.css` for separate application.
 
 Our method encourages the development of widgets as separate and interchangeable parts to reduce conflicts. The modularity allows for the easy exchange, modification, and duplication of widgets in various projects, as long as they follow the same page structure. Additionally, since the widget is a thin wrapper, it can flexibly run different kinds of external code, such as rendering components from other sources.
 
