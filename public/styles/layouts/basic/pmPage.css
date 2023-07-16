@@ -1,67 +1,67 @@
-#pmFooter {
+.pmFooter {
     clear: both;
     grid-column: 1/4;
     grid-row: 3/4;
 }
 
-#pmHeader {
+.pmHeader {
     grid-column: 1/4;
     grid-row: 1/2;
 }
 
-#pmLeftNav {
+.pmLeftNav {
     grid-column: 1/2;
     grid-row: 2/3;
 }
 
-#pmMain {
+.pmMain {
     grid-column: 2/3;
     grid-row: 2/3;
 }
 
-#pmRightNav {
+.pmRightNav {
     grid-column: 3/4;
     grid-row: 2/3;
 }
 
 @media (max-width: 599px) {
-    #pmBody {
+    .pmBody {
         display: grid;
         gap: 5px;
         grid-template-columns: 75px 1fr 75px;
     }
 
-    #pmLeftNav section,
-    #pmMain,
-    #pmRightNav section {
+    .pmLeftNav section,
+    .pmMain,
+    .pmRightNav section {
         margin-bottom: 5px;
     }
 }
 
 @media screen and (min-width: 600px) and (max-width: 1200px) {
-    #pmBody {
+    .pmBody {
         display: grid;
         gap: 10px;
         grid-template-columns: 150px 1fr 150px;
     }
 
-    #pmLeftNav section,
-    #pmMain,
-    #pmRightNav section {
+    .pmLeftNav section,
+    .pmMain,
+    .pmRightNav section {
         margin-bottom: 10px;
     }
 }
 
 @media screen and (min-width: 1201px) {
-    #pmBody {
+    .pmBody {
         display: grid;
         gap: 20px;
         grid-template-columns: 300px 1fr 300px;
     }
 
-    #pmLeftNav section,
-    #pmMain,
-    #pmRightNav section {
+    .pmLeftNav section,
+    .pmMain,
+    .pmRightNav section {
         margin-bottom: 10px;
     }
 }

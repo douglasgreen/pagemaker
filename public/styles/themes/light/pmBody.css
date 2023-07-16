@@ -1,67 +1,67 @@
-#pmBody {
+.pmBody {
     background-color: #fff;
     color: #000;
 }
 
-#pmBody .pmBlue {
+.pmBody .pmBlue {
     background-color: #add8e6;
     color: #000;
 }
 
-#pmBody .pmBlue:hover {
+.pmBody .pmBlue:hover {
     background-color: #c1e0f6;
 }
 
-#pmBody .pmGray {
+.pmBody .pmGray {
     background-color: #d3d3d3;
     color: #000;
 }
 
-#pmBody .pmGray:hover {
+.pmBody .pmGray:hover {
     background-color: #dcdcdc;
 }
 
-#pmBody .pmGreen {
+.pmBody .pmGreen {
     background-color: #98fb98;
     color: #000;
 }
 
-#pmBody .pmGreen:hover {
+.pmBody .pmGreen:hover {
     background-color: #adffad;
 }
 
-#pmBody .pmLavender {
+.pmBody .pmLavender {
     background-color: #e6e6fa;
     color: #000;
 }
 
-#pmBody .pmLavender:hover {
+.pmBody .pmLavender:hover {
     background-color: #f0f0ff;
 }
 
-#pmBody .pmOrange {
+.pmBody .pmOrange {
     background-color: #ffdab9;
     color: #000;
 }
 
-#pmBody .pmOrange:hover {
+.pmBody .pmOrange:hover {
     background-color: #ffe4c4;
 }
 
-#pmBody .pmPink {
+.pmBody .pmPink {
     background-color: #ffb6c1;
     color: #000;
 }
 
-#pmBody .pmPink:hover {
+.pmBody .pmPink:hover {
     background-color: #ffc1d6;
 }
 
-#pmBody .pmYellow {
+.pmBody .pmYellow {
     background-color: #fffacd;
     color: #000;
 }
 
-#pmBody .pmYellow:hover {
+.pmBody .pmYellow:hover {
     background-color: #fffdd0;
 }
