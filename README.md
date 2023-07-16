@@ -72,7 +72,7 @@ CSS, with its peculiar specificity rules, operates on a system that assigns scor
 * Classes = 10 points
 * Tags = 1 point
 
-However, this system, in many ways, seems counterintuitive and problematic for two main reasons.
+However, this system seems counterintuitive and problematic for two main reasons.
 
 Firstly, IDs are often assigned to high-level page elements, while classes are typically linked to lower-level elements. This hierarchy complicates the process of overwriting global styles with more specific, widget-level styles.
 
