@@ -69,6 +69,15 @@ Given their self-contained nature, widgets can exercise considerable flexibility
 * `.pmMenuWidget .mySubclass` - By using a subclass, you can expose it to the widget's CSS interface where it's implemented in the HTML.
 * `.pmMenuWidget` using inline styles - This can be a viable approach when there's certainty that the CSS won't need to be reused within the widget.
 
+### Package directories
+In a complex project, you may need to repeat the same directory and file organization within packages and subpackages. These should be organized in a hierarchical directory like `[package]/[subpackage]/...`. Then at each level of the package hierarchy you would repeat the same structure of layouts and widgets.
+
+### PHP autoloading
+PHP files are usually organized into a top-level directory like `app` or `src` which enables PSR-compatible autoload. The PHP source code of widgets can be organized within the `Widgets` namespace of such a directory. The widget should be maintained as separate files or subdirectories of related code in order to maintain the possibility of easily copying a widget from project to project.
+
+### Other assets
+Other assets like images and fonts can be put into an `assets` directory. Again you should maintain some kind of organized, hierarchical directory structure where assets for each widget are kept separate.
+
 ### Comparison with Typical Design
 The conventional web design lacks:
 * Layering: Absence of clear separation of various webpage features at different scales.
