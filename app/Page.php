@@ -65,12 +65,12 @@ class Page
     /**
      * Add a section to the top-level part.
      */
-    public function addSection(string $partId, Section $section): void
+    public function addSection(string $partClass, Section $section): void
     {
-        if (!isset($this->sections[$partId])) {
-            throw new Exception('Bad top-level part');
+        if (!isset($this->sections[$partClass])) {
+            throw new Exception('Bad top-level container');
         }
-        $this->sections[$partId][] = $section;
+        $this->sections[$partClass][] = $section;
     }
 
     public function setCharset(string $charset): void
@@ -159,7 +159,7 @@ class Page
 
         $output .= "</head>\n";
 
-        $output .= "<body id='pmBody'>\n";
+        $output .= "<body class='pmBody'>\n";
         $output .= $this->renderSection('header', 'pmHeader');
         $output .= $this->renderSection('main', 'pmMain');
         $output .= $this->renderSection('footer', 'pmFooter');
@@ -169,19 +169,19 @@ class Page
         return $output;
     }
 
-    protected function renderSection(string $tag, string $partId): string
+    protected function renderSection(string $tag, string $partClass): string
     {
-        if (!$this->sections[$partId]) {
-            throw new Exception('Bad part ID');
+        if (!$this->sections[$partClass]) {
+            throw new Exception('Bad container class');
         }
-        $output = "<$tag id='$partId'>\n";
-        foreach ($this->sections[$partId] as $section) {
+        $output = "<$tag class='$partClass'>\n";
+        foreach ($this->sections[$partClass] as $section) {
             $sectionTag = $section->getTag();
             $sectionClass = $section->getClass();
             $widgets = $section->getWidgets();
             $output .= "<$sectionTag class='$sectionClass'>\n";
             foreach ($widgets as $widget) {
-                $output .= $this->addWidget($partId, $sectionClass, $widget);
+                $output .= $this->addWidget($partClass, $sectionClass, $widget);
             }
             $output .= "</$sectionTag>\n";
         }
@@ -192,7 +192,7 @@ class Page
     /**
      * Render a widget and add its JS/CSS to the page.
      */
-    protected function renderWidget(string $partId, string $sectionClass, Widget $widget): string
+    protected function renderWidget(string $partClass, string $sectionClass, Widget $widget): string
     {
         foreach ($widget->getScripts() as $name => $script) {
             $this->setScript($name, $script);

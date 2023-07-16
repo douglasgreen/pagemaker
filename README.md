@@ -15,9 +15,9 @@ The PageMaker microframework facilitates the construction of a web page's top-le
 * `<main>`: The primary content of the page.
 * `<footer>`: Likely contains link columns and copyright information.
 
-These containers are identified through unique IDs: `pmHeader`, `pmMain`, `pmFooter`. They are organized using a grid layout and stylized with CSS in a `pmPage.css` file. 
+These containers are identified through unique classes: `pmHeader`, `pmMain`, `pmFooter`. They are organized using a grid layout and stylized with CSS in a `pmPage.css` file. 
 
-Our emphasis on standard IDs is a testament to PageMaker's commitment to clear, project-specific organization. CSS and JS should target these IDs to avoid unwanted styling. Thus, a well-constructed `pmPage.css` file should only contain top-level styles targeting these container IDs.
+Our emphasis on standard classes is a testament to PageMaker's commitment to clear, project-specific organization. CSS and JS should target these classes to avoid unwanted styling. Thus, a well-constructed `pmPage.css` file should only contain top-level styles targeting these container classes.
 
 Top-level containers can be further divided into sections, each denoted with their semantic HTML tag and identified with a class name:
 * `<article>`
@@ -106,7 +106,6 @@ PageMaker encourages you to decompose your application into separate, naturally 
 All CSS declarations in OOCSS begin with the wrapper node's class name. There is a degree of overlap between Sullivan's OOCSS and our PageMaker's philosophy, especially in building web pages using modular and reusable CSS. However, several key differences separate our design approach:
 
 * **Target Audience**: OOCSS is designed for graphic designers hand-coding CSS, whereas PageMaker is intended for developers working on complex projects, providing both a conceptual and practical framework.
-* **Usage of IDs**: OOCSS does not employ IDs for any content, including top-level page containers, to allow multiple headers or footers. In contrast, PageMaker specifies IDs for top-level containers, as these require unique styling for page layouts. Also, with the semantic HTML tags, a header or footer can comprise multiple sections, eliminating the need for multiple headers or footers.
 * **Style Sharing**: Sullivan's OOCSS focuses on sharing styles within a single project. PageMaker extends this concept, allowing not just intra-project style sharing, but also inter-project component sharing. This is facilitated by our layered architecture that separates top-level page organization from the widgets and ensures their complete isolation.
 * **JavaScript Organization**: As a designer, Sullivan does not outline any specifications in OOCSS for JavaScript organization. Conversely, PageMaker applies the same wrapper class requirement to JavaScript code as it does to CSS.
 * **File Organization**: OOCSS does not provide guidelines on the organization of CSS, JS, or HTML files. In contrast, PageMaker prescribes an unambiguous file organization strategy, where files are standalone units named after the widget they represent, thus allowing easier versioning, replacement, and content sharing through clean separation of files.
