@@ -61,13 +61,13 @@ The widget files should be collected into subdirectories of a `widgets` director
 Our method encourages the development of widgets as separate and interchangeable parts to reduce conflicts. The modularity allows for the easy exchange, modification, and duplication of widgets in various projects, as long as they follow the same page structure. Additionally, since the widget is a thin wrapper, it can flexibly run different kinds of external code, such as rendering components from other sources.
 
 ### Low-Level Divs
-Each widget is composed of one or more divs, encapsulated within its container and deployed using a flexbox layout. The task of rendering is carried out by the widget itself since it is a matter of local concern.
+Each widget is composed of one or more divs, encapsulated within its container and deployed using a flexbox layout. The widgets are arranged by page layout code as discussed above. But the task of rendering inside the widget is carried out by the widget itself since it is a matter of local concern.
 
 Given their self-contained nature, widgets can exercise considerable flexibility in their design. For instance, the CSS within a widget can employ information hiding by utilizing tag selectors inside the top-level class selector.
 
-* `.pmMenuWidget p` - This styles all 'p' tags within the widget, negating the need for a subclass designation.
+* `.pmMenuWidget p` - This styles all 'p' tags within the widget, so you don't need a subclass designation.
 * `.pmMenuWidget .mySubclass` - By using a subclass, you can expose it to the widget's CSS interface where it's implemented in the HTML.
-* `.pmMenuWidget` comprising inline styles - This can be a viable approach when there's certainty that the CSS won't need to be reused within the widget.
+* `.pmMenuWidget` using inline styles - This can be a viable approach when there's certainty that the CSS won't need to be reused within the widget.
 
 ### Comparison with Typical Design
 The conventional web design lacks:
@@ -96,13 +96,10 @@ CSS, with its peculiar specificity rules, operates on a system that assigns scor
 * Tags = 1 point
 
 However, this system seems counterintuitive and problematic for two main reasons.
-
-Firstly, IDs are often assigned to high-level page elements, while classes are typically linked to lower-level elements. This hierarchy complicates the process of overwriting global styles with more specific, widget-level styles.
-
-Secondly, the current design makes coordination between third-party stylesheets more challenging. The absence of a well-defined system for establishing precedence among stylesheets, apart from manipulating individual style weights, further complicates matters.
+1. IDs are often assigned to high-level page elements, while classes are typically linked to lower-level elements. This hierarchy complicates the process of overwriting global styles with more specific, widget-level styles.
+2. The current design makes coordination between third-party stylesheets more challenging. The absence of a well-defined system for establishing precedence among stylesheets, apart from manipulating individual style weights, further complicates matters.
 
 A more efficient design for CSS would rely on simple precedence rules rather than weight-based specificity. That is, the most recently applied selector would always take priority. Implementing such a change could address the two design issues mentioned earlier:
-
 1. It would allow for the semantic application of IDs or classes, eliminating concerns about their specificity weights and the need for later overwrites. Therefore, IDs could naturally be used for top-level page containers, with the ability to be overridden by lower-level page classes.
 2. The precedence of third-party stylesheets would be determined by the order in which they were applied, enabling more streamlined coordination.
 
