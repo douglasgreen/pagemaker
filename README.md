@@ -125,7 +125,7 @@ Most applications do not fit the single-page app model. Forcing them into such a
 
 PageMaker encourages you to decompose your application into separate, naturally occurring pages, managed through a menu or state machine, offering a well-structured user navigation experience.
 
-### How is PageMaker like OOCSS?
+### How is PageMaker different from OOCSS?
 [Object-oriented CSS (OOCSS)](https://github.com/stubbornella/oocss/wiki) is a method of organizing CSS introduced by Nicole Sullivan in 2009. According to Sullivan's design, a CSS object is comprised of:
 * HTML nodes in the DOM
 * CSS declarations for these nodes
