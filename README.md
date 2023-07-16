@@ -101,21 +101,21 @@ In the absence of a well-designed CSS system, a practical solution would be to s
 ### How is JS poorly designed and how can we do better?
 JavaScript is a programming language that was hastily put together and gradually refined over years via a committee-led process. Its fundamental design leaves much to be desired, marked by issues such as:
 
-* Output Dependency Issues: Operations functioning at the output layer, leading to browser inconsistencies and fragility due to an over-reliance on specific document formats instead of managing data in a more universal manner.
-* Error Handling Deficiencies: Subpar error handling and reporting which operates at the user level rather than at the server level.
-* Race Condition Challenges: Race conditions brought on by an inadequately designed event model tied to element rendering.
-* Dependency Stack Complications: Excessive rotation, bloat, and intricacy within the dependency stack.
-* Language Misfeatures: Various other language shortcomings outlined in the book 'JavaScript: The Good Parts'.
+* **Output Dependency Issues**: Operations functioning at the output layer, leading to browser inconsistencies and fragility due to an over-reliance on specific document formats instead of managing data in a more universal manner.
+* **Error Handling Deficiencies**: Subpar error handling and reporting which operates at the user level rather than at the server level.
+* **Race Condition Challenges**: Race conditions brought on by an inadequately designed event model tied to element rendering.
+* **Dependency Stack Complications**: Excessive rotation, bloat, and intricacy within the dependency stack.
+* **Language Misfeatures**: Various other language shortcomings outlined in the book 'JavaScript: The Good Parts'.
 
 Furthermore, it also shares a common problem with CSS - the lack of an effective organization system, albeit without the specificity hierarchy. To my knowledge, none of the visual designers who laid down the CSS standards examined here took any initiative to develop similar JavaScript standards. Nevertheless, PageMaker addresses this organizational deficit with the widget system, co-organizing CSS and JavaScript into widgets. Be aware that this system doesn't inherently resolve any of the problems listed above. Therefore, it is advised to restrict the use of JavaScript to specific page animation requirements that don't involve reloading the page.
 
 Future iterations of PageMaker may attempt to rectify some of these issues with:
 
-* Output Dependency Issues: Systematized data retrieval methods to eliminate the need for excessive data encoding within the page.
-* Error Handling Deficiencies: Refined error handling mechanisms that log errors server-side for developer examination.
-* Race Condition Challenges: The introduction of an event queuing system for each widget to prevent race conditions and facilitate cooperative development of event handlers.
-* Dependency Stack Complications: Minimization of JavaScript dependencies by formulating simple, ad hoc alternatives.
-* Language Misfeatures: Formulation or adoption of a simplistic JavaScript style guideline to sidestep language misfeatures.
+* **Output Dependency Issues**: Systematized data retrieval methods to eliminate the need for excessive data encoding within the page.
+* **Error Handling Deficiencies**: Refined error handling mechanisms that log errors server-side for developer examination.
+* **Race Condition Challenges**: The introduction of an event queuing system for each widget to prevent race conditions and facilitate cooperative development of event handlers.
+* **Dependency Stack Complications**: Minimization of JavaScript dependencies by formulating simple, ad hoc alternatives.
+* **Language Misfeatures**: Formulation or adoption of a simplistic JavaScript style guideline to sidestep language misfeatures.
 
 ### Why not use Symfony or some other framework?
 Why not opt for Symfony or a similar framework? While powerful in their own right, tools like Symfony aren't explicitly aimed at addressing the page-specific challenges that PageMaker seeks to solve. Symfony lacks an inbuilt page builder, likely because it anticipates developers will create their own page structures. As such, PageMaker's page layout solution should be compatible with Symfony. Each component of PageMaker is designed to function independently, making them amenable to customisation or co-use with other frameworks like Symfony.
