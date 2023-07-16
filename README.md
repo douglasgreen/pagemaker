@@ -64,6 +64,27 @@ We recommend segmenting CSS files into:
 * Themes: To manage color schemes.
 
 ## Frequently Asked Questions
+### How is CSS poorly designed and how can we do better?
+CSS, with its peculiar specificity rules, operates on a system that assigns scores to different types of selectors:
+* !important = top priority
+* Inline styles = 1000 points
+* IDs = 100 points
+* Classes = 10 points
+* Tags = 1 point
+
+However, this system, in many ways, seems counterintuitive and problematic for two main reasons.
+
+Firstly, IDs are often assigned to high-level page elements, while classes are typically linked to lower-level elements. This hierarchy complicates the process of overwriting global styles with more specific, widget-level styles.
+
+Secondly, the current design makes coordination between third-party stylesheets more challenging. The absence of a well-defined system for establishing precedence among stylesheets, apart from manipulating individual style weights, further complicates matters.
+
+A more efficient design for CSS would rely on simple precedence rules rather than weight-based specificity. That is, the most recently applied selector would always take priority. Implementing such a change could address the two design issues mentioned earlier:
+
+1. It would allow for the semantic application of IDs or classes, eliminating concerns about their specificity weights and the need for later overwrites. Therefore, IDs could naturally be used for top-level page containers, with the ability to be overridden by lower-level page classes.
+2. The precedence of third-party stylesheets would be determined by the order in which they were applied, enabling more streamlined coordination.
+
+In the absence of a well-designed CSS system, a practical solution would be to stick exclusively to top-level class-based selectors. By avoiding the use of !important and ID-based selectors, most problems can be mitigated, given that all selectors would then operate at the same level of specificity. Inline style can be used because they are always applied last so they don't violate the precedence rule. And tags can be used as selectors inside top-level class selectors.
+
 ### Why not use Symfony or some other framework?
 Why not opt for Symfony or a similar framework? While powerful in their own right, tools like Symfony aren't explicitly aimed at addressing the page-specific challenges that PageMaker seeks to solve. Symfony lacks an inbuilt page builder, likely because it anticipates developers will create their own page structures. As such, PageMaker's page layout solution should be compatible with Symfony. Each component of PageMaker is designed to function independently, making them amenable to customisation or co-use with other frameworks like Symfony.
 
