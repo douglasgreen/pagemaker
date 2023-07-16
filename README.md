@@ -149,6 +149,49 @@ One of the core principles of SPAs, the absence of page refreshes, essentially l
 
 PageMaker, on the other hand, advocates for the disintegration of your application into distinct, intuitively structured pages. These pages can be navigated via a menu or a state machine, providing a user navigation experience that is both clear and efficient. The majority of the page rendering should be undertaken using direct database queries and PHP templating, reserving JavaScript for on-page animations and utilizing a limited local state that refreshes upon every page load. This approach results in a more organized and manageable application design, keeping complexity in check.
 
+### Why not use REST APIs?
+REST APIs are often misused, employed as a code organization tool when in reality, they're intended as units of network architecture.
+
+In the past, it was common to build unstructured PHP monoliths. Over time, these were swapped out in favor of REST APIs. However, a better approach would have been to use namespaces and autoloading, a pair of advanced structural tools provided in newer versions of PHP.
+
+Before deciding to use REST APIs, it's crucial to weigh their advantages and disadvantages.
+
+The **benefits** of REST APIs include:
+
+* **Language Compatibility:** They can be called by a variety of programming languages.
+* **Dynamic Page Interaction:** They can be employed for interactive page features without necessitating a page reload.
+* **Server Load Distribution:** If your server is at capacity, REST APIs can be used to divide services between multiple servers.
+
+However, the **drawbacks** of REST APIs shouldn't be overlooked:
+
+* **Performance:** REST APIs operate slower than direct database access.
+* **Code Overhead:** They require additional layers of code for their production and consumption.
+* **Network Delays and Reliability:** Network delays and reliability issues are introduced.
+* **Data Fragmentation:** Your databases can become unnecessarily divided between different servers and APIs.
+
+These drawbacks can be significant, leading to situations where avoiding a REST API could be more beneficial. You might not need a REST API if:
+
+* **Single Server-side Language Use:** You are only using one server-side programming language, such as PHP.
+* **Modular Structure:** Your objective is to grant your application a modular structure, which can be achieved using namespaces and autoloading.
+* **Versioning:** Your need is for versioning, which can be realized with Composer versioning or content versioning.
+* **Database Lookup:** If your requirement is merely a database lookup for some associated value, a direct SQL join would suffice.
+* **Database Capacity:** If your database is at its limit, the solution is to utilize multiple database hosts rather than multiple service hosts.
+
+### Why not use virtual machines?
+The prevalent trend of employing virtual machines (VMs) in modern development deserves thoughtful examination. Both the overuse of VMs and REST APIs seem to stem from a flawed understanding: the belief that dissecting an architecture into smaller parts automatically simplifies it. This, however, isn't necessarily true.
+
+A well-designed system should be easy to explain, understand, and modify. To demonstrate, let's contrast two types of system: a shared development server and a group of VMs. Here, we'll assume that the shared server was initially established by the Networking Department and subsequently replaced by VMs. These VMs are running 10 unique projects for 10 different developers, coordinated by DevOps, with individual developers also establishing their own VMs.
+
+* **Shared Development Server:** This system is relatively straightforward to describe, likely running a single PHP version and one or multiple versions of Node, jQuery, or related libraries. Its configuration includes a single host and a database server. This simplicity in description and maintenance is a key advantage. The Networking Department, rather than developers, generally oversees it, adhering to the principle of specialization.
+
+* **Virtual Machines (VMs):** In contrast, VMs are more complex to describe. Given that the 10 developers could each check out multiple VMs, there could be hundreds of unique VM configurations. Each one possesses its own PHP, Node, and jQuery version, requiring intricate coordination for the setup and configuration of these distinct environments. Additionally, each developer has to manage the setup, operation, and troubleshooting of these VMs—a task previously undertaken by specialists.
+
+The shift to VMs often leads to a scenario where each individual part is less complex, but the overall system becomes much more intricate.
+
+Similarly, REST APIs have the same issue. Segmenting code into separate REST APIs may make the APIs appear simpler. Yet, to fully describe them, you must also account for access credentials, the layers producing and consuming the API, and the network's condition. This results in a system that, while comprised of simpler components, becomes more complex and brittle in its entirety. Dividing the complexity of a whole project into separate parts doesn't eliminate complexity; it can actually enhance it.
+
+Generally, it's likely preferable to begin with an organized monolithic architecture, only opting to segment the design for specific reasons, such as exceeding the capacity of a single server.
+
 ### How is PageMaker different from OOCSS?
 [Object-oriented CSS (OOCSS)](https://github.com/stubbornella/oocss/wiki) is a method of organizing CSS introduced by Nicole Sullivan in 2009. According to Sullivan's design, a CSS object is comprised of:
 * HTML nodes in the DOM
