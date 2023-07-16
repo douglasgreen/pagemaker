@@ -124,9 +124,11 @@ While Symfony serves as a powerful tool for web application development, it does
 When it comes to page layout, one may question the compatibility of PageMaker with Twig or PHPTAL. Within this architecture, PageMaker serves as the tool to build the page structure, using a simple collection of top-level HTML5 semantic tags. You have the option to utilize Twig or PHPTAL to craft the content of each widget or simply design them as HTML leveraging PHP's built-in templating feature. By integrating PageMaker, you are upgrading from Twig's direct usage as it facilitates the arrangement of JavaScript, CSS, and templates in a more systematic way than Twig in isolation. While Twig anticipates that you'll manage your own organization, PageMaker streamlines this process, making your layout tasks more efficient and effective.
 
 ### Why not use single-page apps?
-Most applications do not fit the single-page app model. Forcing them into such a design eliminates the advantage of stateless page loads, akin to stuffing all your code into a single object. 
+While single-page applications (SPAs) can offer a smooth and responsive user experience, they are not always the optimal solution. Trying to mold all applications into this design paradigm can inadvertently forego the benefits of stateless page loads, mirroring the convoluted process of cramming your entire codebase into a solitary object.
 
-PageMaker encourages you to decompose your application into separate, naturally occurring pages, managed through a menu or state machine, offering a well-structured user navigation experience.
+One of the core principles of SPAs, the absence of page refreshes, essentially leads to an aggregation of all your JavaScript into a bulky, cumbersome entity. Moreover, it perpetuates the global state of your application in JavaScript over the long haul, adding layers of complexity to your application design.
+
+PageMaker, on the other hand, advocates for the disintegration of your application into distinct, intuitively structured pages. These pages can be navigated via a menu or a state machine, providing a user navigation experience that is both clear and efficient. The majority of the page rendering should be undertaken using direct database queries and PHP templating, reserving JavaScript for on-page animations and utilizing a limited local state that refreshes upon every page load. This approach results in a more organized and manageable application design, keeping complexity in check.
 
 ### How is PageMaker different from OOCSS?
 [Object-oriented CSS (OOCSS)](https://github.com/stubbornella/oocss/wiki) is a method of organizing CSS introduced by Nicole Sullivan in 2009. According to Sullivan's design, a CSS object is comprised of:
