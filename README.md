@@ -93,10 +93,10 @@ A more efficient design for CSS would rely on simple precedence rules rather tha
 1. It would allow for the semantic application of IDs or classes, eliminating concerns about their specificity weights and the need for later overwrites. Therefore, IDs could naturally be used for top-level page containers, with the ability to be overridden by lower-level page classes.
 2. The precedence of third-party stylesheets would be determined by the order in which they were applied, enabling more streamlined coordination.
 
-In the absence of a well-designed CSS system, a practical solution would be to stick exclusively to top-level class-based selectors. By avoiding the use of !important and ID-based selectors, most problems can be mitigated, given that all selectors would then operate at the same level of specificity. Within a widget:
-* Tags can be used as selectors inside top-level class selectors without affecting urelated usage of the tags in other widgets.
+In the absence of a well-designed CSS system, a practical solution would be to stick exclusively to top-level class-based selectors applied to widgets. By avoiding the use of !important and ID-based selectors, most problems can be mitigated, given that all selectors would then operate at the same level of specificity. And within each widget:
+* Tags can be used as selectors inside the top-level class selector of the widget without affecting unrelated usage of the tags in other widgets.
 * Inline styles can be used because they are always applied last so they don't violate the precedence rule.
-* Information hiding and code brevity are achieved because the top-level container can apply complex substyles without needing to specify their subclass names.
+* Information hiding and code brevity are achieved because the widget class can apply complex substyles without needing to specify their subclass names.
 
 ### How is JS poorly designed and how can we do better?
 JavaScript is a programming language that was hastily put together and gradually refined over years via a committee-led process. Its fundamental design leaves much to be desired, marked by issues such as:
