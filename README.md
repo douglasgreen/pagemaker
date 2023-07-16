@@ -5,6 +5,7 @@ A Revolutionary PHP Microframework
 Web applications are fundamentally a collection of web pages. A well-structured web page is a product of a thoughtful and logical design approach. This includes:
 * Hierarchical design: Top-level page containers, intermediate-level widgets, and small-scale widget features.
 * Modular architecture: Divide the application into independent widgets, each encapsulating its own CSS, JS, and HTML templates.
+* Information hiding: The style of top-level CSS and JS selectors hides information about their internal organization and presents a smaller API.
 * Plug-in architecture: Widgets operate independently, allowing their errors to be identified and handled separately.
 * Unambiguous file organization: Each widget is represented by its distinct set of CSS, JS, and HTML template files.
 
@@ -40,6 +41,14 @@ A well-organized JS and CSS file's top-level selector is `.myWidget`, mirroring 
 Our approach cultivates independent and modular widgets, minimizing conflicts. The modularity enables widget swapping, altering, and replicating across different projects, provided they adhere to the same page-building scheme. Furthermore, because the widget is a mere wrapper, it can execute any third-party code, including rendering third-party components.
 
 ### Low-Level Divs
+Each widget is composed of one or more divs, encapsulated within its container and deployed using a flexbox layout. The task of rendering is carried out by the widget itself since it is a matter of local concern.
+
+Given their self-contained nature, widgets can exercise considerable flexibility in their design. For instance, the CSS within a widget can employ information encapsulation by utilizing tag selectors inside the top-level class selector.
+
+* `.myWidget p` - This styles all 'p' tags within the widget, negating the need for a subclass designation.
+* `.myWidget .mySubclass` - By using a subclass, you can expose it to the widget's CSS API where it's implemented in the HTML.
+* `.myWidget` comprising inline styles - This can be a viable approach when there's certainty that the CSS won't need to be reused within the widget.
+
 Each widget comprises one or more divs rendered within its container using a flexbox. The widget itself performs the rendering because it pertains to local concerns.
 
 ### Comparison with Typical Design
@@ -47,6 +56,7 @@ The conventional web design lacks:
 * Layering: Absence of clear separation of various webpage features at different scales.
 * Modularity: JS and CSS often intermingle, making individual features hard to isolate for replacement or redesign.
 * Robustness: Errors within individual page components are typically not isolated, resulting in full-page errors.
+* Information hiding: Every CSS tag and JS event is exposed at the global level.
 * Clear organization: Guidelines for CSS, JS, and HTML code file organization are often missing.
 
 The lack of clear design often leads to a disordered codebase, which is challenging to maintain and enhance.
