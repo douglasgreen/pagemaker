@@ -56,7 +56,7 @@ Every widget houses its own JS, CSS, and HTML template files, such as Twig or PH
 
 A well-organized JS and CSS file's top-level selector is `.pmMenuWidget`, mirroring the widget class name applied to its `<section class="pmMenuWidget">` tag.
 
-The widget files should be collected into subdirectories of a `widgets` directory. Each subdirectory should be given the name of the widget, such as `widgets\menuWidget`.  If color themes are required, they can be split into subfiles like `pmMenuWidgetLight.css` and `pmMenuWidgetDark.css` for separate application.
+The widget files should be collected into subdirectories of a `widgets` directory. Each subdirectory should be given the name of the widget, such as `widgets\menuWidget`. If color themes are required, they can be split into subfiles like `pmMenuWidgetLight.css` and `pmMenuWidgetDark.css` for separate application.
 
 Our method encourages the development of widgets as separate and interchangeable parts to reduce conflicts. The modularity allows for the easy exchange, modification, and duplication of widgets in various projects, as long as they follow the same page structure. Additionally, since the widget is a thin wrapper, it can flexibly run different kinds of external code, such as rendering components from other sources.
 
@@ -74,7 +74,7 @@ The conventional web design lacks:
 * Layering: Absence of clear separation of various webpage features at different scales.
 * Modularity: JS and CSS often intermingle, making individual features hard to isolate for replacement or redesign.
 * Robustness: Errors within individual page components are typically not isolated, resulting in full-page errors.
-* Information hiding: Every CSS tag and JS event is exposed at the global level.
+* Information hiding: Every CSS selector and JS event is exposed at the global level.
 * Clear organization: Guidelines for CSS, JS, and HTML code file organization are often missing.
 
 The lack of clear design often leads to a disordered codebase, which is challenging to maintain and enhance.
@@ -85,11 +85,6 @@ Our design approach offers:
 * Shareable medium-level widgets between pages and projects.
 * Enhanced understanding of project layout and modification procedures.
 * Fewer ad-hoc modifications and arduous bug fixes when adding or altering features.
-
-## CSS Design with PageMaker
-We recommend segmenting CSS files into:
-* Layouts: To control positioning and spacing.
-* Themes: To manage color schemes.
 
 ## Frequently Asked Questions
 ### How is CSS poorly designed and how can we do better?
