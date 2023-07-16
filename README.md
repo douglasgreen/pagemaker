@@ -10,7 +10,7 @@ Web applications are fundamentally collections of web pages. A well-structured w
 * Unambiguous file organization: Each widget is represented by its distinct set of CSS, JS, and HTML template files.
 
 ## Building Pages with PageMaker
-### Top-Level Containers and Sections
+### Top-Level Containers
 The PageMaker microframework facilitates the construction of a web page's top-level structure via the Page class, which generates standard containers:
 * `<body class="pmBody">`: Used for global body styles like background color or font face.
 * `<header class="pmHeader">`: Potential housing for logo, search bar, icon links, and menu navbar.
