@@ -301,6 +301,24 @@ I need to invent an actual plug-in mechanism to copy widgets between projects. A
 
 I'm thinking of a directory into which all of the CSS, JS, Twig, PHTML, font, and asset files can go. Then a manifest file to describe it all.
 
+## Object-oriented programming
+A well-behaved class:
+* Has no mutable static attributes.
+* Uses protected or public for all members so they can be overridden.
+* Breaks functions into pieces so they can be ovverridden.
+* Balances specific type-checking of inputs with flexible inputs.
+* Is easy to set up.
+* Isn't stored in the session.
+
+## Interfaces vs. abstact classes
+Interfaces let the user define their own data as well as their own functionality. So interfaces are more extensible
+than abstract classes.
+
+Interfaces should not define constructors because those also define implementation specific data details.
+
+## Single responsibility principle
+Don't mix I/O, processing, and storage in the same class?
+
 ## References
 * https://www.elinext.com/blog/modular-web-design/
 * https://www.designrush.com/agency/website-design-development/trends/modular-web-design
