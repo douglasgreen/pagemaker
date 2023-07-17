@@ -3,7 +3,6 @@
 * All code, no GUI builders.
 * All functions without $this are static.
 * All timed JS functions must be added to a queue.
-* Avoid internal and inline JS and CSS because hard to replace.
 * Class attributes all protected, functions all public or protected, static functions all public.
 * CMS where pages are stored in PHTML templates in version control.
 * Code is simple enough to read.

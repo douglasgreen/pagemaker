@@ -1,6 +1,8 @@
 # Introducing PageMaker
 An innovative PHP microframework.
 
+The purpose of PageMaker is to organize front-end development of web pages and files so that independent widgets can be copied from project to project and from page to page within a project. This exceeds the typically disorganized web project and even the usual CSS organization methods.
+
 ## Overview
 Web applications are fundamentally collections of web pages. A well-structured web page is a product of a philosophical and logical design approach. This includes:
 * Hierarchical design: Top-level page containers, intermediate-level widgets, and small-scale widget features.
