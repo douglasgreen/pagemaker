@@ -30,7 +30,7 @@
 * The system is vaguely analogous to the WordPress system of plugins and page building but in simplified new code.
 
 ## Philosophy
-A well-design system is easy to describe and understand. By using a modular approach with common vocabulary for
+A well-design system is easy to describe, understand, and modify. By using a modular approach with common vocabulary for
 top-level page elements, it's possible to understand a web app design. And as you move from project to project, each
 project is laid out in the same way, helping you to quickly understand its design.
 
@@ -278,6 +278,16 @@ https://www.loggly.com/ultimate-guide/php-logging-basics/
 * How to handle JS queing conflicts?
 * Add back link outline on focus and underline on hover.
 * Make comparisons with the other CSS systems in https://css-tricks.com/methods-organize-css/
+
+## Parallel hierarchies
+Consider merging file directories that are parallel hierarchies, unless one is public and the other private.
+
+## One public directory
+There is usually a single public directory and multiple private directories in a repository. The reason is that the public directory is often treated especially by being the root of a document server or a distributable folder like `dist`. And so the private directory is can be split into multiple directories for efficiency. Because they are not the public directory, they are all by default private.
+
+## Development process
+* Minimalism - Including minimal dependencies makes upgrades easier. Of course there is good and bad in everything. That requires you to re-implement some basic feature which might then have security flaws. So you must make an intelligent build versus install decision. Implementing basic features like an email class in PageMaker is only intended to cover simple cases. Any more complex cases should install a full feature dependency. But the lack of dependencies in PageMaker let you choose freely between those dependencies.
+* Incrementalism - Development should proceed in an incremental fashion. First, a working kernel of the system should be developed that enables basic data storage. Then it should be overlaid with the minimum viable product (MVP). Once you have a working system, your development should add small changes and features while always keeping the system in a working state.
 
 ## Things to avoid
 * Don't use base rules that style individual tags like ul. Tags are always reused for different purposes and your base rules will inevitably lead to conflict.
