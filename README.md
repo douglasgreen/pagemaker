@@ -1,5 +1,5 @@
 # Introducing PageMaker
-An innovative PHP microframework.
+An innovative PHP microframework. The status is **currently under development and not ready for production use**.
 
 The purpose of PageMaker is to organize front-end development of web pages and files so that independent widgets can be copied from project to project and from page to page within a project. This exceeds the typically disorganized web project and even the usual CSS organization methods.
 
