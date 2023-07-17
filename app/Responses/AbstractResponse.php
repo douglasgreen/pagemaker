@@ -2,7 +2,7 @@
 
 namespace PageMaker\Responses;
 
-abstract class Response
+abstract class AbstractResponse
 {
     protected $content;
     protected $statusCode;

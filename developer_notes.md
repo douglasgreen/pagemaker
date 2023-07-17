@@ -281,6 +281,8 @@ https://www.loggly.com/ultimate-guide/php-logging-basics/
 ## Parallel hierarchies
 Consider merging file directories that are parallel hierarchies, unless one is public and the other private.
 
+So related interfaces, classes, and implementations like Widgets should go into the same directory.
+
 ## One public directory
 There is usually a single public directory and multiple private directories in a repository. The reason is that the public directory is often treated especially by being the root of a document server or a distributable folder like `dist`. And so the private directory is can be split into multiple directories for efficiency. Because they are not the public directory, they are all by default private.
 
@@ -318,6 +320,32 @@ Interfaces should not define constructors because those also define implementati
 
 ## Single responsibility principle
 Don't mix I/O, processing, and storage in the same class?
+
+## File order
+The members come in this order:
+* properties
+* methods
+
+The top groups come in this order:
+* const
+* static
+* instance
+
+The access levels come in this order:
+* public
+* protected
+
+The members come in this order:
+* logical reference
+* alphabetical
+
+For example, the methods come in this logical order:
+* magic methods/constructor/destructor
+* setters
+* getters
+* finalizers like render, save, etc.
+
+Getters and setters should be symmetrical by default.
 
 ## References
 * https://www.elinext.com/blog/modular-web-design/

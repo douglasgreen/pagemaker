@@ -7,7 +7,7 @@ namespace PageMaker\Widgets;
  * The purpose of widget architecture is separation of features and error checking
  * @todo Add section builder to add divs to section?
  */
-class Widget
+abstract class AbstractWidget
 {
     protected $data;
     protected $name;
@@ -44,17 +44,17 @@ class Widget
         $this->version = $version;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function getScripts()
+    public function getScripts(): array
     {
         return $this->scripts;
     }
 
-    public function getStyles()
+    public function getStyles(): array
     {
         return $this->styles;
     }

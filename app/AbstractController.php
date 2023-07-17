@@ -6,7 +6,7 @@ namespace PageMaker;
  * @class Base controller
  * @todo Add middleware for logging, authentication and error handling.
  */
-abstract class Controller
+abstract class AbstractController
 {
     protected $request;
     protected $registry;
