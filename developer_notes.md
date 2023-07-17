@@ -294,6 +294,9 @@ There is usually a single public directory and multiple private directories in a
 * Don't get into specificity fights. In a well-designed system, you shouldn't have to overwrite other styles.
 * Don't use the !important tag because it's the worst kind of specificity fight.
 
+## Internal APIs
+API endpoints can be a subdirectory of the current project and don't have to be a separate project. They can reuse the current database connection and HTTP host.
+
 ## File copying
 I need to invent an actual plug-in mechanism to copy widgets between projects. And I need to be able to version them as well.
 
