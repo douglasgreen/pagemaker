@@ -236,4 +236,4 @@ The shift to VMs often leads to a scenario where each individual part is less co
 
 Similarly, REST APIs have the same issue. Segmenting code into separate REST APIs may make the APIs appear simpler. Yet, to fully describe them, you must also account for access credentials, the layers producing and consuming the API, and the network's condition. This results in a system that, while comprised of simpler components, becomes more complex and brittle in its entirety. Dividing the complexity of a whole project into separate parts doesn't eliminate complexity; it can actually enhance it.
 
-Generally, it's likely preferable to begin with an organized monolithic architecture, only opting to segment the design for specific reasons, such as exceeding the capacity of a single server.
+Generally, it's likely preferable to begin with an organized monolithic architecture on shared development server, only opting to segment the design for specific reasons, such as exceeding the capacity of a single server.
