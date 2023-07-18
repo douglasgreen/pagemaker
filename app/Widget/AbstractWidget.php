@@ -9,18 +9,45 @@ namespace PageMaker\Widget;
  */
 abstract class AbstractWidget
 {
+    protected static $validTags = [
+        'article',
+        'aside',
+        'div',
+        'nav',
+        'section',
+    ];
+
     protected $data;
     protected $name;
+    protected $class;
+    protected $tag;
     protected $scripts = [];
     protected $styles = [];
 
     /** @var string Semantic version of this class and its CSS/JS files */
     protected $version = "0.1.0";
 
-    public function __construct(string $name, array $data = null)
+    public function __construct(string $name, string $tag, string $class, array $data = null)
     {
         $this->name = $name;
+
+        $this->tag = strtolower($tag);
+        if (!in_array($this->tag, self::$validTags)) {
+            throw new Exception('Bad tag');
+        }
+
+        $this->class = $class;
         $this->data = $data;
+    }
+
+    public function setClass(string $class): void
+    {
+        $this->class = $class;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
     }
 
     public function setScript(string $name, string $src): void
@@ -29,6 +56,11 @@ abstract class AbstractWidget
             $src .= '?version=' . $this->version;
         }
         $this->scripts[$name] = $src;
+    }
+
+    public function setTag(string $tag): void
+    {
+        $this->tag = $tag;
     }
 
     public function setStyle(string $name, string $href): void
@@ -44,6 +76,11 @@ abstract class AbstractWidget
         $this->version = $version;
     }
 
+    public function getClass(): string
+    {
+        return $this->class;
+    }
+
     public function getName(): string
     {
         return $this->name;
@@ -57,6 +94,11 @@ abstract class AbstractWidget
     public function getStyles(): array
     {
         return $this->styles;
+    }
+
+    public function getTag(): string
+    {
+        return $this->tag;
     }
 
     /**

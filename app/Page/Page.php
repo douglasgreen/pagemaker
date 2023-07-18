@@ -35,8 +35,8 @@ class Page
         ]
     ];
 
-    /** @var array Top-level containers (parts) that hold sections */
-    protected $sections = [
+    /** @var array Top-level containers (parts) that hold widgets */
+    protected $widgets = [
         'pmHeader' => [],
         'pmMain' => [],
         'pmFooter' => [],
@@ -63,14 +63,14 @@ class Page
     }
 
     /**
-     * Add a section to the top-level part.
+     * Add a widget to the top-level part.
      */
-    public function addSection(string $partClass, Section $section): void
+    public function addWidget(string $partClass, Widget $widget): void
     {
-        if (!isset($this->sections[$partClass])) {
+        if (!isset($this->widgets[$partClass])) {
             throw new Exception('Bad top-level container');
         }
-        $this->sections[$partClass][] = $section;
+        $this->widgets[$partClass][] = $widget;
     }
 
     public function setCharset(string $charset): void
@@ -171,40 +171,31 @@ class Page
 
     protected function renderSection(string $tag, string $partClass): string
     {
-        if (!$this->sections[$partClass]) {
+        if (!$this->widgets[$partClass]) {
             throw new Exception('Bad container class');
         }
         $output = "<$tag class='$partClass'>\n";
-        foreach ($this->sections[$partClass] as $section) {
-            $sectionTag = $section->getTag();
-            $sectionClass = $section->getClass();
-            $widgets = $section->getWidgets();
-            $output .= "<$sectionTag class='$sectionClass'>\n";
-            foreach ($widgets as $widget) {
-                $output .= $this->addWidget($partClass, $sectionClass, $widget);
+        foreach ($this->widgets[$partClass] as $widget) {
+            $widgetTag = $widget->getTag();
+            $widgetClass = $widget->getClass();
+            $output .= "<$widgetTag class='$widgetClass'>\n";
+
+            // @todo What if the widgets have conflicting requirements with the main page?
+            foreach ($widget->getScripts() as $name => $script) {
+                $this->setScript($name, $script);
             }
-            $output .= "</$sectionTag>\n";
+            foreach ($widget->getStyles() as $name => $style) {
+                $this->setStyle($name, $style);
+            }
+            try {
+                $content = $widget->render();
+            } catch (Throwable $e) {
+                $content = '<p style="color: red">Error rendering ' . $widget->getName() . '</p>';
+            }
+                $output .= "</$widgetTag>\n";
         }
+    }
         $output .= "</$tag>\n";
         return $output;
-    }
-
-    /**
-     * Render a widget and add its JS/CSS to the page.
-     */
-    protected function renderWidget(string $partClass, string $sectionClass, Widget $widget): string
-    {
-        foreach ($widget->getScripts() as $name => $script) {
-            $this->setScript($name, $script);
-        }
-        foreach ($widget->getStyles() as $name => $style) {
-            $this->setStyle($name, $style);
-        }
-        try {
-            $content = $widget->render();
-        } catch (Throwable $e) {
-            $content = '<p style="color: red">Error rendering ' . $widget->getName() . '</p>';
-        }
-        return $content . "\n";
-    }
+}
 }
