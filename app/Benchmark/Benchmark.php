@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker;
+namespace PageMaker\Benchmark;
 
 /**
  * @class A basic PHP Benchmark class using the built-in microtime and memory usage functions to calculate the

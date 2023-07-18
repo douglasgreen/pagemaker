@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker;
+namespace PageMaker\Application;
 
 // @todo Add plugin features to body builder
 // The purpose of plugin architecture is separation of features and error checking.

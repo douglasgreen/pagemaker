@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker;
+namespace PageMaker\Form;
 
 /**
  * @class Form validator

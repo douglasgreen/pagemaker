@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker;
+namespace PageMaker\Authentication;
 
 /**
  * @class Authentication

@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker;
+namespace PageMaker\Controller;
 
 use PageMaker\Registry;
 use PageMaker\Request;
