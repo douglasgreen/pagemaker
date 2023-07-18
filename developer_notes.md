@@ -318,6 +318,12 @@ than abstract classes.
 
 Interfaces should not define constructors because those also define implementation specific data details.
 
+Abstract classes are used instead of concrete classes when the implementation is by definition general and incomplete. When a complete definition can be given, it is preferred to use a concrete class directly.
+
+An example of an abstract class is the Widget class, because it sets up a widget typical data without defining any behavior.
+
+An example of concrete class is the email sender class, because it's always possible to send email due to Its predefined behavior.
+
 ## Single responsibility principle
 Don't mix I/O, processing, and storage in the same class?
 
