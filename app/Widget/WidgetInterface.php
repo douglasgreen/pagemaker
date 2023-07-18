@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker\Widgets;
+namespace PageMaker\Widget;
 
 interface WidgetInterface
 {

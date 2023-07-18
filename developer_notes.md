@@ -324,6 +324,15 @@ An example of an abstract class is the Widget class, because it sets up a widget
 
 An example of concrete class is the email sender class, because it's always possible to send email due to Its predefined behavior.
 
+Optional values of function arguments are left out of the interface definitions.
+
+## Class names
+Don't add noise words like Manager or Handler at the end of class names. All classes manage and handle data. It's part of the definition of class.
+
+PSR rules are used for class names:
+* AbstractX
+* XInterface
+
 ## Single responsibility principle
 Don't mix I/O, processing, and storage in the same class?
 
@@ -352,6 +361,15 @@ For example, the methods come in this logical order:
 * finalizers like render, save, etc.
 
 Getters and setters should be symmetrical by default, that is, each getter should have a setter and vice versa.
+
+## Namespaces
+All namespaces should be singular.
+
+Prefer abstract names for namespaces: e.g. the Validator class in the Validation namespace and Routing\Router.
+
+A namespace can also be named after the thing being managed, e.g. File or Database.
+
+So a namespace should fill in the blank "I am doing _____ or managing a/an _____".
 
 ## Controllers
 A PHP controller class, especially in the context of the Model-View-Controller (MVC) design pattern, typically contains the following functions:

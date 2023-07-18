@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker\Responses;
+namespace PageMaker\Response;
 
 abstract class AbstractResponse
 {

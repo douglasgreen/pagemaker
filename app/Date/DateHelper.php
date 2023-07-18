@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker\DateHelper;
+namespace PageMaker\Date;
 
 /**
  * Class Date helper

@@ -75,7 +75,7 @@ Given their self-contained nature, widgets can exercise considerable flexibility
 In a complex project, you may need to repeat the same directory and file organization within packages and subpackages. These should be organized in a hierarchical directory like `[package]/[subpackage]/...`. Then at each level of the package hierarchy you would repeat the same structure of layouts and widgets.
 
 ### PHP autoloading
-PHP files are usually organized into a top-level directory like `app` or `src` which enables PSR-compatible autoload. The PHP source code of widgets can be organized within the `Widgets` namespace of such a directory. The widget should be maintained as separate files or subdirectories of related code in order to maintain the possibility of easily copying a widget from project to project.
+PHP files are usually organized into a top-level directory like `app` or `src` which enables PSR-compatible autoload. The PHP source code of widgets can be organized within the `Widget` namespace of such a directory. The widget should be maintained as separate files or subdirectories of related code in order to maintain the possibility of easily copying a widget from project to project.
 
 ### Other assets
 Other assets like images and fonts can be put into an `assets` directory. Again you should maintain some kind of organized, hierarchical directory structure where assets for each widget are kept separate.

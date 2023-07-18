@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker\Controller;
+namespace PageMaker\Control;
 
 /**
  * @class Base controller

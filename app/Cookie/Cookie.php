@@ -10,7 +10,7 @@ namespace PageMaker\Cookie;
  * want to expand this class to handle these and other situations.
  */
 
-class CookieManager
+class Cookie implements CookieInterface
 {
     /**
      * Set a new cookie
@@ -19,7 +19,7 @@ class CookieManager
      * @param string $value
      * @param int $expiry in seconds
      */
-    public static function setCookie(string $name, string $value, int $expiry = 3600)
+    public static function set(string $name, string $value, int $expiry): void
     {
         if (!isset($_COOKIE[$name])) {
             setcookie($name, $value, time() + $expiry, "/");
@@ -32,7 +32,7 @@ class CookieManager
      * @param string $name
      * @return string|null
      */
-    public static function getCookie(string $name): ?string
+    public static function get(string $name): ?string
     {
         return isset($_COOKIE[$name]) ? $_COOKIE[$name] : null;
     }
@@ -44,7 +44,7 @@ class CookieManager
      * @param string $value
      * @param int $expiry in seconds
      */
-    public static function updateCookie(string $name, string $value, int $expiry = 3600)
+    public static function update(string $name, string $value, int $expiry): void
     {
         if (isset($_COOKIE[$name])) {
             // Set the cookie again with the new value and updated expiration time
@@ -57,7 +57,7 @@ class CookieManager
      *
      * @param string $name
      */
-    public static function deleteCookie(string $name): void
+    public static function delete(string $name): void
     {
         if (isset($_COOKIE[$name])) {
             // Set the cookie with a past expiration date to delete it

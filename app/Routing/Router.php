@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker\Router;
+namespace PageMaker\Routing;
 
 use Exception;
 
