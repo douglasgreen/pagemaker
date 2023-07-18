@@ -345,7 +345,21 @@ For example, the methods come in this logical order:
 * getters
 * finalizers like render, save, etc.
 
-Getters and setters should be symmetrical by default.
+Getters and setters should be symmetrical by default, that is, each getter should have a setter and vice versa.
+
+## Controllers
+A PHP controller class, especially in the context of the Model-View-Controller (MVC) design pattern, typically contains the following functions:
+
+* __construct(): This is the constructor function that is automatically called when an object of the class is created. It is often used to initialize class properties or perform any setup that the class needs before it is used.
+* index(): This function is usually the default method that is called when no method is specified. For example, in a blog application, the index method of the PostsController might retrieve all the blog posts and pass them to a view to be displayed.
+* create(): This function is typically used to display a form to create a new resource (like a new blog post).
+* store(): This function is usually responsible for handling the POST request from the create form, validating the input, and storing the new resource in the database.
+* show($id): This function is typically used to display a single resource. The $id parameter is used to find the specific resource in the database.
+* edit($id): This function is usually used to display a form for editing an existing resource.
+* update($id): This function is typically responsible for handling the POST request from the edit form, validating the input, and updating the resource in the database.
+* destroy($id): This function is usually used to delete a specific resource from the database.
+
+Remember that these are just typical functions and the actual functions in a PHP controller class can vary depending on the specific needs of the application. Also, the names of these functions can change based on the conventions of the PHP framework being used. For example, in Laravel, these are the standard resource controller methods.
 
 ## References
 * https://www.elinext.com/blog/modular-web-design/
