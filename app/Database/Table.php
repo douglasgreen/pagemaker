@@ -2,7 +2,7 @@
 
 namespace PageMaker\Database;
 
-class TableHandler
+class Table
 {
     protected $pdo;
     protected $database;
