@@ -4,6 +4,7 @@ namespace PageMaker\Section;
 
 use Exception;
 
+/** @todo Fix this - a widget should BE a section. */
 class Section
 {
     protected static $validTags = [
