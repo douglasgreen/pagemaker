@@ -10,6 +10,7 @@ class Section
     protected static $validTags = [
         'article',
         'aside',
+        'div',
         'nav',
         'section',
     ];
