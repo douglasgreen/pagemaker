@@ -83,12 +83,6 @@ The body is a series of rows.
 </body>
 ```
 
-## CSS
-Only three queries:
-* Small: < 600px
-* Medium: 600px - 1200px
-* Large: > 1200px
-
 ## Router
 * Each namespace has its own front controller index.php.
 * Pass a parameter `route=name_action` like `route=customer_view`.
