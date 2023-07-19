@@ -98,11 +98,3 @@ The conventional web design lacks:
 * Clear organization: Guidelines for CSS, JS, and HTML code file organization are often missing.
 
 The lack of clear design often leads to a disordered codebase, which is challenging to maintain and enhance.
-
-### Benefits of PageMaker
-
-Our design approach offers:
-* Shared top-level responsive design templates across pages and projects.
-* Shareable medium-level widgets between pages and projects.
-* Enhanced understanding of project layout and modification procedures.
-* Fewer ad-hoc modifications and arduous bug fixes when adding or altering features.

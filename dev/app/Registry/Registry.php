@@ -29,13 +29,7 @@ class Registry implements RegistryInterface
 
     public function set(string $key, string $type, $value): void
     {
-        // Replace type with its alias if it exists
-        if (array_key_exists($type, self::TYPE_ALIASES)) {
-            $type = self::TYPE_ALIASES[$type]; // Fixed this line, original had $typeAliases which doesn't exist
-        }
-
-        // Check type of the value
-        if (gettype($value) !== $type) {
+        if (!$this->hasType($type, $value)) {
             throw new Exception("Invalid type for key $key. Expected $type, got " . gettype($value));
         }
 
@@ -63,5 +57,33 @@ class Registry implements RegistryInterface
     public function has(string $key): bool
     {
         return isset($this->registry[$key]);
+    }
+
+    protected function hasType(string $type, $value): bool
+    {
+        $actualType = gettype($value);
+
+        // Check object type.
+        if ($actualType == 'object') {
+            if (in_array($type, class_parents($x)) {
+                // It's a subclass
+                return true;
+            } elseif (in_array($type, class_implements($x)) {
+                // It's an interface
+                return true;
+            }
+        }
+
+        // Replace type with its alias if it exists
+        if (array_key_exists($type, self::TYPE_ALIASES)) {
+            $type = self::TYPE_ALIASES[$type];
+        }
+
+        // Check any type.
+        if ($type == $actualType) {
+            return true;
+        }
+
+        return false;
     }
 }
