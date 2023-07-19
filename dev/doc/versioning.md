@@ -15,3 +15,7 @@ Autoload is versioned by using the version name in the path:
     }
 },
 ```
+
+The major composer version is the maximum of the major release versions.
+
+Any component that depends on a major release version must be upgraded to that release version.
