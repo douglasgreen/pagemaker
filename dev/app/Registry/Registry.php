@@ -15,9 +15,9 @@ class Registry implements RegistryInterface
      * @const array
      */
     protected const TYPE_ALIASES = [
-        'int' => 'integer',
-        'float' => 'double',
         'bool' => 'boolean',
+        'float' => 'double',
+        'int' => 'integer',
     ];
 
     /**

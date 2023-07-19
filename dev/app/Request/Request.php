@@ -4,6 +4,7 @@ namespace PageMaker\Request;
 
 /**
  * @class Request handler
+ * @todo Replace this with individual classes for each of the globals ($_GET, etc.).
  *
  * Here's a very simple example of a Request class that wraps the PHP superglobals. It uses the filterInput function
  * to sanitize the input values.
@@ -13,7 +14,7 @@ namespace PageMaker\Request;
  * of your application.
  *
  * This Request class includes methods to access the $_GET, $_POST, $_SERVER, $_FILES, and $_COOKIE superglobals. The
- * get, post, server, files, and cookies methods retrieve a value from the corresponding superglobal. If the key is not
+ * get, post, server, file, and cookie methods retrieve a value from the corresponding superglobal. If the key is not
  * present in the superglobal, they return a default value.
  *
  * The isPost and isGet methods can be used to determine the HTTP method of the request. The filterInput function
@@ -29,8 +30,8 @@ class Request
     protected $get;
     protected $post;
     protected $server;
-    protected $files;
-    protected $cookies;
+    protected $file;
+    protected $cookie;
 
     /**
      * @todo Remove default stripping of HTML tags
@@ -97,8 +98,8 @@ class Request
             $this->get = $_GET;      // Contains all GET request parameters
             $this->post = $_POST;    // Contains all POST request parameters
             $this->server = $_SERVER; // Contains server and execution environment information
-            $this->files = $_FILES;   // Contains all file items which were uploaded
-            $this->cookies = $_COOKIE; // Contains all COOKIE data
+            $this->file = $_FILES;   // Contains all file items which were uploaded
+            $this->cookie = $_COOKIE; // Contains all COOKIE data
         }
     }
 
@@ -117,14 +118,20 @@ class Request
         return self::filterInput($this->server, $key, $default);
     }
 
-    public function files(string $key, $default = null)
+    /**
+     * This is just a reader. Process the result with file Uploader.
+     */
+    public function file(string $key, $default = null)
     {
-        return self::filterInput($this->files, $key, $default);
+        return self::filterInput($this->file, $key, $default);
     }
 
-    public function cookies(string $key, $default = null)
+    /**
+     * This is just a reader. Update cookie with Cookie handler.
+     */
+    public function cookie(string $key, $default = null)
     {
-        return self::filterInput($this->cookies, $key, $default);
+        return self::filterInput($this->cookie, $key, $default);
     }
 
     public function isPost(): bool

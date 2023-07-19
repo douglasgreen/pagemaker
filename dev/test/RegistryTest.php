@@ -1,7 +1,7 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
 use PageMaker\Registry\Registry;
+use PHPUnit\Framework\TestCase;
 
 class RegistryTest extends TestCase
 {
