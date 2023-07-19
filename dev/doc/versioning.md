@@ -5,15 +5,10 @@
 In this system, every piece of code and content, whether public or private, is subjected to versioning. This ensures traceability, manageability, and backward compatibility.
 
 - **Initial Version**: The project starts with a 'dev' version, indicating a development or pre-release stage.
-
 - **Major Releases**: As the project matures, major releases are versioned as v1, v2, and so on.
-
 - **Directory-based Versioning**: Each version of the content is placed in a separate directory named after that version. This provides a clear separation and organization of content based on versions.
-
 - **Autoload Versioning**: The versioning extends to the autoload configuration. The version name is used in the path to determine which version of the code should be loaded. For instance, the `PageMakerDev\\` namespace points to the `dev/app/` directory, while `PageMakerV1\\` points to the `v1/app/`.
-
 - **Composer Versioning**: The major version in the composer is set to the highest major release version available.
-
 - **Dependency Management**: Any component that relies on a particular major release version must be updated to that version. This ensures compatibility and reduces the risk of breaking changes.
 
 ### Comparison to REST API Versioning
@@ -21,11 +16,8 @@ In this system, every piece of code and content, whether public or private, is s
 REST API versioning is a strategy used to manage changes in APIs over time without breaking the applications that depend on them.
 
 - **URI Versioning**: The most common method where the version number is included in the URI, e.g., `/v1/users`.
-
 - **Header Versioning**: The version information is sent in the request header.
-
 - **Parameter Versioning**: The version is passed as a parameter in the request.
-
 - **Media Type Versioning**: The version is included in the accept header, specifying a custom media type.
 
 ### Pros and Cons
