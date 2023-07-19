@@ -428,6 +428,15 @@ Criticisms:
 * ISP: This is more of a front-end design principle because front-end designers of user interfaces need to remember that different users have different purposes. This is not even really a developer principle because developer interfaces are always small single purpose designs anyway.
 * DIP: This principle doesn't tell you why but the reason is to swap out different implementations of the concrete. If you don't need to swap out different implementations, you can ignore this principle.
 
+## Lopsided development
+Our development process is badly lopsided. Back in the old days, PHP, CSS, and JS would all be dumped in a big pile and be unorganized.
+
+PHP then developed methods of organization like namespaces and auto loading. Instead of using these methods to build large-scale projects, everything split into REST APIs. These are organized on the back end with numerous interfaces as though they were going to be general large scale projects. Instead they are small scale projects that are filtered through REST APIs so they're internal API flexibility is wasted. These are over organized.
+
+Our JS and CSS went through no such organizational period so they're still a giant blob of whatever.
+
+This is overall poor architecture and should be remedied with a rebalancing. There needs to be more organization on the JS and CSS side. And PHP organization needs to be proportional to the actual accessibility of the project. If it's hidden behind the REST API, there's no need to pretend that it's going to be some giant project that needs to be littered with interfaces everywhere. Only libraries or large projects need that.
+
 ## ChatGPT
 Notes about requests.
 
