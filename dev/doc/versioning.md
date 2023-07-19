@@ -2,7 +2,7 @@
 
 ### Overview
 
-In this system, every piece of code and content, whether public or private, is subjected to versioning. This ensures traceability, manageability, and backward compatibility.
+In the PageMaker system of internal versioning, every piece of code and content, whether public or private, is subjected to versioning. This ensures traceability, manageability, and backward compatibility.
 
 - **Initial Version**: The project starts with a 'dev' version, indicating a development or pre-release stage.
 - **Major Releases**: As the project matures, major releases are versioned as v1, v2, and so on.
