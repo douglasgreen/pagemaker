@@ -326,6 +326,14 @@ An example of concrete class is the email sender class, because it's always poss
 
 Optional values of function arguments are left out of the interface definitions.
 
+## Interface docs
+Document argument and return types on the interface so they are implemented consistently in implementations. This should also include where they're an exception is expected to be thrown.
+
+The proper way to express that an implementation does exactly like the interface is to omit the docblock. Don't use inherentDoc to mean that it should inherit the docblock of the interface because it's actually just to insert the long description not the entire dock block.
+
+## Interface implementation
+The implementation of an interface should not expose any more public methods than are defined in the interface. If a caller depends on optional public methods, then the interface is not compatible. The constructor is an exception because it is called at the time the class is instantiated not when it is passed around and used.
+
 ## Class names
 Don't add noise words like Manager or Handler at the end of class names. All classes manage and handle data. It's part of the definition of class.
 
@@ -335,6 +343,9 @@ PSR rules are used for class names:
 
 ## Single responsibility principle
 Don't mix I/O, processing, and storage in the same class?
+
+## Static calls
+Use registry instead of static calls so classes can be replaced at runtime
 
 ## File order
 The members come in this order:
@@ -371,6 +382,9 @@ A namespace can also be named after the thing being managed, e.g. File or Databa
 
 So a namespace should fill in the blank "I am doing _____ or managing a/an _____".
 
+## Exceptions
+Always throw Exceptions instead of die.
+
 ## Controllers
 A PHP controller class, especially in the context of the Model-View-Controller (MVC) design pattern, typically contains the following functions:
 
@@ -384,6 +398,40 @@ A PHP controller class, especially in the context of the Model-View-Controller (
 * destroy($id): This function is usually used to delete a specific resource from the database.
 
 Remember that these are just typical functions and the actual functions in a PHP controller class can vary depending on the specific needs of the application. Also, the names of these functions can change based on the conventions of the PHP framework being used. For example, in Laravel, these are the standard resource controller methods.
+
+## Code readability
+Pagemaker is a simple developer-oriented framework. There are of course more complete front-end tools and more complex frameworks available. It's key value proposition is that:
+* The page layout process is well defined, layered, and modular more than any other competing organization system
+* The code is simple enough to read, compatible with other development frameworks, and flexible to override or use components independently.
+
+In addition, it would be a simple matter to re-implement the page organizational concepts in any other framework, so feel free to do so.
+
+## Content-dependent
+Much developer advice is bad because it is not justified and context-dependent. For example, https://en.wikipedia.org/wiki/SOLID:
+
+The Single-responsibility principle: "There should never be more than one reason for a class to change." In other words, every class should have only one responsibility.
+The Open–closed principle: "Software entities ... should be open for extension, but closed for modification."
+The Liskov substitution principle: "Functions that use pointers or references to base classes must be able to use objects of derived classes without knowing it." See also design by contract.
+The Interface segregation principle: "Clients should not be forced to depend upon interfaces that they do not use."
+The Dependency inversion principle: "Depend upon abstractions, [not] concretions."
+
+The problems with these pithy bits of advice as given are:
+* The principles aren't justified by telling you why you should do each one and what happens if you don't. That means you are not likely to implement them correctly.
+* The principles are not grounded in a particular context that tells you when you need to do them and when you don't need to do them. That means you're likely to apply them excessively in the wrong context.
+
+Programming rules are not absolutes but are particular adaptations and you should know when and how to apply them.
+
+Criticisms:
+* SRP: Having one reason to change is vague and unexplained. It really means that each class should be a conceptual whole because it's easier to understand. It should also manage only one resource or operate on only one layer of your design, such as separating the processing from the input and output so that you can test processing without having to do input and output.
+* OCP: This principle predates version control and is probably obsolete. Nothing is wrong with modifying classes in a proper system of change and versioning. However, remember that it is easier to extend and modify because modification requires changing existing code that depends on a class.
+* LSP: Breaking this principle would make polymorphism fail because the substitute class would not work as expected.
+* ISP: This is more of a front-end design principle because front-end designers of user interfaces need to remember that different users have different purposes. This is not even really a developer principle because developer interfaces are always small single purpose designs anyway.
+* DIP: This principle doesn't tell you why but the reason is to swap out different implementations of the concrete. If you don't need to swap out different implementations, you can ignore this principle.
+
+## ChatGPT
+Notes about requests.
+
+* Add docblock comments to these methods and properties compatible with PHPDocumentor:
 
 ## References
 * https://www.elinext.com/blog/modular-web-design/

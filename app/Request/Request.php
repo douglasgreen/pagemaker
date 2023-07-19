@@ -32,6 +32,9 @@ class Request
     protected $files;
     protected $cookies;
 
+    /**
+     * @todo Remove default stripping of HTML tags
+     */
     public static function filterInput(array $input, string $key, $default)
     {
         return isset($input[$key]) ? filter_var($input[$key], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : $default;
