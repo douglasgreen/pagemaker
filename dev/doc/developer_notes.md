@@ -1,29 +1,5 @@
 # Developer notes
 
-## Design goals
-* All code, no GUI builders.
-* All functions without $this are static.
-* All timed JS functions must be added to a queue.
-* Class attributes all protected, functions all public or protected, static functions all public.
-* CMS where pages are stored in PHTML templates in version control.
-* Code is simple enough to read.
-* Dependency injection.
-* Explicit is better than implicit.
-* File location in hierarchy by generality (higher is more general).
-* Identifiers all camel case.
-* Lightweight and efficient.
-* Manual is better than magic.
-* Minimal coupling. Pass scalars not classes as arguments.
-* No dependencies.
-* No session abuse (objects shouldn't be stored in sessions).
-* No writable static properties.
-* Separate layout and color themes.
-* Simple is better than complex.
-* Support UUID, versioning, and uploads in database.
-* Type hints everywhere.
-* Ugly URLs for routing. Named parameters are better.
-* Work on CLI, JSON, or HTML.
-
 ## Key concepts
 
 * This is a micro-CMS more than a microframework, since you're given prebuilt page elements.
