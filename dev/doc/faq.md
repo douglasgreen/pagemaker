@@ -1,4 +1,5 @@
 ## Frequently Asked Questions
+
 ### How is CSS poorly designed and how can we do better?
 CSS, with its peculiar specificity rules, operates on a system that assigns scores to different types of selectors:
 * !important = top priority
@@ -21,6 +22,7 @@ In the absence of a well-designed CSS system, a practical solution would be to s
 * Information hiding and code brevity are achieved because the widget class can apply complex substyles without needing to specify their subclass names.
 
 ### How is JS poorly designed and how can we do better?
+
 JavaScript is a programming language that was hastily put together and gradually refined over years via a committee-led process. Its fundamental design leaves much to be desired, marked by issues such as:
 
 * **Output Dependency Issues**: Operations functioning at the output layer, leading to browser inconsistencies and fragility due to an over-reliance on specific document formats instead of managing data in a more universal manner.
@@ -40,6 +42,7 @@ Future iterations of PageMaker may attempt to rectify some of these issues with:
 * **Language Misfeatures**: Formulation or adoption of a simplistic JavaScript style guideline to sidestep language misfeatures.
 
 ### How is PageMaker different from OOCSS?
+
 [Object-oriented CSS (OOCSS)](https://github.com/stubbornella/oocss/wiki) is a method of organizing CSS introduced by Nicole Sullivan in 2009. According to Sullivan's design, a CSS object is comprised of:
 * HTML nodes in the DOM
 * CSS declarations for these nodes
@@ -55,6 +58,7 @@ All CSS declarations in OOCSS begin with the wrapper node's class name. There is
 * **HTML Content Construction**: In OOCSS, no instructions are provided for building HTML content. PageMaker, on the other hand, defines a widget-builder class that employs templating systems to construct each independent HTML unit while managing its error handling.
 
 ### How is PageMaker different from semantic CSS?
+
 CSS selector naming usually falls under one of two systems:
 * **Feature-based system**: Here, selector names represent independent features such as color, size, or layout. Selectors carry adjective-like names like `.yellow`, `.large`, or `.centered`, and each element receives a combination of these tags.
 * **Semantic system**: In this approach, selector names represent what the element stands for. Therefore, selectors carry noun-like names such as `.menu`, `.submitButton`, or `.search`, with a single name applied to each element, denoting its identity.
@@ -66,6 +70,7 @@ PageMaker's approach begins with segmenting the page into widgets. Each widget, 
 This system can be integrated with a flexible selector-defining mechanism similar to Bootstrap's approach, proving most effective when selectors are applied specifically upon class application. Because class selectors are applied only on request, they don't conflict with the widget definitions. This can enable defining a global vocabulary of color terms, preferred fonts, or related styles for a particular site that can be shared between widgets or page containers.
 
 ### How is PageMaker different from atomic CSS?
+
 Atomic CSS, characterized by its adjective-based selectors, stands in contrast to semantic CSS, which primarily utilizes noun-based selectors. The driving principle behind atomic CSS is backend redundancy reduction. When the same style feature is applied across multiple elements, atomic CSS avoids CSS bloat by reusing single-purpose classes rather than duplicating style declarations. Semantic CSS, on the other hand, aims at frontend simplicity, where a single class applied to an element encapsulates all its style features.
 
 Both these strategies come with their distinct advantages, and it's unnecessary to constrain your CSS selectors to one extreme: solely adjectives or nouns.
@@ -75,6 +80,7 @@ PageMaker organizes CSS into top-level container widgets. This structure shouldn
 While this setup may cause some CSS duplication if you want to share code between widgets, the benefits of independent widget modification arguably offset any such 'bloat'. Essentially, PageMaker embraces the strengths of both atomic and semantic CSS, providing a versatile, robust approach to web design.
 
 ### How is PageMaker different from SMACSS?
+
 Scalable and Modular Architecture for CSS (SMACSS) is a CSS organization scheme proposed by Jonathan Snook in 2011, bearing similarities to Object-oriented CSS (OOCSS) in terms of focusing primarily on CSS styling rather than project organization. Indeed, OOCSS served as one of the sources of inspiration for SMACSS.
 
 * **Base Rules**: In contrast to SMACSS, we don't endorse the use of base rules defined by HTML tag selectors. Given the variety in the usage of different types of tags, assigning style based on tag selection isn't advisable. Instead, we encourage confining all style definitions to class-based selectors.
@@ -86,12 +92,15 @@ Scalable and Modular Architecture for CSS (SMACSS) is a CSS organization scheme 
 In summary, while PageMaker acknowledges the strengths of SMACSS, it furthers the approach by emphasizing modular design, where widgets encapsulate all the necessary resources, enhancing the portability and ease of customization.
 
 ### Can PageMaker be used with Symfony or other frameworks?
+
 While Symfony serves as a powerful tool for web application development, it doesn't directly address the page-specific challenges that PageMaker is designed to solve. Symfony, by design, doesn't provide an in-built page builder as it assumes developers will devise their own page structures. Given this, PageMaker's layout solution can work harmoniously with Symfony. PageMaker's components are independently designed, enabling them to be overridden or used together with other frameworks like Symfony, enhancing the functionality and flexibility of your web development process.
 
 ### Can PageMaker be used with Twig or other page layout libraries?
+
 When it comes to page layout, one may question the compatibility of PageMaker with Twig or PHPTAL. Within this architecture, PageMaker serves as the tool to build the page structure, using a simple collection of top-level HTML5 semantic tags. You have the option to utilize Twig or PHPTAL to craft the content of each widget or simply design them as HTML leveraging PHP's built-in templating feature. By integrating PageMaker, you are upgrading from Twig's direct usage as it facilitates the arrangement of JavaScript, CSS, and templates in a more systematic way than Twig in isolation. While Twig anticipates that you'll manage your own organization, PageMaker streamlines this process, making your layout tasks more efficient and effective.
 
 ### Why not use single-page apps?
+
 While single-page applications (SPAs) can offer a smooth and responsive user experience, they are not always the optimal solution. Trying to mold all applications into this design paradigm can inadvertently forego the benefits of stateless page loads, mirroring the convoluted process of cramming your entire codebase into a god object.
 
 One of the core principles of SPAs, the absence of page refreshes, essentially leads to an aggregation of all your JavaScript into a bulky, cumbersome entity. Moreover, it perpetuates the global state of your application in JavaScript over the entire runtime of your web app, adding layers of complexity to your application design.
@@ -99,6 +108,7 @@ One of the core principles of SPAs, the absence of page refreshes, essentially l
 PageMaker, on the other hand, advocates for the disintegration of your application into distinct, intuitively structured pages. These pages can be navigated via a menu or a state machine, providing a user navigation experience that is both clear and efficient. The majority of the page rendering should be undertaken using direct database queries and PHP templating, reserving JavaScript for on-page animations and utilizing a limited local state that refreshes upon every page load. This approach results in a more organized and manageable application design, keeping complexity in check.
 
 ### Why not use REST APIs?
+
 REST APIs are often misused, employed as a code organization tool when in reality, they're intended as units of network architecture. Microservices are even worse because they break down services into granular units that are too small.
 
 In the past, it was common to build unstructured PHP monoliths. Over time, these were swapped out in favor of REST APIs. However, a better approach would have been to use namespaces and autoloading, a pair of advanced structural tools provided in newer versions of PHP.
@@ -127,6 +137,7 @@ These drawbacks can be significant, leading to situations where avoiding a REST 
 * **Database Capacity:** If your database is at its limit, the solution is to utilize multiple database hosts rather than multiple service hosts.
 
 ### Why not use virtual machines?
+
 The prevalent trend of employing virtual machines (VMs) in modern development deserves thoughtful examination. Both the overuse of VMs and REST APIs seem to stem from a flawed understanding: the belief that dissecting an architecture into smaller parts automatically simplifies it. This, however, isn't necessarily true.
 
 A well-designed system should be easy to explain, understand, and modify. To demonstrate, let's contrast two types of system: a shared development server and a group of VMs. Here, we'll assume that the shared server was initially established by the Networking Department and subsequently replaced by VMs. These VMs are running 10 unique projects for 10 different developers, coordinated by DevOps, with individual developers also establishing their own VMs.

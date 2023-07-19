@@ -1,9 +1,11 @@
 # Introducing PageMaker
+
 An innovative PHP microframework. The status is **currently under development and not ready for production use**.
 
 The purpose of PageMaker is to organize front-end development of web pages and files so that independent widgets can be copied from project to project and from page to page within a project. This exceeds the typically disorganized web project and even the usual CSS organization methods.
 
 ## Overview
+
 Web applications are fundamentally collections of web pages. A well-structured web page is a product of a philosophical and logical design approach. This includes:
 * Hierarchical design: Top-level page containers, intermediate-level widgets, and small-scale widget features.
 * Modular architecture: Divide the application into independent widgets, each encapsulating its own CSS, JS, and HTML templates.
@@ -12,6 +14,7 @@ Web applications are fundamentally collections of web pages. A well-structured w
 * Unambiguous file organization: Each widget is represented by its distinct set of CSS, JS, and HTML template files.
 
 ## Building Pages with PageMaker
+
 ### Top-Level Containers
 The PageMaker microframework facilitates the construction of a web page's top-level structure via the Page class, which generates standard containers:
 * `<body class="pmBody">`: Used for global body styles like background color or font face.
@@ -41,6 +44,7 @@ Each top-level container should further specify a grid layout for the widgets in
 The top-level files should be collected into subdirectories of a `layouts` directory. Each subdirectory should be given the name of the basic page layout, such as `layouts\base` or `layouts\leftnav`. If color themes are required, they can be split into subfiles like `pmPageLight.css` and `pmPageDark.css` for separate application.
 
 ### Intermediate-Level Widgets
+
 PageMaker's middle layer comprises various widgets that extend the Widget class. These widgets are rendered using semantic HTML tags like `<section class="pmMenuWidget">` tags, with 'pmMenuWidget' being the name of a possible menu widget. Widgets should be given short, meaningful names that are unique within their program context. The names should end in Widget to make them easily identifiable as widget names.
 
 There are a limited number of semantic tags that can function as widgets, including:
@@ -63,6 +67,7 @@ The widget files should be collected into subdirectories of a `widgets` director
 Our method encourages the development of widgets as separate and interchangeable parts to reduce conflicts. The modularity allows for the easy exchange, modification, and duplication of widgets in various projects, as long as they follow the same page structure. Additionally, since the widget is a thin wrapper, it can flexibly run different kinds of external code, such as rendering components from other sources.
 
 ### Low-Level Divs
+
 Each widget is composed of one or more divs, encapsulated within its container and deployed using a flexbox layout. The widgets are arranged by page layout code as discussed above. But the task of rendering inside the widget is carried out by the widget itself since it is a matter of local concern.
 
 Given their self-contained nature, widgets can exercise considerable flexibility in their design. For instance, the CSS within a widget can employ information hiding by utilizing tag selectors inside the top-level class selector.
@@ -72,15 +77,19 @@ Given their self-contained nature, widgets can exercise considerable flexibility
 * `.pmMenuWidget` using inline styles - This can be a viable approach when there's certainty that the CSS won't need to be reused within the widget.
 
 ### Package directories
+
 In a complex project, you may need to repeat the same directory and file organization within packages and subpackages. These should be organized in a hierarchical directory like `[package]/[subpackage]/...`. Then at each level of the package hierarchy you would repeat the same structure of layouts and widgets.
 
 ### PHP autoloading
+
 PHP files are usually organized into a top-level directory like `app` or `src` which enables PSR-compatible autoload. The PHP source code of widgets can be organized within the `Widget` namespace of such a directory. The widget should be maintained as separate files or subdirectories of related code in order to maintain the possibility of easily copying a widget from project to project.
 
 ### Other assets
+
 Other assets like images and fonts can be put into an `assets` directory. Again you should maintain some kind of organized, hierarchical directory structure where assets for each widget are kept separate.
 
 ### Comparison with Typical Design
+
 The conventional web design lacks:
 * Layering: Absence of clear separation of various webpage features at different scales.
 * Modularity: JS and CSS often intermingle, making individual features hard to isolate for replacement or redesign.
@@ -91,6 +100,7 @@ The conventional web design lacks:
 The lack of clear design often leads to a disordered codebase, which is challenging to maintain and enhance.
 
 ### Benefits of PageMaker
+
 Our design approach offers:
 * Shared top-level responsive design templates across pages and projects.
 * Shareable medium-level widgets between pages and projects.

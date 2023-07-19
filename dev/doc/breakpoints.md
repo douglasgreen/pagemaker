@@ -1,4 +1,5 @@
 ## CSS breakpoints
+
 In the realm of responsive web design, breakpoints are pivotal. They determine how a website's layout will adjust according to the device's screen size. Here's a deeper dive into a three-breakpoint system and how it compares to other systems:
 
 ### Three-Breakpoint System

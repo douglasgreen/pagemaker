@@ -1,4 +1,5 @@
 # Developer notes
+
 ## Design goals
 * All code, no GUI builders.
 * All functions without $this are static.
@@ -24,6 +25,7 @@
 * Work on CLI, JSON, or HTML.
 
 ## Key concepts
+
 * This is a micro-CMS more than a microframework, since you're given prebuilt page elements.
 * The page CSS, JS and HTML are all laid out in predefined IDs allowing a modular approach to page building.
 * Each page ID is a container that is modular and extensible, allowing adding more sections with their own IDs.
@@ -32,6 +34,7 @@
 * The system is vaguely analogous to the WordPress system of plugins and page building but in simplified new code.
 
 ## Philosophy
+
 A well-design system is easy to describe, understand, and modify. By using a modular approach with common vocabulary for
 top-level page elements, it's possible to understand a web app design. And as you move from project to project, each
 project is laid out in the same way, helping you to quickly understand its design.
@@ -47,6 +50,7 @@ Their main features are redundant and they don't provide predefined page-buildin
 architecture. So why bother to install them?
 
 ## Page layout
+
 The body is a series of rows.
 
 ```
@@ -84,11 +88,13 @@ The body is a series of rows.
 ```
 
 ## Router
+
 * Each namespace has its own front controller index.php.
 * Pass a parameter `route=name_action` like `route=customer_view`.
 * A class in that namespace will call the method CustomerController::getView() or CustomerController::postView().
 
 ## JavaScript
+
 JavaScript is widely used as a component and page builder nowadays. I don't like it though and I don't like the JavaScript ecosystem.
 * JavaScript is architecturally poor because it starts on the output layer with accidental details about how the document is presented.
 * JavaScript runs in the browser which leads to poor error reporting and browser incompatibilities.
@@ -99,6 +105,7 @@ JavaScript is widely used as a component and page builder nowadays. I don't like
 My basic concept of JavaScript is that it should be used to update the page but not to render the page. Thus I use it only where local page updates are required. The initial page load should always be pure PHP. This also implies that I avoid depending on REST APIs for basic page rendering so that page loads are monolithic and fast.
 
 ## Assets
+
 * JavaScript and CSS assets are laid out by page element.
 * Element layouts go into the layout directory.
 * All colors go into the themes directory.
@@ -154,6 +161,7 @@ public/styles/pm_colors_dark.css
 ```
 
 ## Package structure
+
 If a project is divided into packages X, Y, and Z, recreate the top-level directory structure in each package directory:
 
 ```
@@ -176,9 +184,11 @@ public/[packageZ]/[subpackage]/scripts/[js]
 ```
 
 ## Configuration
+
 INI files are the chosen format.
 
 ## Rework
+
 A well-organized directory structure is essential for PHP projects to maintain a clean and scalable codebase. While
 there isn't a one-size-fits-all solution, here is a commonly used directory structure that works well for many PHP
 projects.
@@ -260,6 +270,7 @@ need to adjust or expand this structure. Remember, the goal is to maintain a cle
 code organized, and make it easy to navigate and maintain your PHP project.
 
 ## Todo
+
 Rewrite header into generic sections.
 Finish plugins.
 Write a logger like Monolog that logs exceptions to daily rotated file.
@@ -276,31 +287,38 @@ https://www.loggly.com/ultimate-guide/php-logging-basics/
 * Make comparisons with the other CSS systems in https://css-tricks.com/methods-organize-css/
 
 ## Parallel hierarchies
+
 Consider merging file directories that are parallel hierarchies, unless one is public and the other private.
 
 So related interfaces, classes, and implementations like Widgets should go into the same directory.
 
 ## One public directory
+
 There is usually a single public directory and multiple private directories in a repository. The reason is that the public directory is often treated especially by being the root of a document server or a distributable folder like `dist`. And so the private directory is can be split into multiple directories for efficiency. Because they are not the public directory, they are all by default private.
 
 ## Development process
+
 * Minimalism - Including minimal dependencies makes upgrades easier. Of course there is good and bad in everything. That requires you to re-implement some basic feature which might then have security flaws. So you must make an intelligent build versus install decision. Implementing basic features like an email class in PageMaker is only intended to cover simple cases. Any more complex cases should install a full feature dependency. But the lack of dependencies in PageMaker let you choose freely between those dependencies.
 * Incrementalism - Development should proceed in an incremental fashion. First, a working kernel of the system should be developed that enables basic data storage. Then it should be overlaid with the minimum viable product (MVP). Once you have a working system, your development should add small changes and features while always keeping the system in a working state.
 
 ## Things to avoid
+
 * Don't use base rules that style individual tags like ul. Tags are always reused for different purposes and your base rules will inevitably lead to conflict.
 * Don't get into specificity fights. In a well-designed system, you shouldn't have to overwrite other styles.
 * Don't use the !important tag because it's the worst kind of specificity fight.
 
 ## Internal APIs
+
 API endpoints can be a subdirectory of the current project and don't have to be a separate project. They can reuse the current database connection and HTTP host.
 
 ## File copying
+
 I need to invent an actual plug-in mechanism to copy widgets between projects. And I need to be able to version them as well.
 
 I'm thinking of a directory into which all of the CSS, JS, Twig, PHTML, font, and asset files can go. Then a manifest file to describe it all.
 
 ## Object-oriented programming
+
 A well-behaved class:
 * Has no mutable static attributes.
 * Uses protected or public for all members so they can be overridden.
@@ -310,6 +328,7 @@ A well-behaved class:
 * Isn't stored in the session.
 
 ## Interfaces vs. abstact classes
+
 Interfaces let the user define their own data as well as their own functionality. So interfaces are more extensible
 than abstract classes.
 
@@ -324,14 +343,17 @@ An example of concrete class is the email sender class, because it's always poss
 Optional values of function arguments are left out of the interface definitions.
 
 ## Interface docs
+
 Document argument and return types on the interface so they are implemented consistently in implementations. This should also include where they're an exception is expected to be thrown.
 
 The proper way to express that an implementation does exactly like the interface is to omit the docblock. Don't use inherentDoc to mean that it should inherit the docblock of the interface because it's actually just to insert the long description not the entire dock block.
 
 ## Interface implementation
+
 The implementation of an interface should not expose any more public methods than are defined in the interface. If a caller depends on optional public methods, then the interface is not compatible. The constructor is an exception because it is called at the time the class is instantiated not when it is passed around and used.
 
 ## Class names
+
 Don't add noise words like Manager or Handler at the end of class names. All classes manage and handle data. It's part of the definition of class.
 
 PSR rules are used for class names:
@@ -339,12 +361,15 @@ PSR rules are used for class names:
 * XInterface
 
 ## Single responsibility principle
+
 Don't mix I/O, processing, and storage in the same class?
 
 ## Static calls
+
 Use registry instead of static calls so classes can be replaced at runtime
 
 ## File order
+
 The members come in this order:
 * properties
 * methods
@@ -371,6 +396,7 @@ For example, the methods come in this logical order:
 Getters and setters should be symmetrical by default, that is, each getter should have a setter and vice versa.
 
 ## Namespaces
+
 All namespaces should be singular.
 
 Prefer abstract names for namespaces: e.g. the Validator class in the Validation namespace and Routing\Router.
@@ -380,9 +406,11 @@ A namespace can also be named after the thing being managed, e.g. File or Databa
 So a namespace should fill in the blank "I am doing _____ or managing a/an _____".
 
 ## Exceptions
+
 Always throw Exceptions instead of die.
 
 ## Controllers
+
 A PHP controller class, especially in the context of the Model-View-Controller (MVC) design pattern, typically contains the following functions:
 
 * __construct(): This is the constructor function that is automatically called when an object of the class is created. It is often used to initialize class properties or perform any setup that the class needs before it is used.
@@ -397,6 +425,7 @@ A PHP controller class, especially in the context of the Model-View-Controller (
 Remember that these are just typical functions and the actual functions in a PHP controller class can vary depending on the specific needs of the application. Also, the names of these functions can change based on the conventions of the PHP framework being used. For example, in Laravel, these are the standard resource controller methods.
 
 ## Code readability
+
 Pagemaker is a simple developer-oriented framework. There are of course more complete front-end tools and more complex frameworks available. It's key value proposition is that:
 * The page layout process is well defined, layered, and modular more than any other competing organization system
 * The code is simple enough to read, compatible with other development frameworks, and flexible to override or use components independently.
@@ -404,6 +433,7 @@ Pagemaker is a simple developer-oriented framework. There are of course more com
 In addition, it would be a simple matter to re-implement the page organizational concepts in any other framework, so feel free to do so.
 
 ## Content-dependent
+
 Much developer advice is bad because it is not justified and context-dependent. For example, https://en.wikipedia.org/wiki/SOLID:
 
 The Single-responsibility principle: "There should never be more than one reason for a class to change." In other words, every class should have only one responsibility.
@@ -426,6 +456,7 @@ Criticisms:
 * DIP: This principle doesn't tell you why but the reason is to swap out different implementations of the concrete. If you don't need to swap out different implementations, you can ignore this principle.
 
 ## Lopsided development
+
 Our development process is badly lopsided. Back in the old days, PHP, CSS, and JS would all be dumped in a big pile and be unorganized.
 
 PHP then developed methods of organization like namespaces and auto loading. Instead of using these methods to build large-scale projects, everything split into REST APIs. These are organized on the back end with numerous interfaces as though they were going to be general large scale projects. Instead they are small scale projects that are filtered through REST APIs so they're internal API flexibility is wasted. These are over organized.
@@ -435,15 +466,18 @@ Our JS and CSS went through no such organizational period so they're still a gia
 This is overall poor architecture and should be remedied with a rebalancing. There needs to be more organization on the JS and CSS side. And PHP organization needs to be proportional to the actual accessibility of the project. If it's hidden behind the REST API, there's no need to pretend that it's going to be some giant project that needs to be littered with interfaces everywhere. Only libraries or large projects need that.
 
 ## Dependency injection
+
 Dependency injection is done with the registry. The registry uses typed values.
 
 @todo extend it to handle classes and implementations of interfaces.
 @todo Page should offer remove functions like registry and throw exception on override.
 
 ## Static function calls
+
 Avoid. Use registry instead.
 
 ## Standards
+
 The way standards should be defined is:
 * Each standard should specify what you should do or what you must do.
 * Formatting standards should be automated.
@@ -453,11 +487,13 @@ The way standards should be defined is:
 The way standards often work is focusing on trivialities like naming conventions that aren't even automated. This increases the cognitive burden on the programmer while ignoring larger issues of design.
 
 ## ChatGPT
+
 Notes about requests.
 
 * Add docblock comments to these methods and properties compatible with PHPDocumentor:
 
 ## References
+
 * https://www.elinext.com/blog/modular-web-design/
 * https://www.designrush.com/agency/website-design-development/trends/modular-web-design
 * https://www.wearediagram.com/blog/modular-web-design-designing-with-components
