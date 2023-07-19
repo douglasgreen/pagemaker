@@ -124,7 +124,7 @@ PHP then developed methods of organization like namespaces and auto loading. Ins
 
 Our JS and CSS went through no such organizational period so they're still a giant blob of whatever.
 
-This is overall poor architecture and should be remedied with a rebalancing. There needs to be more organization on the JS and CSS side. And PHP organization needs to be proportional to the actual accessibility of the project. If it's hidden behind the REST API, there's no need to pretend that it's going to be some giant project that needs to be littered with interfaces everywhere. Only libraries or large projects need that.
+This is overall poor architecture and should be remedied with a rebalancing. There needs to be more organization on the JS and CSS side. And PHP organization needs to be proportional to the actual accessibility of the project. If it's hidden behind the REST API, there's no need to pretend that it's going to be some giant project that needs to be littered with interfaces everywhere. Only libraries or large projects need that. Passing the output through a REST API cuts off the extensibility because the program interface is closed and only the REST API is exposed.
 
 ## Standards
 
