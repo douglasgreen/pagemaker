@@ -1,3 +1,5 @@
+## Design discussion
+
 Our current system of organizing CSS and JS lacks any higher-level structure or rules. However, a well-designed system should be easy to describe and easy to understand. It is also easy to reapply without reinventing the wheel. So here is my attempt to describe a page builder system.
 
 An HTML page consists of:
