@@ -18,7 +18,7 @@ class Json extends Response
         echo json_encode($data);
     }
 
-    public function __construct(string $data = [], int $statusCode = 200, array $headers = [])
+    public function __construct(array $data = [], int $statusCode = 200, array $headers = [])
     {
         $this->data = $data;
         $this->statusCode = $statusCode;

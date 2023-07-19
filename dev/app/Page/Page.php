@@ -194,8 +194,8 @@ class Page
             }
                 $output .= "</$widgetTag>\n";
         }
-    }
+
         $output .= "</$tag>\n";
         return $output;
-}
+    }
 }

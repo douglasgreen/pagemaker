@@ -7,9 +7,9 @@ use PageMaker\Request;
 
 interface ControllerInterface
 {
-    protected function setRegistry(Registry $registry): void;
-    protected function setRequest(Request $request): void;
+    public function setRegistry(Registry $registry): void;
+    public function setRequest(Request $request): void;
 
-    protected function getRegistry(): Registry;
-    protected function getRequest(): Request;
+    public function getRegistry(): Registry;
+    public function getRequest(): Request;
 }

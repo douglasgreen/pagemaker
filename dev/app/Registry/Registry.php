@@ -65,10 +65,10 @@ class Registry implements RegistryInterface
 
         // Check object type.
         if ($actualType == 'object') {
-            if (in_array($type, class_parents($x)) {
+            if (in_array($type, class_parents($x))) {
                 // It's a subclass
                 return true;
-            } elseif (in_array($type, class_implements($x)) {
+            } elseif (in_array($type, class_implements($x))) {
                 // It's an interface
                 return true;
             }

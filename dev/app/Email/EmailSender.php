@@ -21,20 +21,25 @@ class EmailSender
 
     protected $attachment;
     protected $charset = 'UTF-8';
-    protected $headers = [
-        'From' => null,
-        'Bcc' => [],
-        'Cc' => [],
-        'MIME-Version' => '1.0',
-        'Return-Path' => null,
-        'X-Mailer' => 'PHP/' . phpversion(),
-        'X-Priority' => '1',
-        'X-Sender' => null
-    ];
+    protected $headers = [];
     protected $sections = [];
     protected $subject;
     protected $to;
     protected $useHtml = false;
+
+    public function __construct()
+    {
+        $this->headers = [
+            'From' => null,
+            'Bcc' => [],
+            'Cc' => [],
+            'MIME-Version' => '1.0',
+            'Return-Path' => null,
+            'X-Mailer' => 'PHP/' . phpversion(),
+            'X-Priority' => '1',
+            'X-Sender' => null
+        ];
+    }
 
     public function addBcc(string $bcc): void
     {

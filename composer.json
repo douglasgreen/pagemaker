@@ -19,11 +19,13 @@
     },
     "require-dev": {
         "phpmd/phpmd": "^2.13",
+        "phpunit/phpunit": "^10.2",
         "squizlabs/php_codesniffer": "^3.7"
     },
     "scripts": {
         "fix-js": "npm run fix && npm run format && npx prettier --write .",
         "fix-php": "./vendor/bin/phpcbf",
-        "lint-php": "./vendor/bin/phpcs && ./vendor/bin/phpmd app text phpmd.xml"
+        "lint-php": "./vendor/bin/phpcs && ./vendor/bin/phpmd app text phpmd.xml",
+        "test": "./vendor/bin/phpunit --bootstrap dev/test/bootstrap.php dev/test"
     }
 }

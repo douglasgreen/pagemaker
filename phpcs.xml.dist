@@ -10,4 +10,5 @@
     </rule>
 
     <file>dev/app/</file>
+    <file>dev/test/</file>
 </ruleset>
