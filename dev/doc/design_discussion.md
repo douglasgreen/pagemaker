@@ -126,6 +126,24 @@ Our JS and CSS went through no such organizational period so they're still a gia
 
 This is overall poor architecture and should be remedied with a rebalancing. There needs to be more organization on the JS and CSS side. And PHP organization needs to be proportional to the actual accessibility of the project. If it's hidden behind the REST API, there's no need to pretend that it's going to be some giant project that needs to be littered with interfaces everywhere. Only libraries or large projects need that. Passing the output through a REST API cuts off the extensibility because the program interface is closed and only the REST API is exposed.
 
+## Features
+Website features are decomposed in a hierarchy under top-level version:
+
+v1/feat1/feat2/feat3...
+
+Each feature directory consists of:
+* An index.php for routing.
+* A widgets/ directory for widgets.
+* api/ for REST API endpoints
+* images/ directory for images
+* js/ directory for JavaScript
+* css/ directory for stylesheets
+* templates/ directory for templates
+
+Template files like *.phtml and *.twig can be hidden from the public with web server rules.
+
+The assets in each directory should pertain to that feature and any lower-level features but not higher-level features.
+
 ## Standards
 
 The way standards should be defined is:
