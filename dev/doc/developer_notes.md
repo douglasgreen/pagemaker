@@ -33,22 +33,6 @@
 * The plugins provide for extensible units combining PHP, HTML, JS, and CSS, and a templater like Twig or PHPTAL where errors are isolated to each plugin.
 * The system is vaguely analogous to the WordPress system of plugins and page building but in simplified new code.
 
-## Philosophy
-
-A well-design system is easy to describe, understand, and modify. By using a modular approach with common vocabulary for
-top-level page elements, it's possible to understand a web app design. And as you move from project to project, each
-project is laid out in the same way, helping you to quickly understand its design.
-
-The plugin system is also a robust system where errors in a widget inside the page don't break the page.
-
-Other PHP frameworks focus on:
-* Routing with pretty URLs. But pretty URLs aren't as clear as key/value pairs. Routing is also redundant to the web
-  server, which does routing already.
-* Templating, which is redundant to PHP's built-in templating and forces you to learn another language for templating.
-
-Their main features are redundant and they don't provide predefined page-building structure or a robust plugin
-architecture. So why bother to install them?
-
 ## Page layout
 
 The body is a series of rows.
@@ -92,17 +76,6 @@ The body is a series of rows.
 * Each namespace has its own front controller index.php.
 * Pass a parameter `route=name_action` like `route=customer_view`.
 * A class in that namespace will call the method CustomerController::getView() or CustomerController::postView().
-
-## JavaScript
-
-JavaScript is widely used as a component and page builder nowadays. I don't like it though and I don't like the JavaScript ecosystem.
-* JavaScript is architecturally poor because it starts on the output layer with accidental details about how the document is presented.
-* JavaScript runs in the browser which leads to poor error reporting and browser incompatibilities.
-* JavaScript always drags in a giant pile of dependencies to maintain.
-* Typical JavaScript is lacking in the features of well-designed modularity and typing that enable scalable, well-organized programming.
-* The JavaScript language itself was hastily designed and polished by committee. It's endless feature enhancements make it more complex without making it more attractive. It's the only language I know that has a book that describes the good parts and all of the bad parts that you should avoid.
-
-My basic concept of JavaScript is that it should be used to update the page but not to render the page. Thus I use it only where local page updates are required. The initial page load should always be pure PHP. This also implies that I avoid depending on REST APIs for basic page rendering so that page loads are monolithic and fast.
 
 ## Assets
 
@@ -234,16 +207,6 @@ API endpoints can be a subdirectory of the current project and don't have to be 
 I need to invent an actual plug-in mechanism to copy widgets between projects. And I need to be able to version them as well.
 
 I'm thinking of a directory into which all of the CSS, JS, Twig, PHTML, font, and asset files can go. Then a manifest file to describe it all.
-
-## Object-oriented programming
-
-A well-behaved class:
-* Has no mutable static attributes.
-* Uses protected or public for all members so they can be overridden.
-* Breaks functions into pieces so they can be ovverridden.
-* Balances specific type-checking of inputs with flexible inputs.
-* Is easy to set up.
-* Isn't stored in the session.
 
 ## Interfaces vs. abstact classes
 

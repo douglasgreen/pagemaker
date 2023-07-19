@@ -41,6 +41,17 @@ Future iterations of PageMaker may attempt to rectify some of these issues with:
 * **Dependency Stack Complications**: Minimization of JavaScript dependencies by formulating simple, ad hoc alternatives.
 * **Language Misfeatures**: Formulation or adoption of a simplistic JavaScript style guideline to sidestep language misfeatures.
 
+#### @todo Combine this
+
+JavaScript is widely used as a component and page builder nowadays. I don't like it though and I don't like the JavaScript ecosystem.
+* JavaScript is architecturally poor because it starts on the output layer with accidental details about how the document is presented.
+* JavaScript runs in the browser which leads to poor error reporting and browser incompatibilities.
+* JavaScript always drags in a giant pile of dependencies to maintain.
+* Typical JavaScript is lacking in the features of well-designed modularity and typing that enable scalable, well-organized programming.
+* The JavaScript language itself was hastily designed and polished by committee. It's endless feature enhancements make it more complex without making it more attractive. It's the only language I know that has a book that describes the good parts and all of the bad parts that you should avoid.
+
+My basic concept of JavaScript is that it should be used to update the page but not to render the page. Thus I use it only where local page updates are required. The initial page load should always be pure PHP. This also implies that I avoid depending on REST APIs for basic page rendering so that page loads are monolithic and fast.
+
 ### Criticisms of single-page apps
 
 While single-page applications (SPAs) can offer a smooth and responsive user experience, they are not always the optimal solution. Trying to mold all applications into this design paradigm can inadvertently forego the benefits of stateless page loads, mirroring the convoluted process of cramming your entire codebase into a god object.

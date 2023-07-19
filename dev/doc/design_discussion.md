@@ -23,3 +23,19 @@ The key questions that you want to answer with this system are:
 * How should I build a widget? Just provide it with generic data and let it do all of the work so that it's errors can be caught.
 
 The current system or CSS/JS organization answers none of these questions persuasively therefore this system is better.
+
+### More notes
+
+A well-design system is easy to describe, understand, and modify. By using a modular approach with common vocabulary for
+top-level page elements, it's possible to understand a web app design. And as you move from project to project, each
+project is laid out in the same way, helping you to quickly understand its design.
+
+The plugin system is also a robust system where errors in a widget inside the page don't break the page.
+
+Other PHP frameworks focus on:
+* Routing with pretty URLs. But pretty URLs aren't as clear as key/value pairs. Routing is also redundant to the web
+  server, which does routing already.
+* Templating, which is redundant to PHP's built-in templating and forces you to learn another language for templating.
+
+Their main features are redundant and they don't provide predefined page-building structure or a robust plugin
+architecture. So why bother to install them?
