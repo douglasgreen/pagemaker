@@ -7,14 +7,17 @@
 * CMS where pages are stored in PHTML templates in version control.
 * Code is simple enough to read.
 * Dependency injection.
+* Explicit is better than implicit.
 * File location in hierarchy by generality (higher is more general).
 * Identifiers all camel case.
 * Lightweight and efficient.
+* Manual is better than magic.
 * Minimal coupling. Pass scalars not classes as arguments.
 * No dependencies.
 * No session abuse (objects shouldn't be stored in sessions).
 * No writable static properties.
 * Separate layout and color themes.
+* Simple is better than complex.
 * Support UUID, versioning, and uploads in database.
 * Type hints everywhere.
 * Ugly URLs for routing. Named parameters are better.
@@ -453,6 +456,24 @@ The layers are:
 * CLI utilities
 * REST API
 * Front end
+
+## Dependency injection
+Dependency injection is done with the registry. The registry uses typed values.
+
+@todo extend it to handle classes and implementations of interfaces.
+@todo Page should offer remove functions like registry and throw exception on override.
+
+## Static function calls
+Avoid. Use registry instead.
+
+## Standards
+The way standards should be defined is:
+* Each standard should specify what you should do or what you must do.
+* Formatting standards should be automated.
+* Standard should specify larger design rules that make a system easy to describe and easy to understand and modify.
+* Standards should rarely change in a way that breaks backward compatibility. If they do, they should provide an automated upgrade path.
+
+The way standards often work is focusing on trivialities like naming conventions that aren't even automated. This increases the cognitive burden on the programmer while ignoring larger issues of design.
 
 ## ChatGPT
 Notes about requests.
