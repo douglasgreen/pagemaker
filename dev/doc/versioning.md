@@ -1,4 +1,4 @@
-## Internal and external versioning
+## Comprehensive versioning
 
 ### Overview
 
@@ -38,6 +38,15 @@ REST API versioning is a strategy used to manage changes in APIs over time witho
 **Cons of REST API Versioning**
 1. **Maintenance Overhead**: Maintaining multiple versions of an API can be challenging.
 2. **Potential Confusion**: If not documented well, clients might get confused about which version to use.
+
+### Making versioning comprehensive
+
+The same versioning semantics can be applied to all portions of a project.
+* Databases: The Sample database would be versioned as SampleDev, SampleV1, etc.
+* Assets: Asset directories like `images` can be versioned as `images_dev`, `images_v1`, etc.
+* Web document root: The web document can be split into subdirectories like `dev`, `v1`, etc.
+
+The point is that a single system of semantic, incremental versioning is applied across all project features, leading to disciplined, well-defined versioning throughout.
 
 ## Conclusion
 
