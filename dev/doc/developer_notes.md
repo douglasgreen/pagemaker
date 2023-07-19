@@ -440,23 +440,6 @@ Our JS and CSS went through no such organizational period so they're still a gia
 
 This is overall poor architecture and should be remedied with a rebalancing. There needs to be more organization on the JS and CSS side. And PHP organization needs to be proportional to the actual accessibility of the project. If it's hidden behind the REST API, there's no need to pretend that it's going to be some giant project that needs to be littered with interfaces everywhere. Only libraries or large projects need that.
 
-## Layered design of web apps
-1. Design the database.
-2. Design a data representation layer that represents the database objects as XML, JSON, or PHP data objects.
-3. Design a PHP layer that does all necessary database functions.
-4. Implement a set of command line utilities that perform basic functions using the PHP database API.
-5. Test everything.
-6. Design the front end and its workflow.
-7. Design a REST API layer that implements basic front-end functions.
-
-The layers are:
-* Database
-* Data representation
-* Data storage API
-* CLI utilities
-* REST API
-* Front end
-
 ## Dependency injection
 Dependency injection is done with the registry. The registry uses typed values.
 
