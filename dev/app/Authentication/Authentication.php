@@ -21,13 +21,13 @@ class Authentication
 {
     protected $db;
 
-    public static function logout(): void
+    public function logout(): void
     {
         unset($_SESSION['user_id']);
         session_destroy();
     }
 
-    public static function isUserLoggedIn(): bool
+    public function isUserLoggedIn(): bool
     {
         return isset($_SESSION['user_id']);
     }

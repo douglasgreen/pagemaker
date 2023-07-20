@@ -38,7 +38,7 @@ class Request
     /**
      * @todo Remove default stripping of HTML tags
      */
-    public static function filterInput(array $input, string $key, $default)
+    public function filterInput(array $input, string $key, $default)
     {
         return isset($input[$key]) ? filter_var($input[$key], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : $default;
     }
@@ -107,17 +107,17 @@ class Request
 
     public function get(string $key, $default = null)
     {
-        return self::filterInput($this->get, $key, $default);
+        return $this->filterInput($this->get, $key, $default);
     }
 
     public function post(string $key, $default = null)
     {
-        return self::filterInput($this->post, $key, $default);
+        return $this->filterInput($this->post, $key, $default);
     }
 
     public function server(string $key, $default = null)
     {
-        return self::filterInput($this->server, $key, $default);
+        return $this->filterInput($this->server, $key, $default);
     }
 
     /**
@@ -125,7 +125,7 @@ class Request
      */
     public function file(string $key, $default = null)
     {
-        return self::filterInput($this->file, $key, $default);
+        return $this->filterInput($this->file, $key, $default);
     }
 
     /**
@@ -133,7 +133,7 @@ class Request
      */
     public function cookie(string $key, $default = null)
     {
-        return self::filterInput($this->cookie, $key, $default);
+        return $this->filterInput($this->cookie, $key, $default);
     }
 
     public function isPost(): bool

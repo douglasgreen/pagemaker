@@ -12,47 +12,6 @@ class Table
     protected $fqtn;
     protected $primaryKey;
 
-    public static function buildUpdateList(array $fields): string
-    {
-        if (!$fields) {
-            throw new Exception('Fields required');
-        }
-
-        $updateList = '';
-        foreach ($fields as $field) {
-            $updateList .= "$field = :$field, ";
-        }
-        $updateList = rtrim($updateList, ', ');
-        return $updateList;
-    }
-
-    public static function buildWhereClause(array $fields, string $op = 'AND'): string
-    {
-        if (!$fields) {
-            return '';
-        }
-        $whereClause = 'WHERE ';
-        foreach ($fields as $field) {
-            $whereClause .= "$field = :$field $op ";
-        }
-        $whereClause = rtrim($whereClause, " $op ");
-        return $whereClause;
-    }
-
-    public static function markFields(array $fields, array $usedFields = []): array
-    {
-        $markedFields = [];
-        foreach ($fields as $field) {
-            $i = 1;
-            $newField = $field;
-            while (in_array($newField, $usedFields)) {
-                $newField = $field . $i++;
-            }
-            $markedFields[] = ':' . $newField;
-        }
-        return $markedFields;
-    }
-
     public function __construct(PDO $pdo, string $database, string $table)
     {
         $this->pdo = $pdo;
@@ -74,7 +33,7 @@ class Table
     {
         $fields = array_keys($data);
         $values = array_values($data);
-        $markedFields = self::markFields($fields);
+        $markedFields = $this->markFields($fields);
 
         $fieldsStr = implode(', ', $fields);
         $paramStr = implode(', ', $markedFields);
@@ -109,9 +68,9 @@ class Table
     {
         $fields = array_keys($data);
         $values = array_values($data);
-        $markedFields = self::markFields($fields);
+        $markedFields = $this->markFields($fields);
 
-        $whereClause = self::buildWhereClause($fields, $op);
+        $whereClause = $this->buildWhereClause($fields, $op);
 
         $query = "DELETE FROM $this->fqtn $whereClause";
 
@@ -155,9 +114,9 @@ class Table
     {
         $fields = array_keys($data);
         $values = array_values($data);
-        $markedFields = self::markFields($fields);
+        $markedFields = $this->markFields($fields);
 
-        $whereClause = self::buildWhereClause($fields, $op);
+        $whereClause = $this->buildWhereClause($fields, $op);
 
         $query = "SELECT * FROM $this->fqtn $whereClause";
 
@@ -177,9 +136,9 @@ class Table
 
         $fields = array_keys($data);
         $values = array_values($data);
-        $markedFields = self::markFields($fields);
+        $markedFields = $this->markFields($fields);
 
-        $updateList = self::buildUpdateList($fields);
+        $updateList = $this->buildUpdateList($fields);
 
         $markedKey = ':' . $this->primaryKey;
 
@@ -195,15 +154,15 @@ class Table
     {
         $fields = array_keys($data);
         $values = array_values($data);
-        $markedFields = self::markFields($fields);
+        $markedFields = $this->markFields($fields);
 
         $whereFields = array_keys($whereData);
         $whereValues = array_values($whereData);
-        $whereMarkedFields = self::markFields($whereFields, $fields);
+        $whereMarkedFields = $this->markFields($whereFields, $fields);
 
-        $updateList = self::buildUpdateList($fields);
+        $updateList = $this->buildUpdateList($fields);
 
-        $whereClause = self::buildWhereClause($whereFields, $op);
+        $whereClause = $this->buildWhereClause($whereFields, $op);
 
         $query = "UPDATE $this->fqtn SET $updateList $whereClause";
 
@@ -212,5 +171,46 @@ class Table
         $allData = array_merge($markedData, $whereMarkedData);
         $stmt = $this->pdo->prepare($query);
         $stmt->execute($allData);
+    }
+
+    protected function buildUpdateList(array $fields): string
+    {
+        if (!$fields) {
+            throw new Exception('Fields required');
+        }
+
+        $updateList = '';
+        foreach ($fields as $field) {
+            $updateList .= "$field = :$field, ";
+        }
+        $updateList = rtrim($updateList, ', ');
+        return $updateList;
+    }
+
+    protected function buildWhereClause(array $fields, string $op = 'AND'): string
+    {
+        if (!$fields) {
+            return '';
+        }
+        $whereClause = 'WHERE ';
+        foreach ($fields as $field) {
+            $whereClause .= "$field = :$field $op ";
+        }
+        $whereClause = rtrim($whereClause, " $op ");
+        return $whereClause;
+    }
+
+    protected function markFields(array $fields, array $usedFields = []): array
+    {
+        $markedFields = [];
+        foreach ($fields as $field) {
+            $i = 1;
+            $newField = $field;
+            while (in_array($newField, $usedFields)) {
+                $newField = $field . $i++;
+            }
+            $markedFields[] = ':' . $newField;
+        }
+        return $markedFields;
     }
 }
