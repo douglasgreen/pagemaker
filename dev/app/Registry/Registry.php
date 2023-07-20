@@ -6,6 +6,11 @@ use Exception;
 
 /**
  * @class A registry to store values, checking their type.
+ *
+ * A type can be:
+ * A type alias, like int for integer
+ * A simple type, like a scalar or array
+ * A fully-qualified class or interface name
  */
 class Registry implements RegistryInterface
 {
