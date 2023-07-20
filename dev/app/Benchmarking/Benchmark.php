@@ -34,11 +34,6 @@ class Benchmark
     protected $startMemory;
     protected $endMemory;
 
-    public static function getPeakMemoryUsage(): int
-    {
-        return memory_get_peak_usage();
-    }
-
     public function start(): void
     {
         $this->startTime = microtime(true);
@@ -51,13 +46,18 @@ class Benchmark
         $this->endMemory = memory_get_usage();
     }
 
-    public function getTime(): float
-    {
-        return round($this->endTime - $this->startTime, 3);
-    }
-
     public function getMemoryUsage(): int
     {
         return $this->endMemory - $this->startMemory;
+    }
+
+    public function getPeakMemoryUsage(): int
+    {
+        return memory_get_peak_usage();
+    }
+
+    public function getTime(): float
+    {
+        return round($this->endTime - $this->startTime, 3);
     }
 }

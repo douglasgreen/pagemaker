@@ -44,7 +44,6 @@ architecture. So why bother to install them?
 
 * Absolute is better than relative.
 * All code, no GUI builders.
-* All functions without $this are static.
 * All timed JS functions must be added to a queue.
 * Class attributes all protected, functions all public or protected, static functions all public.
 * CMS where pages are stored in PHTML templates in version control.
