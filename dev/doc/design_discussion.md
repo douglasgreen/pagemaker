@@ -1,4 +1,4 @@
-## Design discussion
+# Design discussion
 
 Our current system of organizing CSS and JS lacks any higher-level structure or rules. However, a well-designed system should be easy to describe and easy to understand. It is also easy to reapply without reinventing the wheel. So here is my attempt to describe a page builder system.
 
@@ -24,7 +24,7 @@ The key questions that you want to answer with this system are:
 
 The current system or CSS/JS organization answers none of these questions persuasively therefore this system is better.
 
-### More notes
+## More notes
 
 A well-design system is easy to describe, understand, and modify. By using a modular approach with common vocabulary for
 top-level page elements, it's possible to understand a web app design. And as you move from project to project, each
@@ -40,7 +40,7 @@ Other PHP frameworks focus on:
 Their main features are redundant and they don't provide predefined page-building structure or a robust plugin
 architecture. So why bother to install them?
 
-### Goals
+## Goals
 
 * Absolute is better than relative.
 * All code, no GUI builders.

@@ -1,4 +1,4 @@
-## Design Process for Web Applications
+# Design Process for Web Applications
 
 1. **Database Design**: Begin by designing the database structure, ensuring that it can efficiently store and manage the required data.
 2. **Data Representation Layer**: Create a layer that represents the database objects. This can be in the form of XML, JSON, or PHP data objects. This layer facilitates the import and export of data and allows for scripting of data processing tasks.
@@ -8,7 +8,7 @@
 6. **Front End Design**: Design the user interface and its associated workflows and widgets, ensuring a seamless and user-friendly experience.
 7. **REST API Layer**: Create a REST API layer that provides essential functions for the front end, allowing it to interact with the backend services and data.
 
-### Layers Involved
+## Layers Involved
 
 - **Database Layer**: The foundational layer where all data is stored.
 - **Data Representation Layer**: Transforms database objects into a standardized format like XML or JSON.

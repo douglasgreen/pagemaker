@@ -1,5 +1,5 @@
-## Error handling
+# Error handling
 
-### Exceptions
+## Exceptions
 
 Always throw Exceptions instead of die.

@@ -1,8 +1,8 @@
-## CSS breakpoints
+# CSS breakpoints
 
 In the realm of responsive web design, breakpoints are pivotal. They determine how a website's layout will adjust according to the device's screen size. Here's a deeper dive into a three-breakpoint system and how it compares to other systems:
 
-### Three-Breakpoint System
+## Three-Breakpoint System
 
 - **Small (for mobile)**: Less than 600px
   - Tailored for mobile devices like smartphones.
@@ -20,7 +20,7 @@ In the realm of responsive web design, breakpoints are pivotal. They determine h
 - **Simplicity**: With only three breakpoints, the design and testing process becomes more streamlined. It's easier to manage and reduces the chances of overlooking layout issues.
 - **Flexibility**: While it offers a general guideline, developers can still introduce additional breakpoints for specific pages or components if required.
 
-### Comparison to Other Systems
+## Comparison to Other Systems
 
 Many responsive designs adopt a more granular approach with five or more breakpoints. This might include:
 

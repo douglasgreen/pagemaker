@@ -1,4 +1,4 @@
-### Benefits of PageMaker
+# Benefits of PageMaker
 
 Our design approach offers:
 * Shared top-level responsive design templates across pages and projects.

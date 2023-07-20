@@ -1,4 +1,4 @@
-## ChatGPT
+# ChatGPT
 
 Notes about requests.
 

@@ -1,6 +1,6 @@
-## CSS Comparisons
+# CSS Comparisons
 
-### Comparing PageMaker and OOCSS
+## Comparing PageMaker and OOCSS
 
 [Object-oriented CSS (OOCSS)](https://github.com/stubbornella/oocss/wiki) is a method of organizing CSS introduced by Nicole Sullivan in 2009. According to Sullivan's design, a CSS object is comprised of:
 * HTML nodes in the DOM
@@ -16,7 +16,7 @@ All CSS declarations in OOCSS begin with the wrapper node's class name. There is
 * **File Organization**: OOCSS does not provide guidelines on the organization of CSS, JS, or HTML files. In contrast, PageMaker prescribes an unambiguous file organization strategy, where files are standalone units named after the widget they represent, thus allowing easier versioning, replacement, and content sharing through clean separation of files.
 * **HTML Content Construction**: In OOCSS, no instructions are provided for building HTML content. PageMaker, on the other hand, defines a widget-builder class that employs templating systems to construct each independent HTML unit while managing its error handling.
 
-### Comparing PageMaker and Semantic CSS
+## Comparing PageMaker and Semantic CSS
 
 CSS selector naming usually falls under one of two systems:
 * **Feature-based system**: Here, selector names represent independent features such as color, size, or layout. Selectors carry adjective-like names like `.yellow`, `.large`, or `.centered`, and each element receives a combination of these tags.
@@ -28,7 +28,7 @@ PageMaker's approach begins with segmenting the page into widgets. Each widget, 
 
 This system can be integrated with a flexible selector-defining mechanism similar to Bootstrap's approach, proving most effective when selectors are applied specifically upon class application. Because class selectors are applied only on request, they don't conflict with the widget definitions. This can enable defining a global vocabulary of color terms, preferred fonts, or related styles for a particular site that can be shared between widgets or page containers.
 
-### Comparing PageMaker and Atomic CSS
+## Comparing PageMaker and Atomic CSS
 
 Atomic CSS, characterized by its adjective-based selectors, stands in contrast to semantic CSS, which primarily utilizes noun-based selectors. The driving principle behind atomic CSS is backend redundancy reduction. When the same style feature is applied across multiple elements, atomic CSS avoids CSS bloat by reusing single-purpose classes rather than duplicating style declarations. Semantic CSS, on the other hand, aims at frontend simplicity, where a single class applied to an element encapsulates all its style features.
 
@@ -38,7 +38,7 @@ PageMaker organizes CSS into top-level container widgets. This structure shouldn
 
 While this setup may cause some CSS duplication if you want to share code between widgets, the benefits of independent widget modification arguably offset any such 'bloat'. Essentially, PageMaker embraces the strengths of both atomic and semantic CSS, providing a versatile, robust approach to web design.
 
-### Comparing PageMaker and SMACSS
+## Comparing PageMaker and SMACSS
 
 Scalable and Modular Architecture for CSS (SMACSS) is a CSS organization scheme proposed by Jonathan Snook in 2011, bearing similarities to Object-oriented CSS (OOCSS) in terms of focusing primarily on CSS styling rather than project organization. Indeed, OOCSS served as one of the sources of inspiration for SMACSS.
 

@@ -1,4 +1,4 @@
-## Dependency Injection
+# Dependency Injection
 
 Dependency injection is done with the registry. The registry uses typed values.
 

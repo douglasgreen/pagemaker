@@ -1,4 +1,4 @@
-## Traceability
+# Traceability
 
 PageMaker is designed to be traceable from the front end to the back end. You should be able to look at a front and component and figure out where it is coming from. This is accomplished by:
 * A layered design that separates high-level page arrangement from medium-level widgets. When those features are mixed together, it makes finding your code more difficult.

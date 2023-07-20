@@ -1,36 +1,8 @@
-## Object-oriented programming
-
-Let's delve into the characteristics that define a well-behaved class in the realm of object-oriented programming
-
-### The absence of mutable static attributes
-
-Mutable static attributes can introduce unexpected behaviors in a program, especially when multiple instances of a class are involved. By ensuring that static attributes are immutable, a class can maintain consistent behavior across all instances. This reduces the risk of side effects and makes the class more predictable.
-
-### The usage of protected or public access modifiers for all members to enable overriding
-
-Access modifiers determine the visibility and accessibility of class members. By using `protected` or `public` access modifiers, a class ensures that its members can be overridden by subclasses. This provides flexibility and allows for the extension of class functionality without modifying the original class.
-
-### Breaking functions into smaller pieces to facilitate overriding
-
-When functions are monolithic or too large, they become difficult to override or extend. By breaking functions into smaller, more modular pieces, subclasses can selectively override specific parts of a function without having to rewrite the entire function. This modular approach promotes code reusability and maintainability.
-
-### Striking a balance between specific type-checking of inputs and allowing flexibility in inputs
-
-While it's essential to ensure that inputs to a function or method are of the expected type, being overly strict can limit flexibility. A well-behaved class finds a balance by implementing specific type-checking where necessary but also allowing for flexible inputs where appropriate. This ensures that the class remains robust while also being adaptable to different use cases.
-
-### Ensuring ease of setup for the class
-
-A class should be designed in a way that makes it easy to instantiate and use. This includes providing clear documentation, intuitive constructors, and default values where necessary. An easy-to-setup class reduces the learning curve for developers and promotes its adoption in various projects.
-
-### Avoiding the storage of the class in the session
-
-Storing classes or objects in sessions can lead to potential issues, especially in web applications. For instance, serialized objects might become outdated if the class definition changes, leading to deserialization errors. Moreover, storing large objects in sessions can consume significant memory. A well-behaved class avoids session storage, ensuring that instances are created and managed appropriately without relying on session persistence.
-
-### Summary
-
-In summary, a well-behaved class in object-oriented programming is designed with predictability, flexibility, and maintainability in mind. By adhering to these principles, developers can create robust and adaptable software components.
+# Object-oriented programming
 
 ## Interfaces
+
+### What sort of methods should interfaces define?
 
 Interfaces should use minimal arguments for flexibility and focus on the outputs that they produce.
 
@@ -39,6 +11,43 @@ They should prefer methods that provide service like render() instead of getters
 The should avoid specifying setters so that either setters or a constructor can build the data more flexibly.
 
 Setters can be provided on the abstract class that implements the interface.
+
+## Abstract classes
+
+
+
+## Access modifiers
+
+### Why shouldn't I use private members?
+
+Access modifiers determine the visibility and accessibility of class members. By using `protected` or `public` access modifiers, a class ensures that its members can be overridden by subclasses. This provides flexibility and allows for the extension of class functionality without modifying the original class.
+
+## Methods
+
+### How should I break down methods in a class?
+
+When functions are monolithic or too large, they become difficult to override or extend. By breaking functions into smaller, more modular pieces, subclasses can selectively override specific parts of a function without having to rewrite the entire function. This modular approach promotes code reusability and maintainability.
+
+### Why shouldn't I use mutable static properties?
+
+Mutable static properties can introduce unexpected behaviors in a program, especially when multiple instances of a class are involved. By ensuring that static properties are immutable, a class can maintain consistent behavior across all instances. This reduces the risk of side effects and makes the class more predictable.
+
+### Why shouldn't I store objects in a PHP session?
+
+Storing objects in sessions can lead to potential issues. For instance, serialized objects might become outdated if the class definition changes, leading to deserialization errors. Moreover, storing large objects in sessions can consume significant memory. A well-behaved class avoids session storage, ensuring that instances are created and managed appropriately without relying on session persistence.
+
+
+
+
+
+
+### Striking a balance between specific type-checking of inputs and allowing flexibility in inputs
+
+While it's essential to ensure that inputs to a function or method are of the expected type, being overly strict can limit flexibility. A well-behaved class finds a balance by implementing specific type-checking where necessary but also allowing for flexible inputs where appropriate. This ensures that the class remains robust while also being adaptable to different use cases.
+
+### Ensuring ease of setup for the class
+
+A class should be designed in a way that makes it easy to instantiate and use. This includes providing clear documentation, intuitive constructors, and default values where necessary. An easy-to-setup class reduces the learning curve for developers and promotes its adoption in various projects.
 
 ## Interfaces vs. abstact classes
 
@@ -69,9 +78,9 @@ The implementation of an interface should not expose any more public methods tha
 
 Don't add noise words like Manager or Handler at the end of class names. All classes manage and handle data. It's part of the definition of class.
 
-PSR rules are used for class names:
-* AbstractX
-* XInterface
+PSR rules are used for class names, where <name> is the class name.
+* Abstract<name>
+* <name>Interface
 
 ## Single responsibility principle
 
@@ -120,19 +129,4 @@ So a namespace should fill in the blank "I am doing _____ or managing a/an _____
 
 ## Controllers
 
-A PHP controller class, especially in the context of the Model-View-Controller (MVC) design pattern, typically contains the following functions:
-
-* __construct(): This is the constructor function that is automatically called when an object of the class is created. It is often used to initialize class properties or perform any setup that the class needs before it is used.
-* index(): This function is usually the default method that is called when no method is specified. For example, in a blog application, the index method of the PostsController might retrieve all the blog posts and pass them to a view to be displayed.
-* create(): This function is typically used to display a form to create a new resource (like a new blog post).
-* store(): This function is usually responsible for handling the POST request from the create form, validating the input, and storing the new resource in the database.
-* show($id): This function is typically used to display a single resource. The $id parameter is used to find the specific resource in the database.
-* edit($id): This function is usually used to display a form for editing an existing resource.
-* update($id): This function is typically responsible for handling the POST request from the edit form, validating the input, and updating the resource in the database.
-* destroy($id): This function is usually used to delete a specific resource from the database.
-
-Remember that these are just typical functions and the actual functions in a PHP controller class can vary depending on the specific needs of the application. Also, the names of these functions can change based on the conventions of the PHP framework being used. For example, in Laravel, these are the standard resource controller methods.
-
-## Static function calls
-
-Avoid. Use registry instead.
+Controllers are defined by the router as <page>Controller with method get<action> or post<action>.

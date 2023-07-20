@@ -1,4 +1,4 @@
-## Project layout
+# Project layout
 
 A well-organized directory structure is essential for PHP projects to maintain a clean and scalable codebase. While there isn't a one-size-fits-all solution, here is a commonly used directory structure that works well for many PHP projects.
 
