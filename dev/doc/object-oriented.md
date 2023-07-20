@@ -90,6 +90,10 @@ Don't mix I/O, processing, and storage in the same class?
 
 Use registry instead of static calls so classes can be replaced at runtime. However it's OK to provide static utility classes. The classes that use them can be overridden if needed.
 
+Put these in a Utility namespace so they are easy to find.
+
+All methods in the Utility namespace should be static. All methods outside the utility namespace should be non-static. Don't mix static and non-static methods in the same class.
+
 ## File order
 
 The members come in this order:

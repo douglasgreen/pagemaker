@@ -2,6 +2,8 @@
 
 namespace PageMaker\Request;
 
+use PageMaker\Utility\PhpConfig;
+
 /**
  * @class Request handler
  * @todo Replace this with individual classes for each of the globals ($_GET, etc.).
@@ -46,7 +48,7 @@ class Request
         global $argv;  // Access to the command line arguments
 
         // Check if the script is running in a command line interface (CLI) environment
-        if (Application::isCli()) {
+        if (PhpConfig::isCli()) {
             // Create an empty array to store our GET data, equivalent to the $_GET superglobal in a web environment
             $this->get = [];
 

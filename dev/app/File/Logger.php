@@ -27,17 +27,17 @@ class Logger
     const WARNING = 'WARNING';
     const ERROR = 'ERROR';
 
-    public static function info(string $message)
+    public function info(string $message)
     {
         self::log(self::INFO, $message);
     }
 
-    public static function warning(string $message)
+    public function warning(string $message)
     {
         self::log(self::WARNING, $message);
     }
 
-    public static function error(string $message)
+    public function error(string $message)
     {
         self::log(self::ERROR, $message);
     }

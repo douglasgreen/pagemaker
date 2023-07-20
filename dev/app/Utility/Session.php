@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker\Session;
+namespace PageMaker\Utility;
 
 /**
  * @class Session

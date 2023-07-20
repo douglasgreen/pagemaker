@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker\File;
+namespace PageMaker\Utility;
 
 use Exception;
 
@@ -23,8 +23,49 @@ use Exception;
  * and sanitize all inputs to these functions, and ensure that they can only be used to manipulate files in a way that
  * is safe and conforms to your application's requirements.
  */
-class Helper
+class File
 {
+    /**
+     * Add a trailing slash.
+     */
+    public static function addTrailingSlash(string $path): string
+    {
+        $path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        return $path;
+    }
+
+    /**
+     * Create a directory.
+     *
+     * @param string $dirPath
+     * @param int $permissions
+     * @return bool
+     */
+    public static function createDirectory(string $dirPath, int $permissions = 0777): bool
+    {
+        if (!file_exists($dirPath)) {
+            return mkdir($dirPath, $permissions, true);
+        }
+
+        return false;
+    }
+
+    /**
+     * Delete a file.
+     *
+     * @param string $filepath
+     * @return bool
+     * @throws Exception
+     */
+    public static function deleteFile(string $filepath): bool
+    {
+        if (file_exists($filepath)) {
+            return unlink($filepath);
+        }
+
+        return true;
+    }
+
     public static function findProjectRoot(): string
     {
         $dir = __DIR__;
@@ -71,46 +112,5 @@ class Helper
         } else {
             return false;
         }
-    }
-
-    /**
-     * Delete a file.
-     *
-     * @param string $filepath
-     * @return bool
-     * @throws Exception
-     */
-    public static function deleteFile(string $filepath): bool
-    {
-        if (!file_exists($filepath)) {
-            throw new Exception("File does not exist: {$filepath}");
-        }
-
-        return unlink($filepath);
-    }
-
-    /**
-     * Create a directory.
-     *
-     * @param string $dirPath
-     * @param int $permissions
-     * @return bool
-     */
-    public static function createDirectory(string $dirPath, int $permissions = 0777): bool
-    {
-        if (!file_exists($dirPath)) {
-            return mkdir($dirPath, $permissions, true);
-        }
-
-        return false;
-    }
-
-    /**
-     * Add a trailing slash.
-     */
-    public static function addTrailingSlash(string $path): string
-    {
-        $path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-        return $path;
     }
 }

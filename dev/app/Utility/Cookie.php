@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker\Cookie;
+namespace PageMaker\Utility;
 
 /**
  * @class Manage cookies.
@@ -10,7 +10,7 @@ namespace PageMaker\Cookie;
  * want to expand this class to handle these and other situations.
  */
 
-class Cookie implements CookieInterface
+class Cookie
 {
     /**
      * Set a new cookie
