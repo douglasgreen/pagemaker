@@ -42,6 +42,7 @@ architecture. So why bother to install them?
 
 ### Goals
 
+* Absolute is better than relative.
 * All code, no GUI builders.
 * All functions without $this are static.
 * All timed JS functions must be added to a queue.
@@ -58,6 +59,7 @@ architecture. So why bother to install them?
 * No dependencies.
 * No session abuse (objects shouldn't be stored in sessions).
 * No writable static properties.
+* Organized is better than unorganized.
 * Separate layout and color themes.
 * Simple is better than complex.
 * Support UUID, versioning, and uploads in database.

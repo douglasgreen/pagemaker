@@ -30,6 +30,16 @@ Storing classes or objects in sessions can lead to potential issues, especially 
 
 In summary, a well-behaved class in object-oriented programming is designed with predictability, flexibility, and maintainability in mind. By adhering to these principles, developers can create robust and adaptable software components.
 
+## Interfaces
+
+Interfaces should use minimal arguments for flexibility and focus on the outputs that they produce.
+
+They should prefer methods that provide service like render() instead of getters that turn the object into a bag of data.
+
+The should avoid specifying setters so that either setters or a constructor can build the data more flexibly.
+
+Setters can be provided on the abstract class that implements the interface.
+
 ## Interfaces vs. abstact classes
 
 Interfaces let the user define their own data as well as their own functionality. So interfaces are more extensible
@@ -69,7 +79,7 @@ Don't mix I/O, processing, and storage in the same class?
 
 ## Static calls
 
-Use registry instead of static calls so classes can be replaced at runtime
+Use registry instead of static calls so classes can be replaced at runtime. However it's OK to provide static utility classes. The classes that use them can be overridden if needed.
 
 ## File order
 
