@@ -28,3 +28,5 @@ Crafting custom exception subclasses in PHP can be beneficial for:
 * **Structured Error Management:** Custom exceptions enable a structured way of error handling. Instead of depending on error codes or other makeshift solutions, you can interrupt the script's normal flow and pass control to a designated exception handler when an exception arises.
 * **Enhanced Error Information:** Custom exception subclasses in PHP can be packed with error specifics like the error message, file location, line number, and stack trace, aiding developers in troubleshooting.
 * **Improved Code Readability:** Custom exceptions can make your PHP code more understandable by assigning descriptive names to potential errors. This can lead to more self-explanatory and maintainable code.
+
+As a well-behaved code library, PageMaker uses its own base exception class everywhere so its exceptions can be distinguished.
