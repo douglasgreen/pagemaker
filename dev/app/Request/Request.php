@@ -27,7 +27,7 @@ use PageMaker\Utility\PhpConfig;
  * the FILTER_SANITIZE_FULL_SPECIAL_CHARS filter may not be appropriate for all situations. For example, you may need
  * different sanitization for email addresses, URLs, integers, etc.
  */
-class Request
+class Request implements RequestInterface
 {
     protected $get;
     protected $post;
@@ -52,35 +52,35 @@ class Request
         }
     }
 
-    public function get(string $key, $default = null)
+    public function get(string $key, $default = null, $useFilter = false)
     {
-        return $this->filterInput($this->get, $key, $default);
+        return $this->filterInput($this->get, $key, $default, $useFilter);
     }
 
-    public function post(string $key, $default = null)
+    public function post(string $key, $default = null, $useFilter = false)
     {
-        return $this->filterInput($this->post, $key, $default);
+        return $this->filterInput($this->post, $key, $default, $useFilter);
     }
 
-    public function server(string $key, $default = null)
+    public function server(string $key, $default = null, $useFilter = false)
     {
-        return $this->filterInput($this->server, $key, $default);
+        return $this->filterInput($this->server, $key, $default, $useFilter);
     }
 
     /**
      * This is just a reader. Process the result with file Uploader.
      */
-    public function file(string $key, $default = null)
+    public function file(string $key, $default = null, $useFilter = false)
     {
-        return $this->filterInput($this->file, $key, $default);
+        return $this->filterInput($this->file, $key, $default, $useFilter);
     }
 
     /**
      * This is just a reader. Update cookie with Cookie handler.
      */
-    public function cookie(string $key, $default = null)
+    public function cookie(string $key, $default = null, $useFilter = false)
     {
-        return $this->filterInput($this->cookie, $key, $default);
+        return $this->filterInput($this->cookie, $key, $default, $useFilter);
     }
 
     public function isPost(): bool
@@ -93,9 +93,13 @@ class Request
         return $this->server('REQUEST_METHOD') === 'GET';
     }
 
-    protected function filterInput(array $input, string $key, $default)
+    protected function filterInput(array $input, string $key, $default, $useFilter)
     {
-        return isset($input[$key]) ? filter_var($input[$key], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : $default;
+        $value = $input[$key]) ?? $default;
+        if ($useFilter) {
+            $value = filter_var($value, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        }
+        return $value;
     }
 
     protected function processArgv(): array
