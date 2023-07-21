@@ -13,7 +13,7 @@ Exceptions are primarily intended to handle unforeseen or exceptional situations
 
 A function might opt to return null in some circumstances:
 
-* **API Design:** When the API is purposefully crafted to yield null under particular scenarios. While the `onBind` method in Android is cited as an example, similar logic can apply in PHP.
+* **API Design:** When the API is purposefully crafted to yield null under particular scenarios such as an unset variable.
 * **Undesirable Defaults:** For functions that return single values, it might be preferable to return null rather than a default or empty instance. Default values may conceal issues or establish intricate dependencies.
 * **Anticipated Lack of Results:** If a function, like a search method, often doesn't find what it's looking for, returning null might be more fitting than throwing an exception. For instance, a null result for a user query on an item that isn't present could be more logical.
 * **Ignorable Null Conditions:** Sometimes, a PHP application can overlook null objects, like when processing database records where some bad records lead to null outcomes. Here, logging the anomaly or flagging it in the UI might suffice.
