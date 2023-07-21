@@ -70,6 +70,8 @@ Document argument and return types on the interface so they are implemented cons
 
 The proper way to express that an implementation does exactly like the interface is to omit the docblock. Don't use inherentDoc to mean that it should inherit the docblock of the interface because it's actually just to insert the long description not the entire dock block.
 
+Leave any optional arguments off of an interface declaration.
+
 ## Interface implementation
 
 The implementation of an interface should not expose any more public methods than are defined in the interface. If a caller depends on optional public methods, then the interface is not compatible. The constructor is an exception because it is called at the time the class is instantiated not when it is passed around and used.
