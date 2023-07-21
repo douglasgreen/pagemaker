@@ -2,6 +2,8 @@
 
 namespace PageMaker\File;
 
+use PageMaker\PageMakerException;
+
 class CSVReader
 {
     protected $file;
@@ -12,7 +14,7 @@ class CSVReader
     public function __construct(string $file, string $delimiter = ',', int $length = 1000)
     {
         if (!file_exists($file) || !is_readable($file)) {
-            throw new Exception("$file not readable");
+            throw new PageMakerException("$file not readable");
         }
         $this->file = fopen($file, 'r');
         $this->delimiter = $delimiter;

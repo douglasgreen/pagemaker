@@ -2,7 +2,7 @@
 
 namespace PageMaker\Registry;
 
-use Exception;
+use PageMaker\PageMakerException;
 
 /**
  * @class A registry to store values, checking their type.
@@ -35,13 +35,13 @@ class Registry implements RegistryInterface
     public function set(string $key, string $type, $value): void
     {
         if (!$this->hasType($type, $value)) {
-            throw new Exception("Invalid type for key $key. Expected $type, got " . gettype($value));
+            throw new PageMakerException("Invalid type for key $key. Expected $type, got " . gettype($value));
         }
 
         if (!isset($this->registry[$key])) {
             $this->registry[$key] = $value;
         } else {
-            throw new Exception("There is already an entry for key $key");
+            throw new PageMakerException("There is already an entry for key $key");
         }
     }
 
@@ -50,7 +50,7 @@ class Registry implements RegistryInterface
         if (isset($this->registry[$key])) {
             return $this->registry[$key];
         } else {
-            throw new Exception("No entry for key $key");
+            throw new PageMakerException("No entry for key $key");
         }
     }
 

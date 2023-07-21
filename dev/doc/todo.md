@@ -15,3 +15,7 @@ https://www.loggly.com/ultimate-guide/php-logging-basics/
 * Add back link outline on focus and underline on hover.
 * Make comparisons with the other CSS systems in https://css-tricks.com/methods-organize-css/
 * Consider error logging, setting error handler, and subclassing exceptions.
+* Don't mark interface with @throws because that is an implementation detail.
+* Don't store interfaces with classes. Rather store them in a contracts directory.
+* Don't name interfaces with Interface. It's redundant when in contracts directory. Name them ...able or ...er (what's its capable of or does)
+* Use PMException everywhere in library so its exceptions can be distinguished.

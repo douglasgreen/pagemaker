@@ -2,6 +2,8 @@
 
 namespace PageMaker\Database;
 
+use PageMaker\PageMakerException;
+
 /**
  * @class Database handler
  *
@@ -33,7 +35,7 @@ class Connection
             // set the PDO error mode to exception
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
-            throw new Exception('Connection failed: ' . $e->getMessage());
+            throw new PageMakerException('Connection failed: ' . $e->getMessage());
         }
     }
 
@@ -43,7 +45,7 @@ class Connection
             $stmt = $this->connection->prepare($sql);
             return $stmt->execute($parameters);
         } catch (PDOException $e) {
-            throw new Exception('Query failed: ' . $e->getMessage());
+            throw new PageMakerException('Query failed: ' . $e->getMessage());
         }
     }
 
@@ -54,7 +56,7 @@ class Connection
             $stmt->execute($parameters);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            throw new Exception('Query failed: ' . $e->getMessage());
+            throw new PageMakerException('Query failed: ' . $e->getMessage());
         }
     }
 

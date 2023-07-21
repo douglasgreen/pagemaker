@@ -2,7 +2,7 @@
 
 namespace PageMaker\Utility;
 
-use Exception;
+use PageMaker\PageMakerException;
 
 /**
  * @class
@@ -55,7 +55,7 @@ class File
      *
      * @param string $filepath
      * @return bool
-     * @throws Exception
+     * @throws PageMakerException
      */
     public static function deleteFile(string $filepath): bool
     {
@@ -76,7 +76,7 @@ class File
             $dir = dirname($dir);
         }
 
-        throw new Exception('Project root not found. Please ensure that the vendor directory is installed by Composer.');
+        throw new PageMakerException('Project root not found. Please ensure that the vendor directory is installed by Composer.');
     }
 
     /**
@@ -84,12 +84,12 @@ class File
      *
      * @param string $filepath
      * @return string
-     * @throws Exception
+     * @throws PageMakerException
      */
     public static function readFile(string $filepath): string
     {
         if (!file_exists($filepath)) {
-            throw new Exception("File does not exist: {$filepath}");
+            throw new PageMakerException("File does not exist: {$filepath}");
         }
 
         return file_get_contents($filepath);

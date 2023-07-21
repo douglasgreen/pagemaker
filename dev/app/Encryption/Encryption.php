@@ -2,6 +2,8 @@
 
 namespace PageMaker\Encryption;
 
+use PageMaker\PageMakerException;
+
 /**
  * Class Handle encryption.
  *
@@ -27,7 +29,7 @@ class Encryption
     public function __construct(string $cipherMethod, string $key, string $iv, int $options = 0)
     {
         if (empty($key) || empty($iv)) {
-            throw new Exception('Both key and iv are required');
+            throw new PageMakerException('Both key and iv are required');
         }
 
         $this->cipherMethod = $cipherMethod;
@@ -40,7 +42,7 @@ class Encryption
     {
         $encryptedData = openssl_encrypt($data, $this->cipherMethod, $this->key, $this->options, $this->iv);
         if ($encryptedData === false) {
-            throw new Exception('Unable to encrypt data');
+            throw new PageMakerException('Unable to encrypt data');
         }
         return base64_encode($encryptedData);
     }
@@ -49,7 +51,7 @@ class Encryption
     {
         $decryptedData = openssl_decrypt(base64_decode($encryptedData), $this->cipherMethod, $this->key, $this->options, $this->iv);
         if ($decryptedData === false) {
-            throw new Exception('Unable to decrypt data');
+            throw new PageMakerException('Unable to decrypt data');
         }
         return $decryptedData;
     }

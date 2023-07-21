@@ -2,6 +2,8 @@
 
 namespace PageMaker\Template;
 
+use PageMaker\PageMakerException;
+
 /**
  * @class Template engine
  *
@@ -44,7 +46,7 @@ class TemplateEngine
      *
      * @param string $filename
      * @return string The rendered template
-     * @throws TemplateNotFoundException If the template file does not exist
+     * @throws PageMakerException If the template file does not exist
      */
     public function render($filename)
     {
@@ -54,7 +56,7 @@ class TemplateEngine
         if (file_exists($this->directory . $filename)) {
             include($this->directory . $filename);
         } else {
-            throw new Exception("Template not found");
+            throw new PageMakerException("Template not found");
         }
 
         return ob_get_clean();

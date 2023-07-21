@@ -2,7 +2,7 @@
 
 namespace PageMaker\Page;
 
-use Exception;
+use PageMaker\PageMakerException;
 use PageMaker\Widget\Widget;
 
 /*
@@ -68,7 +68,7 @@ class Page
     public function addWidget(string $partClass, Widget $widget): void
     {
         if (!isset($this->widgets[$partClass])) {
-            throw new Exception('Bad top-level container');
+            throw new PageMakerException('Bad top-level container');
         }
         $this->widgets[$partClass][] = $widget;
     }
@@ -98,7 +98,7 @@ class Page
             $this->metadata['name'][$name] = $content;
             return;
         }
-        throw new Exception("Unrecognize meta name");
+        throw new PageMakerException("Unrecognize meta name");
     }
 
     public function setScript(string $name, string $src): void
@@ -172,7 +172,7 @@ class Page
     protected function renderSection(string $tag, string $partClass): string
     {
         if (!$this->widgets[$partClass]) {
-            throw new Exception('Bad container class');
+            throw new PageMakerException('Bad container class');
         }
         $output = "<$tag class='$partClass'>\n";
         foreach ($this->widgets[$partClass] as $widget) {

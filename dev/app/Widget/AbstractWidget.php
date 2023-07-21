@@ -2,6 +2,8 @@
 
 namespace PageMaker\Widget;
 
+use PageMaker\PageMakerException;
+
 /**
  * A widget extends this class. It adds scripts, add styles, and output.
  * The purpose of widget architecture is separation of features and error checking
@@ -33,7 +35,7 @@ abstract class AbstractWidget
 
         $this->tag = strtolower($tag);
         if (!in_array($this->tag, self::$validTags)) {
-            throw new Exception('Bad tag');
+            throw new PageMakerException('Bad tag');
         }
 
         $this->class = $class;

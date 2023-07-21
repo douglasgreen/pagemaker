@@ -2,7 +2,7 @@
 
 namespace PageMaker\Email;
 
-use Exception;
+use PageMaker\PageMakerException;
 
 /**
  * @class Email sender
@@ -94,7 +94,7 @@ class EmailSender
     public function setHeader(string $name, string $value): void
     {
         if (!isset($this->headers[$name])) {
-            throw new Exception("Unrecognized header");
+            throw new PageMakerException("Unrecognized header");
         }
         $this->headers[$name] = $value;
     }
