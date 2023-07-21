@@ -209,3 +209,19 @@ I need to invent an actual plug-in mechanism to copy widgets between projects. A
 
 I'm thinking of a directory into which all of the CSS, JS, Twig, PHTML, font, and asset files can go. Then a manifest file to describe it all.
 
+## Widget directories
+
+Widgets should use local files with no namespace. Directories are public and private. The menuWidget directory is
+completely self-contained.
+
+For example, menuWidget dirs:
+
+```
+menuWidgetV1
+menuWidgetV1\public\menuWidget.js
+menuWidgetV1\public\menuWidget.css
+menuWidgetV1\private\MenuWidget.php - contains MenuWidget.php class
+menuWidgetV1\private\menuWidget.twig - contains Twig templates
+menuWidgetV1\private\menuWidget.phtml - contains PHP html templates
+menuWidgetV1\private\run_menu_widget.php - contains executible command-line script
+```
