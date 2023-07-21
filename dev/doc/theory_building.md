@@ -1,6 +1,6 @@
 # Review of "Programming as Theory Building" by Peter Naur
 
-Peter Naur wrote an article called "Programming as Theory Building." In it, he says programming isn't just about writing code. It's about really understanding the problem you're trying to solve.
+Peter Naur wrote an article called ["Programming as Theory Building](https://pages.cs.wisc.edu/~remzi/Naur.pdf)". In it, he says programming isn't just about writing code. It's about really understanding the problem you're trying to solve.
 
 Naur uses the idea of "theory" from a philosopher named Gilbert Ryle. Basically, it's the deep knowledge someone has when they can do something, explain it, answer questions about it, and more. When a programmer deeply understands a problem, they build this kind of knowledge.
 
