@@ -6,3 +6,4 @@
 * Use plural or category name for all database tables.
 * Use singular category name for all namespaces.
 * Use singular name for all file directories.
+* Prefer complete words to abbreviations in all public-facing, non-local names.
