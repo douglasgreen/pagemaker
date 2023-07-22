@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker\Response;
+namespace PageMakerDev\Response;
 
 /**
  * Use this class for CLI response.

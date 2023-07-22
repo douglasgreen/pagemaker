@@ -11,7 +11,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "PageMaker\\": "dev/app/"
+            "PageMakerDev\\": "dev/app/"
         }
     },
     "require": {
@@ -25,7 +25,7 @@
     "scripts": {
         "fix-js": "npm run fix && npm run format && npx prettier --write .",
         "fix-php": "./vendor/bin/phpcbf",
-        "lint-php": "./vendor/bin/phpcs && ./vendor/bin/phpmd app text phpmd.xml",
+        "lint-php": "./vendor/bin/phpcs && ./vendor/bin/phpmd dev/app text phpmd.xml",
         "test": "./vendor/bin/phpunit --bootstrap dev/test/bootstrap.php dev/test"
     }
 }

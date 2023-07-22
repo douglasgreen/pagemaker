@@ -1,8 +1,8 @@
 <?php
 
-namespace PageMaker;
+namespace PageMakerDev;
 
-use PageMaker\Widget\Widget;
+use PageMakerDev\Widget\Widget;
 
 /*
  * @class Page builder

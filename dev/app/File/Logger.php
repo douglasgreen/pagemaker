@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker\File;
+namespace PageMakerDev\File;
 
 /**
  * @class Logger

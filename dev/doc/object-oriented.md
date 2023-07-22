@@ -82,6 +82,10 @@ Leave any optional arguments off of an interface declaration.
 
 The implementation of an interface should not expose any more public methods than are defined in the interface. If a caller depends on optional public methods, then the interface is not compatible. The constructor is an exception because it is called at the time the class is instantiated not when it is passed around and used.
 
+The interface can be aliases to use both at once:
+
+use PageMaker\Contract\Registry as RegistryInterface;
+
 ## Class names
 
 Don't add noise words like Manager or Handler at the end of class names. All classes manage and handle data. It's part of the definition of class.

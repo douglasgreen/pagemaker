@@ -1,8 +1,8 @@
 <?php
 
-namespace PageMaker;
+namespace PageMakerDev;
 
-use PageMaker\Contract\Registry as RegistryInterface;
+use PageMakerDev\Contract\Registry as RegistryInterface;
 
 /**
  * @class A registry to store values, checking their type.

@@ -1,6 +1,9 @@
 <?php
 
-use PageMaker\Registry;
+namespace PageMakerDev\Test;
+
+use PageMakerDev\LibraryException;
+use PageMakerDev\Registry;
 use PHPUnit\Framework\TestCase;
 
 class RegistryTest extends TestCase
@@ -16,7 +19,7 @@ class RegistryTest extends TestCase
 
     public function testGetNonexistentKey()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(LibraryException::class);
         $this->expectExceptionMessage('No entry for key key1');
 
         $registry = new Registry();
@@ -41,7 +44,7 @@ class RegistryTest extends TestCase
 
     public function testSetExistingKey()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(LibraryException::class);
         $this->expectExceptionMessage('There is already an entry for key key1');
 
         $registry = new Registry();
@@ -51,7 +54,7 @@ class RegistryTest extends TestCase
 
     public function testSetInvalidTypeValue()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(LibraryException::class);
         $this->expectExceptionMessage('Invalid type for key key1. Expected int, got string');
 
         $registry = new Registry();

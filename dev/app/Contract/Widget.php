@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker\Contract;
+namespace PageMakerDev\Contract;
 
 interface Widget
 {

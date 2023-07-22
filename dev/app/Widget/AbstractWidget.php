@@ -1,8 +1,8 @@
 <?php
 
-namespace PageMaker\Widget;
+namespace PageMakerDev\Widget;
 
-use PageMaker\LibraryException;
+use PageMakerDev\LibraryException;
 
 /**
  * A widget extends this class. It adds scripts, add styles, and output.

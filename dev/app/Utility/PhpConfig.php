@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker\Utility;
+namespace PageMakerDev\Utility;
 
 class PhpConfig
 {

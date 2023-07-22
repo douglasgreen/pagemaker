@@ -1,8 +1,8 @@
 <?php
 
-namespace PageMaker\Utility;
+namespace PageMakerDev\Utility;
 
-use PageMaker\LibraryException;
+use PageMakerDev\LibraryException;
 
 /**
  * @class

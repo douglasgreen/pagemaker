@@ -1,8 +1,8 @@
 <?php
 
-namespace PageMaker\Contract;
+namespace PageMakerDev\Contract;
 
-use PageMaker\Utility\PhpConfig;
+use PageMakerDev\Utility\PhpConfig;
 
 /**
  * Handles retrieval of $_GET, $_POST, $_SERVER, and $_COOKIE vars from a request.

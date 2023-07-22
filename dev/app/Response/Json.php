@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker\Response;
+namespace PageMakerDev\Response;
 
 class Json extends Response
 {

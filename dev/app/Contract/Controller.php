@@ -1,9 +1,9 @@
 <?php
 
-namespace PageMaker\Contract;
+namespace PageMakerDev\Contract;
 
-use PageMaker\Registry;
-use PageMaker\Request;
+use PageMakerDev\Registry;
+use PageMakerDev\Request;
 
 interface Controller
 {

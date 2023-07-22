@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker;
+namespace PageMakerDev;
 
 /**
  * @class Template engine

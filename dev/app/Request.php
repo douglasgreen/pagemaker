@@ -1,27 +1,24 @@
 <?php
 
-namespace PageMaker;
+namespace PageMakerDev;
 
-use PageMaker\Utility\PhpConfig;
+use PageMakerDev\Utility\PhpConfig;
+use PageMakerDev\Contract\Request as RequestInterface;
 
 /**
  * @class Request handler
- * @todo Replace this with individual classes for each of the globals ($_GET, etc.).
  *
- * Here's a very simple example of a Request class that wraps the PHP superglobals. It uses the filterInput function
- * to sanitize the input values.
- *
- * Please note that the filterInput function is a simplistic way to sanitize input and may not be appropriate for all
- * situations. You should use more comprehensive validation and sanitization techniques depending on the specific needs
- * of your application.
+ * Here's a simple request class that wraps the PHP superglobals.
  *
  * This Request class includes methods to access the $_GET, $_POST, $_SERVER, $_FILES, and $_COOKIE superglobals. The
  * get, post, server, file, and cookie methods retrieve a value from the corresponding superglobal. If the key is not
  * present in the superglobal, they return a default value.
  *
- * Remember to use more complex validation and sanitization logic for real applications. The filter_var function with
- * the FILTER_SANITIZE_FULL_SPECIAL_CHARS filter may not be appropriate for all situations. For example, you may need
- * different sanitization for email addresses, URLs, integers, etc.
+ * The filter_var function with the FILTER_SANITIZE_FULL_SPECIAL_CHARS filter may not be appropriate for all
+ * situations. For example, you may need different sanitization for email addresses, URLs, integers, etc.
+ *
+ * For testing, fake superglobal arrays can be injected to the constructor. Otherwise, the built-in superglobals are
+ * accessed directly rather than being copied to save memory.
  */
 class Request implements RequestInterface
 {
@@ -31,8 +28,13 @@ class Request implements RequestInterface
     protected $cookies;
     protected $files;
 
-    public function __construct()
-    {
+    public function __construct(
+        ?array $getVars = null,
+        ?array $postVars = null,
+        ?array $serverVars = null,
+        ?array $files = null,
+        ?array $cookies = null,
+    ) {
         global $argv;  // Access to the command line arguments
 
         // Check if the script is running in a command line interface (CLI) environment
@@ -40,11 +42,11 @@ class Request implements RequestInterface
             $this->getVars = $this->processArgv();
         } else {
             // For a non-CLI environment, populate the relevant properties from the superglobals
-            $this->getVars = $_GET;      // Contains all GET request parameters
-            $this->postVars = $_POST;    // Contains all POST request parameters
-            $this->serverVars = $_SERVER; // Contains server and execution environment information
-            $this->files = $_FILES;   // Contains all file items which were uploaded
-            $this->cookies = $_COOKIE; // Contains all COOKIE data
+            $this->getVars = $getVars;
+            $this->postVars = $postVars;
+            $this->serverVars = $serverVars;
+            $this->files = $files;
+            $this->cookies = $cookies;
         }
     }
 
@@ -53,12 +55,32 @@ class Request implements RequestInterface
      */
     public function cookie(string $key, $default = null, $useFilter = false)
     {
-        return $this->filterInput($this->cookies, $key, $default, $useFilter);
+        if (isset($this->cookies)) {
+            $value = $this->cookies[$key] ?? $default;
+        } else {
+            $value = $_COOKIE[$key] ?? $default;
+        }
+
+        if ($useFilter) {
+            $value = filter_var($value, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        }
+
+        return $value;
     }
 
     public function get(string $key, $default = null, $useFilter = false)
     {
-        return $this->filterInput($this->getVars, $key, $default, $useFilter);
+        if (isset($this->getVars)) {
+            $value = $this->getVars[$key] ?? $default;
+        } else {
+            $value = $_GET[$key] ?? $default;
+        }
+
+        if ($useFilter) {
+            $value = filter_var($value, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        }
+
+        return $value;
     }
 
     /**
@@ -66,25 +88,46 @@ class Request implements RequestInterface
      */
     public function file(string $key, $default = null, $useFilter = false)
     {
-        return $this->filterInput($this->files, $key, $default, $useFilter);
+        if (isset($this->files)) {
+            $value = $this->files[$key] ?? $default;
+        } else {
+            $value = $_FILES[$key] ?? $default;
+        }
+
+        if ($useFilter) {
+            $value = filter_var($value, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        }
+
+        return $value;
     }
 
     public function post(string $key, $default = null, $useFilter = false)
     {
-        return $this->filterInput($this->postVars, $key, $default, $useFilter);
+        if (isset($this->postVars)) {
+            $value = $this->postVars[$key] ?? $default;
+        } else {
+            $value = $_POST[$key] ?? $default;
+        }
+
+        if ($useFilter) {
+            $value = filter_var($value, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        }
+
+        return $value;
     }
 
     public function server(string $key, $default = null, $useFilter = false)
     {
-        return $this->filterInput($this->serverVars, $key, $default, $useFilter);
-    }
+        if (isset($this->serverVars)) {
+            $value = $this->serverVars[$key] ?? $default;
+        } else {
+            $value = $_SERVER[$key] ?? $default;
+        }
 
-    protected function filterInput(array $input, string $key, $default, $useFilter)
-    {
-        $value = $input[$key]) ?? $default;
         if ($useFilter) {
             $value = filter_var($value, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         }
+
         return $value;
     }
 

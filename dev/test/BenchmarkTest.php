@@ -1,6 +1,8 @@
 <?php
 
-use PageMaker\Benchmark;
+namespace PageMakerDev\Test;
+
+use PageMakerDev\Benchmark;
 use PHPUnit\Framework\TestCase;
 
 class BenchmarkTest extends TestCase

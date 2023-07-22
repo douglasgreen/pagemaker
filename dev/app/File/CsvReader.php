@@ -1,8 +1,8 @@
 <?php
 
-namespace PageMaker\File;
+namespace PageMakerDev\File;
 
-use PageMaker\LibraryException;
+use PageMakerDev\LibraryException;
 
 class CSVReader
 {

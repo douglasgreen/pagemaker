@@ -1,8 +1,8 @@
 <?php
 
-namespace PageMaker\Database;
+namespace PageMakerDev\Database;
 
-use PageMaker\LibraryException;
+use PageMakerDev\LibraryException;
 
 class Table
 {
