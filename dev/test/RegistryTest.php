@@ -1,6 +1,6 @@
 <?php
 
-use PageMaker\Registry\Registry;
+use PageMaker\Registry;
 use PHPUnit\Framework\TestCase;
 
 class RegistryTest extends TestCase
