@@ -67,7 +67,7 @@ class Page
     public function addWidget(string $partClass, Widget $widget): void
     {
         if (!isset($this->widgets[$partClass])) {
-            throw new PageMakerException('Bad top-level container');
+            throw new LibraryException('Bad top-level container');
         }
         $this->widgets[$partClass][] = $widget;
     }
@@ -97,7 +97,7 @@ class Page
             $this->metadata['name'][$name] = $content;
             return;
         }
-        throw new PageMakerException("Unrecognize meta name");
+        throw new LibraryException("Unrecognize meta name");
     }
 
     public function setScript(string $name, string $src): void
@@ -171,7 +171,7 @@ class Page
     protected function renderSection(string $tag, string $partClass): string
     {
         if (!$this->widgets[$partClass]) {
-            throw new PageMakerException('Bad container class');
+            throw new LibraryException('Bad container class');
         }
         $output = "<$tag class='$partClass'>\n";
         foreach ($this->widgets[$partClass] as $widget) {

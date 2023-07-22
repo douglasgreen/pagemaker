@@ -33,13 +33,13 @@ class Registry implements RegistryInterface
     public function set(string $key, string $type, $value): void
     {
         if (!$this->hasType($type, $value)) {
-            throw new PageMakerException("Invalid type for key $key. Expected $type, got " . gettype($value));
+            throw new LibraryException("Invalid type for key $key. Expected $type, got " . gettype($value));
         }
 
         if (!isset($this->registry[$key])) {
             $this->registry[$key] = $value;
         } else {
-            throw new PageMakerException("There is already an entry for key $key");
+            throw new LibraryException("There is already an entry for key $key");
         }
     }
 
@@ -48,7 +48,7 @@ class Registry implements RegistryInterface
         if (isset($this->registry[$key])) {
             return $this->registry[$key];
         } else {
-            throw new PageMakerException("No entry for key $key");
+            throw new LibraryException("No entry for key $key");
         }
     }
 

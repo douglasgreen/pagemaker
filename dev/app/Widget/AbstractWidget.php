@@ -2,7 +2,7 @@
 
 namespace PageMaker\Widget;
 
-use PageMaker\PageMakerException;
+use PageMaker\LibraryException;
 
 /**
  * A widget extends this class. It adds scripts, add styles, and output.
@@ -35,7 +35,7 @@ abstract class AbstractWidget
 
         $this->tag = strtolower($tag);
         if (!in_array($this->tag, self::$validTags)) {
-            throw new PageMakerException('Bad tag');
+            throw new LibraryException('Bad tag');
         }
 
         $this->class = $class;

@@ -2,14 +2,14 @@
 
 namespace PageMaker\Utility;
 
-use PageMaker\PageMakerException;
+use PageMaker\LibraryException;
 
 class Value
 {
     public static function checkEmail(string $email): void
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new PageMakerException('Invalid email format');
+            throw new LibraryException('Invalid email format');
         }
     }
 
@@ -20,7 +20,7 @@ class Value
         $pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/';
 
         if (!preg_match($pattern, $password)) {
-            throw new PageMakerException('Invalid password');
+            throw new LibraryException('Invalid password');
         }
     }
 
@@ -31,14 +31,14 @@ class Value
         $pattern = '/^\+1[2-9]\d{2}[2-9]\d{2}\d{4}$/';
 
         if (!preg_match($pattern, $phoneNumber)) {
-            throw new PageMakerException('Invalid phone number');
+            throw new LibraryException('Invalid phone number');
         }
     }
 
     public static function checkRequired(string $field, string $value): void
     {
         if (empty($value)) {
-            throw new PageMakerException($field . ' is required');
+            throw new LibraryException($field . ' is required');
         }
     }
 
@@ -51,10 +51,10 @@ class Value
         if (preg_match($pattern, $identifier)) {
             // Check if there are two consecutive uppercase letters
             if (preg_match('/[A-Z]{2,}/', $identifier)) {
-                throw new PageMakerException('Not strict camel case');
+                throw new LibraryException('Not strict camel case');
             }
         } else {
-            throw new PageMakerException('Not camel case');
+            throw new LibraryException('Not camel case');
         }
     }
 }

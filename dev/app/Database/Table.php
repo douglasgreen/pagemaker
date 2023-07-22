@@ -2,7 +2,7 @@
 
 namespace PageMaker\Database;
 
-use PageMaker\PageMakerException;
+use PageMaker\LibraryException;
 
 class Table
 {
@@ -54,7 +54,7 @@ class Table
     public function delete(int $id): void
     {
         if (!isset($this->primaryKey)) {
-            throw new PageMakerException('Primary key not set');
+            throw new LibraryException('Primary key not set');
         }
 
         $markedKey = ':' . $this->primaryKey;
@@ -85,7 +85,7 @@ class Table
     public function read(int $id): ?array
     {
         if (!isset($this->primaryKey)) {
-            throw new PageMakerException('Primary key not set');
+            throw new LibraryException('Primary key not set');
         }
 
         $markedKey = ':' . $this->primaryKey;
@@ -133,7 +133,7 @@ class Table
     public function update(array $data, int $id): void
     {
         if (!isset($this->primaryKey)) {
-            throw new PageMakerException('Primary key not set');
+            throw new LibraryException('Primary key not set');
         }
 
         $fields = array_keys($data);
@@ -178,7 +178,7 @@ class Table
     protected function buildUpdateList(array $fields): string
     {
         if (!$fields) {
-            throw new PageMakerException('Fields required');
+            throw new LibraryException('Fields required');
         }
 
         $updateList = '';

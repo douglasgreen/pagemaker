@@ -49,7 +49,7 @@ class Router
 
         // Check if the class exists
         if (!class_exists($className)) {
-            throw new PageMakerException("Class '$className' not found");
+            throw new LibraryException("Class '$className' not found");
         }
 
         $object = new $className();
@@ -62,7 +62,7 @@ class Router
         // Check if the method exists
         $methodName = strtolower($this->method) . ucfirst(strtolower($this->action));
         if (!method_exists($object, $methodName)) {
-            throw new PageMakerException("Method '$methodName' not found in class '$className'");
+            throw new LibraryException("Method '$methodName' not found in class '$className'");
         }
 
         // Call the method

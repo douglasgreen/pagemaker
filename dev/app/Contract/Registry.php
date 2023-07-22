@@ -16,7 +16,7 @@ interface Registry
      * @param string $type The expected type of the value.
      * @param mixed $value The value to be stored.
      *
-     * @throws PageMakerException If the type of the value doesn't match the expected type or if the key already exists.
+     * @throws LibraryException If the type of the value doesn't match the expected type or if the key already exists.
      */
     public function set(string $key, string $type, $value): void;
 
@@ -27,7 +27,7 @@ interface Registry
      *
      * @return mixed The value associated with the key.
      *
-     * @throws PageMakerException If no entry exists for the provided key.
+     * @throws LibraryException If no entry exists for the provided key.
      */
     public function get(string $key);
 

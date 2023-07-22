@@ -44,7 +44,7 @@ class Template
      *
      * @param string $filename
      * @return string The rendered template
-     * @throws PageMakerException If the template file does not exist
+     * @throws LibraryException If the template file does not exist
      */
     public function render($filename)
     {
@@ -54,7 +54,7 @@ class Template
         if (file_exists($this->directory . $filename)) {
             include($this->directory . $filename);
         } else {
-            throw new PageMakerException("Template not found");
+            throw new LibraryException("Template not found");
         }
 
         return ob_get_clean();

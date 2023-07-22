@@ -92,7 +92,7 @@ class Email
     public function setHeader(string $name, string $value): void
     {
         if (!isset($this->headers[$name])) {
-            throw new PageMakerException("Unrecognized header");
+            throw new LibraryException("Unrecognized header");
         }
         $this->headers[$name] = $value;
     }
