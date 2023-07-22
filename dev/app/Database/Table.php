@@ -2,9 +2,10 @@
 
 namespace PageMakerDev\Database;
 
+use PageMakerDev\Contract\Crud;
 use PageMakerDev\LibraryException;
 
-class Table
+class Table implements Crud
 {
     protected $pdo;
     protected $database;
