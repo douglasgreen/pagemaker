@@ -56,6 +56,8 @@ On the other hand, PageMaker has a built-in library versioning system. It allows
 
 In composer the PageMaker namespace should be used to mean the latest version. Otherwise a more specific alias like PageMakerV1 should be used.
 
+On the other hand, versioning doesn't work in the general case because Composer dependencies don't allow versioning.
+
 ## Conclusion
 
 While both internal content versioning for a PHP project and REST API versioning serve the purpose of managing changes over time, their applications are different. The former is more about organizing and managing code and content within a project, while the latter is about ensuring external applications can consistently interact with a service. The choice between them (or the decision to use both) depends on the specific needs of the project and its interaction with external systems.
