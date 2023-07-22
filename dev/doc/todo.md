@@ -19,3 +19,4 @@ https://www.loggly.com/ultimate-guide/php-logging-basics/
 * Don't store interfaces with classes. Rather store them in a contracts directory.
 * Don't name interfaces with Interface. It's redundant when in contracts directory. Name them ...able or ...er (what's its capable of or does)
 * Use PMException everywhere in library so its exceptions can be distinguished. Document this.
+* Provide usage examples including how to use with Symfony and Vue so that people can see how they're compatible.
