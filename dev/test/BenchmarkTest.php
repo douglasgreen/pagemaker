@@ -5,23 +5,6 @@ use PHPUnit\Framework\TestCase;
 
 class BenchmarkTest extends TestCase
 {
-    public function testBenchmarkTime()
-    {
-        $benchmark = new Benchmark();
-
-        usleep(100);  // sleep for 0.0001 seconds
-
-        $benchmark->start();
-
-        usleep(200);  // sleep for 0.0002 seconds
-
-        $benchmark->end();
-
-        // Since we've slept for 0.0002 seconds, the time should be close to this.
-        $this->assertGreaterThanOrEqual(0.000, $benchmark->getTime());
-        $this->assertLessThanOrEqual(0.001, $benchmark->getTime());
-    }
-
     public function testBenchmarkMemory()
     {
         $benchmark = new Benchmark();
@@ -37,6 +20,23 @@ class BenchmarkTest extends TestCase
 
         // Ensure memory usage is greater than 0 since we allocated memory for an array
         $this->assertGreaterThan(0, $benchmark->getMemoryUsage());
+    }
+
+    public function testBenchmarkTime()
+    {
+        $benchmark = new Benchmark();
+
+        usleep(100);  // sleep for 0.0001 seconds
+
+        $benchmark->start();
+
+        usleep(200);  // sleep for 0.0002 seconds
+
+        $benchmark->end();
+
+        // Since we've slept for 0.0002 seconds, the time should be close to this.
+        $this->assertGreaterThanOrEqual(0.000, $benchmark->getTime());
+        $this->assertLessThanOrEqual(0.001, $benchmark->getTime());
     }
 
     public function testPeakMemoryUsage()
