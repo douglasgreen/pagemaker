@@ -86,9 +86,10 @@ The implementation of an interface should not expose any more public methods tha
 
 Don't add noise words like Manager or Handler at the end of class names. All classes manage and handle data. It's part of the definition of class.
 
-PSR rules are used for class names, where <name> is the class name.
+PSR rules are used for abstract class names, where <name> is the class name.
 * Abstract<name>
-* <name>Interface
+
+However, Interfaces are put into the Contracts directory and not named <name>Interface.
 
 ## Single responsibility principle
 
