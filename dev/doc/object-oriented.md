@@ -12,6 +12,12 @@ The should avoid specifying setters so that either setters or a constructor can 
 
 Setters can be provided on the abstract class that implements the interface.
 
+### Why do interfaces go into the Contracts namespace?
+
+Interfaces should be general constructs, not just restatement of whatever a class happens to do. Putting them in the contracts directory also helps name them more concisely. Instead of a RequestInterface in the Request directory, there is just a simple Request interface in the contracts directory. The interface is used differently than the implementation so there is no confusion. The implementation is used when the concrete instance is created and the interface is used when it is injected as a dependency in another place where a class is defined. These are two different usages so both of them are named Request.
+* PageMaker\Contracts\Request - the interface
+* PageMaker\Request - the implementation
+
 ## Abstract classes
 
 
