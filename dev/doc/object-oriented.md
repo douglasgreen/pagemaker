@@ -2,21 +2,51 @@
 
 ## Interfaces
 
+### What is the purpose of an interface?
+
+The purpose is to provide more code flexibility and enable dependency injection. The interface defines a minimal set of services as methods. When a caller uses the interface, they can be sure that the methods defined are present for them to use.
+
 ### What sort of methods should interfaces define?
 
-Interfaces should use minimal arguments for flexibility and focus on the outputs that they produce.
+* Any method or method argument used by a caller of an interface object must be included in the interface. If it isn't defined, then relying on that interface will produce errors.
+* Interfaces should focus on the outputs that they produce, not the inputs that they receive.
+* When possible, interfaces should prefer methods that provide service like render() instead of getters that turn the object into a bag of data.
 
-They should prefer methods that provide service like render() instead of getters that turn the object into a bag of data.
+Interfaces should avoid specifying setters so that either setters or a constructor can build the data more flexibly. The definition of the data for a class is implementation specific. Setters can be provided on the class that implements the interface. The classes that implement interfaces are usually injected as dependencies. They don't need setters after that because they should already be fully configured.
 
-The should avoid specifying setters so that either setters or a constructor can build the data more flexibly.
-
-Setters can be provided on the abstract class that implements the interface.
-
-### Why do interfaces go into the Contracts namespace?
+### Why do interfaces go into the Contract namespace?
 
 Interfaces should be general constructs, not just restatement of whatever a class happens to do. Putting them in the contracts directory also helps name them more concisely. Instead of a RequestInterface in the Request directory, there is just a simple Request interface in the contracts directory. The interface is used differently than the implementation so there is no confusion. The implementation is used when the concrete instance is created and the interface is used when it is injected as a dependency in another place where a class is defined. These are two different usages so both of them are named Request.
-* PageMaker\Contracts\Request - the interface
+* PageMaker\Contract\Request - the interface
 * PageMaker\Request - the implementation
+
+## How are interfaces different from abstact classes?
+
+Interfaces let the user define their own data as well as their own functionality. So interfaces are more extensible than abstract classes.
+
+Abstract classes are used instead of concrete classes when the implementation is by definition general and incomplete. When a complete definition can be given, it is preferred to use a concrete class directly.
+
+An example of an abstract class is the Widget class, because it sets up a widget typical data without defining any behavior.
+
+An example of concrete class is the email sender class, because it's always possible to send email due to Its predefined behavior.
+
+Optional values of function arguments are left out of the interface definitions.
+
+## Interface docs
+
+Document argument and return types on the interface so they are implemented consistently in implementations. This should also include where they're an exception is expected to be thrown.
+
+The proper way to express that an implementation does exactly like the interface is to omit the docblock. Don't use inherentDoc to mean that it should inherit the docblock of the interface because it's actually just to insert the long description not the entire dock block.
+
+Leave any optional arguments off of an interface declaration.
+
+## Interface implementation
+
+The implementation of an interface should not expose any more public methods than are defined in the interface. If a caller depends on optional public methods, then the interface is not compatible. The constructor is an exception because it is called at the time the class is instantiated not when it is passed around and used.
+
+The interface can be aliases to use both at once:
+
+use PageMaker\Contract\Registry as RegistryInterface;
 
 ## Abstract classes
 
@@ -55,37 +85,6 @@ While it's essential to ensure that inputs to a function or method are of the ex
 
 A class should be designed in a way that makes it easy to instantiate and use. This includes providing clear documentation, intuitive constructors, and default values where necessary. An easy-to-setup class reduces the learning curve for developers and promotes its adoption in various projects.
 
-## Interfaces vs. abstact classes
-
-Interfaces let the user define their own data as well as their own functionality. So interfaces are more extensible
-than abstract classes.
-
-Interfaces should not define constructors because those also define implementation specific data details.
-
-Abstract classes are used instead of concrete classes when the implementation is by definition general and incomplete. When a complete definition can be given, it is preferred to use a concrete class directly.
-
-An example of an abstract class is the Widget class, because it sets up a widget typical data without defining any behavior.
-
-An example of concrete class is the email sender class, because it's always possible to send email due to Its predefined behavior.
-
-Optional values of function arguments are left out of the interface definitions.
-
-## Interface docs
-
-Document argument and return types on the interface so they are implemented consistently in implementations. This should also include where they're an exception is expected to be thrown.
-
-The proper way to express that an implementation does exactly like the interface is to omit the docblock. Don't use inherentDoc to mean that it should inherit the docblock of the interface because it's actually just to insert the long description not the entire dock block.
-
-Leave any optional arguments off of an interface declaration.
-
-## Interface implementation
-
-The implementation of an interface should not expose any more public methods than are defined in the interface. If a caller depends on optional public methods, then the interface is not compatible. The constructor is an exception because it is called at the time the class is instantiated not when it is passed around and used.
-
-The interface can be aliases to use both at once:
-
-use PageMaker\Contract\Registry as RegistryInterface;
-
 ## Class names
 
 Don't add noise words like Manager or Handler at the end of class names. All classes manage and handle data. It's part of the definition of class.
@@ -93,7 +92,7 @@ Don't add noise words like Manager or Handler at the end of class names. All cla
 PSR rules are used for abstract class names, where <name> is the class name.
 * Abstract<name>
 
-However, Interfaces are put into the Contracts directory and not named <name>Interface.
+However, interfaces are put into the Contract directory and not named <name>Interface.
 
 ## Single responsibility principle
 
