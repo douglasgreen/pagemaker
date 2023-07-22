@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker\Pagination;
+namespace PageMaker;
 
 class Pagination
 {

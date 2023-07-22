@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker\Localization;
+namespace PageMaker;
 
 /**
  * @class

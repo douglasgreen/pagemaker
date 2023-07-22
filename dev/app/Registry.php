@@ -1,8 +1,6 @@
 <?php
 
-namespace PageMaker\Registry;
-
-use PageMaker\PageMakerException;
+namespace PageMaker;
 
 /**
  * @class A registry to store values, checking their type.

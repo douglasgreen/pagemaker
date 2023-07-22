@@ -1,8 +1,6 @@
 <?php
 
-namespace PageMaker\Email;
-
-use PageMaker\PageMakerException;
+namespace PageMaker;
 
 /**
  * @class Email sender
@@ -14,7 +12,7 @@ use PageMaker\PageMakerException;
  * 3. Keep css simple and inline
  * 4. Avoid JavaScript
  */
-class EmailSender
+class Email
 {
     // Define carriage return type (according to RFC standard)
     protected const EOL = "\r\n";

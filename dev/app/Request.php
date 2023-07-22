@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker\Request;
+namespace PageMaker;
 
 use PageMaker\Utility\PhpConfig;
 

@@ -1,15 +1,13 @@
 <?php
 
-namespace PageMaker\Template;
-
-use PageMaker\PageMakerException;
+namespace PageMaker;
 
 /**
  * @class Template engine
  *
  * Responsible for setting up, configuring, and rendering PHP templates.
  */
-class TemplateEngine
+class Template
 {
     /**
      * Holds the path to the directory containing the templates

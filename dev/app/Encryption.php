@@ -1,8 +1,6 @@
 <?php
 
-namespace PageMaker\Encryption;
-
-use PageMaker\PageMakerException;
+namespace PageMaker;
 
 /**
  * Class Handle encryption.

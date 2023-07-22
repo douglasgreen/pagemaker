@@ -1,8 +1,7 @@
 <?php
 
-namespace PageMaker\Page;
+namespace PageMaker;
 
-use PageMaker\PageMakerException;
 use PageMaker\Widget\Widget;
 
 /*

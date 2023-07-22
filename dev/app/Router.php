@@ -1,8 +1,6 @@
 <?php
 
-namespace PageMaker\Routing;
-
-use PageMaker\PageMakerException;
+namespace PageMaker;
 
 /**
  * @class Router
