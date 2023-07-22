@@ -19,21 +19,17 @@ use PageMaker\Utility\PhpConfig;
  * get, post, server, file, and cookie methods retrieve a value from the corresponding superglobal. If the key is not
  * present in the superglobal, they return a default value.
  *
- * The isPost and isGet methods can be used to determine the HTTP method of the request. The filterInput function
- * sanitizes the input values. It's a protected method used by the other methods to retrieve and sanitize values from the
- * superglobals.
- *
  * Remember to use more complex validation and sanitization logic for real applications. The filter_var function with
  * the FILTER_SANITIZE_FULL_SPECIAL_CHARS filter may not be appropriate for all situations. For example, you may need
  * different sanitization for email addresses, URLs, integers, etc.
  */
 class Request implements RequestInterface
 {
-    protected $get;
-    protected $post;
-    protected $server;
-    protected $file;
-    protected $cookie;
+    protected $getVars;
+    protected $postVars;
+    protected $serverVars;
+    protected $cookies;
+    protected $files;
 
     public function __construct()
     {
@@ -41,38 +37,15 @@ class Request implements RequestInterface
 
         // Check if the script is running in a command line interface (CLI) environment
         if (PhpConfig::isCli()) {
-            $this->get = $this->processArgv();
+            $this->getVars = $this->processArgv();
         } else {
             // For a non-CLI environment, populate the relevant properties from the superglobals
-            $this->get = $_GET;      // Contains all GET request parameters
-            $this->post = $_POST;    // Contains all POST request parameters
-            $this->server = $_SERVER; // Contains server and execution environment information
-            $this->file = $_FILES;   // Contains all file items which were uploaded
-            $this->cookie = $_COOKIE; // Contains all COOKIE data
+            $this->getVars = $_GET;      // Contains all GET request parameters
+            $this->postVars = $_POST;    // Contains all POST request parameters
+            $this->serverVars = $_SERVER; // Contains server and execution environment information
+            $this->files = $_FILES;   // Contains all file items which were uploaded
+            $this->cookies = $_COOKIE; // Contains all COOKIE data
         }
-    }
-
-    public function get(string $key, $default = null, $useFilter = false)
-    {
-        return $this->filterInput($this->get, $key, $default, $useFilter);
-    }
-
-    public function post(string $key, $default = null, $useFilter = false)
-    {
-        return $this->filterInput($this->post, $key, $default, $useFilter);
-    }
-
-    public function server(string $key, $default = null, $useFilter = false)
-    {
-        return $this->filterInput($this->server, $key, $default, $useFilter);
-    }
-
-    /**
-     * This is just a reader. Process the result with file Uploader.
-     */
-    public function file(string $key, $default = null, $useFilter = false)
-    {
-        return $this->filterInput($this->file, $key, $default, $useFilter);
     }
 
     /**
@@ -80,17 +53,30 @@ class Request implements RequestInterface
      */
     public function cookie(string $key, $default = null, $useFilter = false)
     {
-        return $this->filterInput($this->cookie, $key, $default, $useFilter);
+        return $this->filterInput($this->cookies, $key, $default, $useFilter);
     }
 
-    public function isPost(): bool
+    public function get(string $key, $default = null, $useFilter = false)
     {
-        return $this->server('REQUEST_METHOD') === 'POST';
+        return $this->filterInput($this->getVars, $key, $default, $useFilter);
     }
 
-    public function isGet(): bool
+    /**
+     * This is just a reader. Process the result with file Uploader.
+     */
+    public function file(string $key, $default = null, $useFilter = false)
     {
-        return $this->server('REQUEST_METHOD') === 'GET';
+        return $this->filterInput($this->files, $key, $default, $useFilter);
+    }
+
+    public function post(string $key, $default = null, $useFilter = false)
+    {
+        return $this->filterInput($this->postVars, $key, $default, $useFilter);
+    }
+
+    public function server(string $key, $default = null, $useFilter = false)
+    {
+        return $this->filterInput($this->serverVars, $key, $default, $useFilter);
     }
 
     protected function filterInput(array $input, string $key, $default, $useFilter)

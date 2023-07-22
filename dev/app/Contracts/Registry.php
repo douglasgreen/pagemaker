@@ -1,11 +1,11 @@
 <?php
 
-namespace PageMaker\Registry;
+namespace PageMaker\Contract;
 
 /**
  * @interface A registry to store values, checking their type.
  */
-interface RegistryInterface
+interface Registry
 {
     /**
      * Set a value in the registry, checking its type.

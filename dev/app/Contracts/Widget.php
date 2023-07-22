@@ -1,8 +1,8 @@
 <?php
 
-namespace PageMaker\Widget;
+namespace PageMaker\Contract;
 
-interface WidgetInterface
+interface Widget
 {
     public function getClass(): string;
     public function getName(): string;

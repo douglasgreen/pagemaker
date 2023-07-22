@@ -1,6 +1,6 @@
 <?php
 
-namespace PageMaker\Request;
+namespace PageMaker\Contract;
 
 use PageMaker\Utility\PhpConfig;
 
@@ -9,9 +9,9 @@ use PageMaker\Utility\PhpConfig;
  *
  * $_REQUEST is not offered. Use $_GET and $_POST instead.
  *
- * @interface RequestInterface
+ * @interface Request
  */
-interface RequestInterface
+interface Request
 {
     /**
      * Retrieves a value from the $_COOKIE superglobal based on a given key.
