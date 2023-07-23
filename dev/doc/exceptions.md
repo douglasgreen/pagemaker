@@ -9,6 +9,12 @@ Exceptions are primarily intended to handle unforeseen or exceptional situations
 * **Failure to Execute Essential Tasks:** If a crucial task fails (e.g., a database query not executing or an inability to write to a file), an exception should be thrown.
 * **Unexpected States:** If your PHP application ends up in an unexpected condition, such as when a variable isn't of the anticipated type or value, or if a class property gets accessed before being set, it's wise to throw an exception.
 
+### When should a function log an error in PHP?
+
+The problem with exceptions is that they are intrusive. They stop the program and unwind the stack.
+
+If debugging information is required but the error is not considered to be severe, another option is to log the error rather than throwing the exception. This can be done with the `error_log()` function.
+
 ### When should a function in PHP return null?
 
 A function might opt to return null in some circumstances:
