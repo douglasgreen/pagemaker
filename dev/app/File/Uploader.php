@@ -17,7 +17,7 @@ class Uploader
 
     public function __construct(string $destinationDir)
     {
-        $destinationDir = FileHelper::addTrailingSlash($destinationDir);
+        $destinationDir = File::addTrailingSlash($destinationDir);
         if (!is_dir($destinationDir) || !is_writable($destinationDir)) {
             throw new InvalidArgumentException("Directory doesn't exist or isn't writable.");
         }

@@ -36,7 +36,7 @@ class Template
      */
     public function setTemplateDirectory(string $directory): void
     {
-        $this->directory = FileHelper::addTrailingSlash($directory);
+        $this->directory = File::addTrailingSlash($directory);
     }
 
     /**
