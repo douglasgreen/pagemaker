@@ -1,5 +1,13 @@
 # CSS Comparisons
 
+## Comparing PageMaker and unorganized CSS
+
+The typical system of CSS is to provide no well-described system of organization at all. I like to call this approach "random piles of random styles in random files". Such a system is easy to describe as "just do whatever" but then you end up with a large indescribable pile of whatever.
+
+CSS makes this condition especially bad because it is disorganized by definition. Any selector can limitlessly style any tag which is the definition of spaghetti code.
+
+PageMaker greatly improves on this by having an organized system of defining CSS selectors and separating them into files. The previous systems to organize CSS did nearly as much. But pagemaker generalizes the system to the definition of widgets, which are independent units of CSS, JS, and HTML templates all similarly well-organized.
+
 ## Comparing PageMaker and OOCSS
 
 [Object-oriented CSS (OOCSS)](https://github.com/stubbornella/oocss/wiki) is a method of organizing CSS introduced by Nicole Sullivan in 2009. According to Sullivan's design, a CSS object is comprised of:
