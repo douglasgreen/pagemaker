@@ -2,6 +2,9 @@
 
 namespace PageMakerDev;
 
+use IntlDateFormatter;
+use NumberFormatter;
+
 /**
  * @class
  * This is a basic implementation and it does not contain any actual translations or complex localization logic. For a
@@ -28,10 +31,10 @@ namespace PageMakerDev;
  */
 class Localization
 {
-    // The current locale
+    // @var string The current locale
     protected $locale;
 
-    // Array to hold translations
+    // @var array Array to hold translations
     protected $translations = [];
 
     // Construct the Localization with a default locale
