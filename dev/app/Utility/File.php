@@ -18,16 +18,16 @@ class File
         return $path;
     }
 
-    public static function findProjectRoot(): string
+    public static function findProjectRoot(): ?string
     {
         $dir = __DIR__;
-        while ($dir !== '/') {
-            if (is_dir($dir . '/vendor')) {
+        while ($dir != '/') {
+            if (is_file($dir . '/composer.json')) {
                 return $dir;
             }
             $dir = dirname($dir);
         }
 
-        throw new LibraryException('Project root not found. Please ensure that the vendor directory is installed by Composer.');
+        return null;
     }
 }
