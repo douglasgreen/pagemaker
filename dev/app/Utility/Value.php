@@ -24,11 +24,12 @@ class Value
         }
     }
 
+    /**
+     * Call filter_var($phoneNumber, FILTER_SANITIZE_NUMBER_INT) before this.
+     */
     public static function checkPhoneNumber(string $phoneNumber): void
     {
-        // This pattern is for US phone numbers only
-        // You may want to use a different pattern depending on your country
-        $pattern = '/^\+1[2-9]\d{2}[2-9]\d{2}\d{4}$/';
+        $pattern = '/^\+?\d+(-\d+)*$/';
 
         if (!preg_match($pattern, $phoneNumber)) {
             throw new LibraryException('Invalid phone number');
