@@ -37,3 +37,9 @@ REST APIs are widely overused. This illustrates the fallacy of thinking that bre
 * Separate code projects
 * Separate code units such as namespace or classes
 * Or for data storage, a separate database table
+
+## What are the limits of critical thinking?
+
+The problem with critical thinking is that it dwells on philosophical generalities, therefore it isn't always the right tool for the job. Critical thinking is only one aspect of good project development. There are other possible viewpoints, such as:
+* Good business perspective
+* Detailed technical engineering
