@@ -155,3 +155,12 @@ The way standards should be defined is:
 
 The way standards often work is focusing on trivialities like naming conventions that aren't even automated. This increases the cognitive burden on the programmer while ignoring larger issues of design.
 
+## Code as writing
+
+Good code is like good writing.
+* It needs to communicate with other programmers.
+* It is better when it goes through multiple drafts.
+* It needs modularity (organization into parts) where the modules have good names (headings).
+* Each module should have a single purpose.
+* It works better when simplified so the reader (programmer) can form mental models about it (understand it).
+* Its choices are somwhat arbitrary and somewhat contextual (specific purpose in a specific environment).
