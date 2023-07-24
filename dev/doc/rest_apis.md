@@ -43,3 +43,14 @@ The costs are:
 Things that haven't really changed are:
 * The ability to version, because you could have always versioned your local code or the Composer project.
 * Modularity, because you don't have to enforce network isolation to have modularity.
+
+So when should REST APIs be used? When their costs are outweighed by their benefits with respect to requirements such as:
+* Scaling beyond a single server
+* Using multiple programming languages
+* Reloading part of the page
+
+For small single-party projects, the last usage is the most common. These projects required neither the scalability of major projects nor the generality of a third-party API.
+
+A REST API meets the requirement of reloading part of the page. And it is efficient because the REST API request substitutes for a page load, which would require a trip across the network anyway. Efficiency would require a minimum number of REST API requests per user interaction. And so the most efficient use of REST APIs for small projects would be to implement top-level interactive user features in a one-to-one fashion, where one user action results in one API request.
+
+REST APIs should also be built on a fast lower layer of direct programming language APIs. These APIs should be used when more direct speedy access is required.
