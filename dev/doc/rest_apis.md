@@ -45,9 +45,9 @@ Things that haven't really changed are:
 * Modularity, because you don't have to enforce network isolation to have modularity.
 
 So when should REST APIs be used? When their costs are outweighed by their benefits with respect to requirements such as:
-* Scaling beyond a single server
-* Using multiple programming languages
-* Reloading part of the page
+* Scaling beyond a single server, but this might also be done by splitting up the database without splitting up the code.
+* Using multiple programming languages, but this might also be done by creating a shared data format rather than a shared service format.
+* Reloading part of the page, but this might also be done by reloading the whole page.
 
 For small single-party projects, the last usage is the most common. These projects required neither the scalability of major projects nor the generality of a third-party API.
 
