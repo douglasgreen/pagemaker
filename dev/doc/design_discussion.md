@@ -164,3 +164,5 @@ Good code is like good writing.
 * Each module should have a single purpose.
 * It works better when simplified so the reader (programmer) can form mental models about it (understand it).
 * Its choices are somwhat arbitrary and somewhat contextual (specific purpose in a specific environment).
+
+That's why I sometimes add more comments than other programmers. The comments function as headings to organize the code into sections. Even though it's basically just restating the code, it still has a purpose of explaining and organizing like any good heading.
