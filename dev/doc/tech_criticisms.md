@@ -96,7 +96,6 @@ The prevalent trend of employing virtual machines (VMs) in modern development de
 A well-designed system should be easy to explain, understand, and modify. To demonstrate, let's contrast two types of system: a shared development server and a group of VMs. Here, we'll assume that the shared server was initially established by the Networking Department and subsequently replaced by VMs. These VMs are running 10 unique projects for 10 different developers, coordinated by DevOps, with individual developers also establishing their own VMs.
 
 * **Shared Development Server:** This system is relatively straightforward to describe, likely running a single PHP version and one or multiple versions of Node, jQuery, or related libraries. Its configuration includes a single host and a database server. This simplicity in description and maintenance is a key advantage. The Networking Department, rather than developers, generally oversees it, adhering to the principle of specialization.
-
 * **Virtual Machines (VMs):** In contrast, VMs are more complex to describe. Given that the 10 developers could each check out multiple VMs, there could be hundreds of unique VM configurations. Each one possesses its own PHP, Node, and jQuery version, requiring intricate coordination for the setup and configuration of these distinct environments. Additionally, each developer has to manage the setup, operation, and troubleshooting of these VMs—a task previously undertaken by specialists.
 
 The shift to VMs often leads to a scenario where each individual part is less complex, but the overall system becomes much more intricate.
@@ -104,3 +103,5 @@ The shift to VMs often leads to a scenario where each individual part is less co
 Similarly, REST APIs have the same issue. Segmenting code into separate REST APIs may make the APIs appear simpler. Yet, to fully describe them, you must also account for access credentials, the layers producing and consuming the API, and the network's condition. This results in a system that, while comprised of simpler components, becomes more complex and brittle in its entirety. Dividing the complexity of a whole project into separate parts doesn't eliminate complexity; it can actually enhance it.
 
 Generally, it's likely preferable to begin with an organized monolithic architecture on shared development server, only opting to segment the design for specific reasons, such as exceeding the capacity of a single server.
+
+<!-- DSG/ChatGPT 7/25/2023 -->
