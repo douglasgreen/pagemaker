@@ -29,7 +29,7 @@ Not all situations warrant a function. You might skip it when:
 3. **Flow Disruption**: Inserting a function might disrupt the natural flow of your main code.
 4. **Ambiguity**: If the function's purpose isn't clear or it doesn't represent a distinct task.
 
-## Best Practices for Using Functions:
+## Best practices for using functions
 
 1. **Naming**: Use action words for function names. For instance, `display()` in `Report::display()` implies showing a report.
 2. **Single Responsibility**: Ensure your function performs only one task. Avoid names with "and" or "or" as they suggest multiple responsibilities.

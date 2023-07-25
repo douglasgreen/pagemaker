@@ -39,3 +39,5 @@ Some designs use more sizes, like:
 - **Upkeep**: More sizes mean more things might break when updating or changing the design.
 
 To sum it up, the three-size system is easy and quick, but you should think about what devices your audience uses. If they use many different devices, a system with more sizes might work better. But for a lot of websites, three sizes are good enough.
+
+<!-- DSG/ChatGPT 7/25/2023 -->
