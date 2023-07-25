@@ -13,9 +13,9 @@ Web applications are fundamentally collections of web pages. A well-structured w
 * Plug-in architecture: Widgets operate independently, allowing their errors to be identified and handled separately.
 * Unambiguous file organization: Each widget is represented by its distinct set of CSS, JS, and HTML template files.
 
-## Building Pages with PageMaker
+## Building pages with PageMaker
 
-### Top-Level Containers
+### Top-level containers
 The PageMaker microframework facilitates the construction of a web page's top-level structure via the Page class, which generates standard containers:
 * `<body class="pmBody">`: Used for global body styles like background color or font face.
 * `<header class="pmHeader">`: Potential housing for logo, search bar, icon links, and menu navbar.
@@ -43,7 +43,7 @@ Each top-level container should further specify a grid layout for the widgets in
 
 The top-level files should be collected into subdirectories of a `layouts` directory. Each subdirectory should be given the name of the basic page layout, such as `layouts\base` or `layouts\leftnav`. If color themes are required, they can be split into subfiles like `pmPageLight.css` and `pmPageDark.css` for separate application.
 
-### Intermediate-Level Widgets
+### Intermediate-level widgets
 
 PageMaker's middle layer comprises various widgets that extend the Widget class. These widgets are rendered using semantic HTML tags like `<section class="pmMenuWidget">` tags, with 'pmMenuWidget' being the name of a possible menu widget. Widgets should be given short, meaningful names that are unique within their program context. The names should end in Widget to make them easily identifiable as widget names.
 
@@ -66,7 +66,7 @@ The widget files should be collected into subdirectories of a `widgets` director
 
 Our method encourages the development of widgets as separate and interchangeable parts to reduce conflicts. The modularity allows for the easy exchange, modification, and duplication of widgets in various projects, as long as they follow the same page structure. Additionally, since the widget is a thin wrapper, it can flexibly run different kinds of external code, such as rendering components from other sources.
 
-### Low-Level Divs
+### Low-level divs
 
 Each widget is composed of one or more divs, encapsulated within its container and deployed using a flexbox layout. The widgets are arranged by page layout code as discussed above. But the task of rendering inside the widget is carried out by the widget itself since it is a matter of local concern.
 
@@ -88,7 +88,7 @@ PHP files are usually organized into a top-level directory like `app` or `src` w
 
 Other assets like images and fonts can be put into an `assets` directory. Again you should maintain some kind of organized, hierarchical directory structure where assets for each widget are kept separate.
 
-### Comparison with Typical Design
+### Comparison with typical design
 
 The conventional web design lacks:
 * Layering: Absence of clear separation of various webpage features at different scales.

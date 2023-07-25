@@ -11,7 +11,7 @@ In the PageMaker system of internal versioning, every piece of code and content,
 - **Composer Versioning**: The major version in the composer is set to the highest major release version available.
 - **Dependency Management**: Any component that relies on a particular major release version must be updated to that version. This ensures compatibility and reduces the risk of breaking changes.
 
-## Comparison to REST API Versioning
+## Comparison to REST API versioning
 
 REST API versioning is a strategy used to manage changes in APIs over time without breaking the applications that depend on them.
 
@@ -20,7 +20,7 @@ REST API versioning is a strategy used to manage changes in APIs over time witho
 - **Parameter Versioning**: The version is passed as a parameter in the request.
 - **Media Type Versioning**: The version is included in the accept header, specifying a custom media type.
 
-## Pros and Cons
+## Pros and cons
 
 **Pros of Internal Content Versioning**
 1. **Clear Organization**: By segregating content based on versions, it's easier to locate and manage specific versions of the content.

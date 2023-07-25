@@ -2,7 +2,7 @@
 
 In web design, CSS breakpoints help websites look good on different devices. Here's how a three-size system compares to other methods:
 
-## Three-Size System
+## Three-size system
 
 - **Small (mobile)**: Under 600px
   - For smartphones.
@@ -20,7 +20,7 @@ In web design, CSS breakpoints help websites look good on different devices. Her
 - **Simple**: Three sizes make designing and testing easier. It reduces mistakes.
 - **Flexible**: Developers can add more sizes for specific pages if needed.
 
-## Other Systems
+## Other systems
 
 Some designs use more sizes, like:
 

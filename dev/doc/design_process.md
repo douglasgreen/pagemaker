@@ -8,7 +8,7 @@
 6. **Front End Design**: Design the user interface and its associated workflows and widgets, ensuring a seamless and user-friendly experience.
 7. **REST API Layer**: Create a REST API layer that provides essential functions for the front end, allowing it to interact with the backend services and data.
 
-## Layers Involved
+## Layers involved
 
 - **Database Layer**: The foundational layer where all data is stored.
 - **Data Representation Layer**: Transforms database objects into a standardized format like XML or JSON.
@@ -18,3 +18,5 @@
 - **Front-End Layer**: The user interface where users interact with the application.
 
 This structured approach ensures that each component of a web application is modular, maintainable, and scalable.
+
+<!-- DSG/ChatGPT 7/25/2023 -->

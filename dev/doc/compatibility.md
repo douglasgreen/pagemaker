@@ -1,9 +1,20 @@
-# Compatibility
+# Compatibility Guide
 
-## Can PageMaker be used with Symfony or other frameworks?
+## Integration of PageMaker with Symfony and other frameworks
 
-While Symfony serves as a powerful tool for web application development, it doesn't directly address the page-specific challenges that PageMaker is designed to solve. Symfony, by design, doesn't provide an in-built page builder as it assumes developers will devise their own page structures. Given this, PageMaker's layout solution can work harmoniously with Symfony. PageMaker's components are independently designed, enabling them to be overridden or used together with other frameworks like Symfony, enhancing the functionality and flexibility of your web development process.
+Symfony is renowned for its robust capabilities in web application development. However, it does not inherently possess a built-in page builder, expecting developers to craft their own page designs. On the other hand, PageMaker is tailored specifically to address the challenges related to page layout and design.
 
-## Can PageMaker be used with Twig or other page layout libraries?
+The good news is that the two can coexist and complement each other:
 
-When it comes to page layout, one may question the compatibility of PageMaker with Twig or PHPTAL. Within this architecture, PageMaker serves as the tool to build the page structure, using a simple collection of top-level HTML5 semantic tags. You have the option to utilize Twig or PHPTAL to craft the content of each widget or simply design them as HTML leveraging PHP's built-in templating feature. By integrating PageMaker, you are upgrading from Twig's direct usage as it facilitates the arrangement of JavaScript, CSS, and templates in a more systematic way than Twig in isolation. While Twig anticipates that you'll manage your own organization, PageMaker streamlines this process, making your layout tasks more efficient and effective.
+- **Symfony & PageMaker**: The independent design of PageMaker's components allows them to be integrated seamlessly with Symfony. This enhances the overall web development experience by combining the strength of Symfony with the layout solutions of PageMaker.
+- **Flexibility with Other Frameworks**: Not limited to Symfony, PageMaker can be incorporated with various other frameworks, optimizing the functionality and adaptability of your web development journey.
+
+## Compatibility with Twig and other layout libraries
+
+Wondering how PageMaker pairs up with layout libraries like Twig or PHPTAL? Let's break it down:
+
+- **PageMaker's Role**: PageMaker specializes in constructing the overall page structure, predominantly utilizing top-level HTML5 semantic tags.
+- **Incorporating Twig or PHPTAL**: You can choose to use Twig or PHPTAL to shape the content within individual widgets. Alternatively, employ PHP's native templating capabilities to design them directly in HTML.
+- **Advantages Over Direct Twig Use**: By adopting PageMaker, you elevate beyond the direct application of Twig. PageMaker organizes JavaScript, CSS, and templates in a more cohesive manner. Unlike Twig, which expects you to handle layout arrangements on your own, PageMaker simplifies and enhances this process, ensuring you have a streamlined experience in managing page layouts.
+
+<!-- DSG/ChatGPT 7/25/2023 -->
