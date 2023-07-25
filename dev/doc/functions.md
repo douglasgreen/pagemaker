@@ -1,35 +1,42 @@
-# Functions
+# Functions: A Guide for Beginners
 
-## Why do functions exist?
+## What are functions and why are they important?
 
-Functions are a unit of functionality that let you reuse code. They encapsulate the functionality and let you type the parameters. They also replace an opaque block of code with a clear verbal label, the name of the function. Putting your code in a function also enables you to unit test it, increasing code quality.
+Functions are like mini-programs within a program, designed to perform a specific task. Here's why they're essential:
 
-On the other hand, remember that there is always a cost to calling a function. There is an overhead to pushing its arguments onto the stack and then removing them when the function terminates. In addition, the more functions you write, the more your code is broken apart into little pieces. This forces the reader to jump all over the place to follow the thread of execution.
+1. **Reusability**: Instead of writing the same code multiple times, you can write it once inside a function and call that function whenever needed.
+2. **Clarity**: Functions replace complex blocks of code with a simple name, making your code easier to read.
+3. **Testing**: Functions allow for unit testing, ensuring each part of your code works correctly.
+4. **Efficiency**: While functions make code more organized, remember there's a slight performance cost every time a function is called due to the process of passing arguments and returning values.
 
-The alternative to writing a function is to leave your code inline.
+However, not all code needs to be inside a function. Sometimes, it's more straightforward to have the code run directly.
 
-## When should I use a function?
+## When should you use a function?
 
-You might write a function when:
-* The functionality it contains is hard to write, complex, or error prone. Putting it in a function lets you unit test it and reuse it everywhere.
-* The function would contain many lines of code or be repeated in many places.
-* Writing functions reduces the need to deal with data structures directly, because you can do a function call instead.
-* Functions make your code more modular. When the functions are called, you can read a top-level series of descriptive actions rather than the code details.
+Consider creating a function when:
 
-## When should I not use a function?
+1. **Complexity**: The task is intricate, and by placing it inside a function, you can test and reuse it.
+2. **Repetition**: The same set of instructions appears in multiple places.
+3. **Modularity**: You want to make your code more structured, allowing you to read a series of high-level actions instead of diving into code details.
+4. **Data Handling**: Using functions can simplify interactions with data structures.
 
-You might choose to write your code inline when:
-* It can be replaced with a single, simple line of code.
-* Your code is simple and does not need to be reused.
-* Breaking into a function needlessly separates it from the main line of execution.
-* The function is hard to describe and test and does not seem to be a natural unit of execution.
-* Using the function does not make your code seem any simpler.
+## When might you avoid using a function?
 
-## How should I use functions?
+Not all situations warrant a function. You might skip it when:
 
-When you define functions:
-* Give them the name of an imperative verb. When the function is a method, the implied object of the verb is the class that contains the method. For example `Report::display()` means to display a report.
-* Make sure the function does only one thing that matches the name. Function names should not contain "and" or "or" because that implies two different responsibilities.
-* Remember that a function name is a label and not a description. It only needs you to remind you of what the function does, not describe every last detail of how it does it. The name just needs to be enough to distinguish the function from other functions within the same context.
-* Only make a method public if a user actually needs to call it. So if you need to break up a method, make the inner parts protected instead of public.
-* According to Steve McConnell in Code Complete, research indicates that a function should not usually contain more than 200 lines of code. At that point, it becomes harder to understand its internals and it should be broken apart into subfunctions. Of course, you can always break into sub-functions long before it reaches that limit if it makes sense to do so.
+1. **Simplicity**: The task can be achieved with a single line of code.
+2. **One-time Use**: The code segment isn't reused elsewhere.
+3. **Flow Disruption**: Inserting a function might disrupt the natural flow of your main code.
+4. **Ambiguity**: If the function's purpose isn't clear or it doesn't represent a distinct task.
+
+## Best Practices for Using Functions:
+
+1. **Naming**: Use action words for function names. For instance, `display()` in `Report::display()` implies showing a report.
+2. **Single Responsibility**: Ensure your function performs only one task. Avoid names with "and" or "or" as they suggest multiple responsibilities.
+3. **Brevity**: A function name is a cue, not an exhaustive description. It should be concise yet distinct within its context.
+4. **Access Levels**: Only make functions public if they need to be accessed externally. If a function is a helper or intermediary step, consider making it protected.
+5. **Size Matters**: As suggested by Steve McConnell in "Code Complete", functions should ideally be under 200 lines. If a function grows too large, consider breaking it into smaller sub-functions.
+
+Remember, the goal is to make your code more readable, maintainable, and efficient. Whether you choose to use a function or not should align with these objectives.
+
+<!-- DSG/ChatGPT 7/23/2023 -->

@@ -2,9 +2,9 @@
 
 Here are notes about ChatGPT requests.
 
-## Custom instructions
+## Rewrite
 
-> Respond with simple language that is accurate but doesn't sound pretentious. Although sometimes technical vocabulary must be used when explaining technical concepts, the result should still be understandable to an average adult reader. It is OK to express opinions.
+> This documentation is intended for professional programmers. Please rewrite it for clarity and accuracy, rearranging or rewriting it as needed:
 
 ## Docblocks
 
