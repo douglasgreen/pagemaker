@@ -1,56 +1,53 @@
-# REST APIs
+# Understanding REST APIs: A Guide
 
-## Usage
+## Introduction
 
-REST APIs should be added last to the top layer for in-page animations. The system should work without them.
+REST APIs provide a structured way to interact with web resources. Before diving into the details, let's clarify when and why one might use them, especially in the context of smaller projects or in-page animations.
 
-## Internal endpoints
+## When to use REST APIs
 
-API endpoints can be a subdirectory of the current project and don't have to be a separate project. They can reuse the current database connection and HTTP host.
+REST APIs are ideal when:
 
-## Scalability
+1. **Partial Page Updates**: You need to update only a part of your web page without reloading the entire page. This is particularly relevant for in-page animations or dynamic content updates.
+2. **Scalability**: Your project might grow and need to scale beyond a single server.
+3. **Multi-language Support**: Your application might be consumed by clients written in various programming languages. REST APIs offer a universal interaction protocol.
+4. **External Access**: You intend to allow third parties to interact with your application.
 
-REST APIs are often described as scalable. But their scalability should be broken down into two senses:
-* Throughput, meaning they scale because you dedicated a separate server to them.
-* Latency, meaning they don't scale because each response is transferred across the network.
+## Structuring REST APIs
 
-When REST APIs fragment into microservices, the latency starts to dominate.
+### Endpoints organization
 
-## What are the costs and benefits of REST API modularity versus code or project modularity?
+Endpoints, or the specific URLs of your API where resources can be accessed, can reside within your main project. This means you don't necessarily need to spin off a separate project for your API. This integrated approach lets you reuse the existing database connection and the HTTP host.
 
-I'll use PHP as an example. Consider three basic alternatives:
-1. Break your code down into classes and load them with an auto loader.
-2. Do the same as number one but load your code in a separate project using Composer.
-3. Do the same as number two but split your project into a separate microservice using a REST API.
+### Scalability aspects
 
-Case 1 is the fastest and most direct. The benefit is that your API is a PHP API, which consists of lightweight, typed function calls. These calls execute directly on the local host and are the fastest and most feature-rich interface.
+The term 'scalable' in the context of REST APIs can be viewed in two dimensions:
 
-Case 2 has all of the same qualities as number one except the code is separated into a different repository and installed using Composer. The only difficulty there is now you have to push changes to both repositories every time you make a release to the new repository. However, splitting it into a separate repository allows you to more rigorously separate it from the main repository.
+1. **Throughput**: APIs can manage increased loads when dedicated servers handle them.
+2. **Latency**: Each API call requires network data transfer, which introduces some delay. This latency becomes more prominent when you break down your application into multiple microservices.
 
-Case 3 is similar to the other cases except now we split your project into a REST API.
+## REST APIs: modularity and costs
 
-The benefits are:
-* Your code is walled off behind a REST API so it is very isolated and can't talk directly to the local code base. Being isolated makes it seem easier to understand. However, note that your project is actually not any more modular than before so it should have been easy to understand even as modular code or a separate project.
-* Your code can now run on a different host, if your current host is out of resources. However, note that your database code could have always run on a different host even without a REST API.
-* Your code can now be called using more than one language, if you require that. This is mainly useful for providers of public third-party services. For in-house development, a single language like PHP could be stipulated.
+Let's understand REST API modularity using PHP as our base:
 
-The costs are:
-* Your code and your database are probably split from the main database. This creates a state of data fragmentation where your foreign keys can't be enforced or easily looked up.
-* Your code requires extra steps of setup and authentication.
-* Your REST API is untyped and feature-poor compared to direct access through PHP.
-* The slowness of the REST API and its extra layers is compounded by the slowness of delivery across a network. The network introduces additional network problems and complexity.
+1. **Direct PHP API**: This is the most straightforward approach where your code is broken down into classes, and they're loaded as needed. It's efficient and offers the advantage of direct, fast function calls.
+2. **Project-based Modularity with Composer**: Similar to the direct approach but the code is separated into a different repository. It provides better separation but requires managing multiple repositories.
+3. **Microservice Approach with REST API**: Here, your project is transformed into an independent microservice accessible via a REST API. 
 
-Things that haven't really changed are:
-* The ability to version, because you could have always versioned your local code or the Composer project.
-* Modularity, because you don't have to enforce network isolation to have modularity.
+**Benefits**:
+- **Isolation**: Your code remains encapsulated, promoting better clarity.
+- **Flexibility**: The code can be executed on a different server or can support multiple programming languages.
 
-So when should REST APIs be used? When their costs are outweighed by their benefits with respect to requirements such as:
-* Scaling beyond a single server, but this might also be done by splitting up the database without splitting up the code.
-* Using multiple programming languages, but this might also be done by creating a shared data format rather than a shared service format.
-* Reloading part of the page, but this might also be done by reloading the whole page.
+**Costs**:
+- **Data Fragmentation**: The data might be split across multiple sources, complicating relationships like foreign keys.
+- **Setup Overhead**: Additional setup and authentication layers are introduced.
+- **Performance Overheads**: Network data transfer introduces latency, and direct PHP access is usually faster than API calls.
 
-For small single-party projects, the last usage is the most common. These projects required neither the scalability of major projects nor the generality of a third-party API.
+### Key considerations
 
-A REST API meets the requirement of reloading part of the page. And it is efficient because the REST API request substitutes for a page load, which would require a trip across the network anyway. Efficiency would require a minimum number of REST API requests per user interaction. And so the most efficient use of REST APIs for small projects would be to implement top-level interactive user features in a one-to-one fashion, where one user action results in one API request.
+1. **Versioning**: Whether you use direct PHP, Composer, or REST APIs, you always have the flexibility to version your application.
+2. **Modularity**: REST APIs inherently promote modularity, but remember, modular design can be achieved even without network isolation.
 
-REST APIs should also be built on a fast lower layer of direct programming language APIs. These APIs should be used when more direct speedy access is required.
+## Conclusion
+
+For small projects, REST APIs are most commonly used for dynamic page updates. They should efficiently handle user interactions, ideally mapping one user action to a single API request. Moreover, REST APIs should be layered over faster, direct programming APIs to ensure swift access when needed. Always weigh the benefits against the costs before deciding to implement REST APIs.

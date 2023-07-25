@@ -5,27 +5,27 @@ A well-organized directory structure is essential for PHP projects to maintain a
 ```
 project/
 ├── app/
-│   ├── Controllers/
-│   ├── Models/
-│   ├── Views/
-│   ├── Helpers/
+│   ├── Controller/
+│   ├── Model/
+│   ├── View/
+│   ├── Helper/
 │   └── Config/
 ├── config/
 │   ├── app/
 │   ├── database/
 │   └── mail/
 ├── public/
-│   ├── scripts/
-│   ├── styles/
+│   ├── script/
+│   ├── style/
 │   └── index.php
-├── resources/
-│   ├── views/
-│   ├── assets/
+├── resource/
+│   ├── view/
+│   ├── asset/
 │   └── lang/
 ├── storage/
-│   ├── logs/
+│   ├── log/
 │   └── cache/
-├── tests/
+├── test/
 ├── vendor/
 ├── .env
 ├── .gitignore
@@ -37,10 +37,10 @@ project/
 Let's go through the main directories and their purposes:
 
 - `app/`: This directory contains the core application files.
-  - `Controllers/`: Contains PHP classes responsible for handling user requests and responses.
-  - `Models/`: Contains PHP classes that represent the application's data structures and interact with the database.
-  - `Views/`: Contains templates or view files for rendering the user interface.
-  - `Helpers/`: Contains reusable helper functions or classes.
+  - `Controller/`: Contains PHP classes responsible for handling user requests and responses.
+  - `Model/`: Contains PHP classes that represent the application's data structures and interact with the database.
+  - `View/`: Contains templates or view files for rendering the user interface.
+  - `Helper/`: Contains reusable helper functions or classes.
   - `Config/`: Contains configuration file loaders for the application.
 
 - `config/`: This directory contains configuration files in INI format.
@@ -53,16 +53,16 @@ Let's go through the main directories and their purposes:
   - `js/`: Contains JavaScript files.
   - `index.php`: The entry point of your application that handles all incoming requests.
 
-- `resources/`: This directory holds non-public resources and assets.
-  - `views/`: Contains additional view templates, partials, or layouts.
-  - `assets/`: Contains non-PHP assets like images, fonts, etc.
+- `resource/`: This directory holds non-public resources and assets.
+  - `view/`: Contains additional view templates, partials, or layouts.
+  - `asset/`: Contains non-PHP assets like images, fonts, etc.
   - `lang/`: Contains language files for internationalization or localization.
 
 - `storage/`: This directory stores application-generated files.
-  - `logs/`: Contains log files.
+  - `log/`: Contains log files.
   - `cache/`: Contains cached files or data.
 
-- `tests/`: Contains test files and directories for unit or integration testing.
+- `test/`: Contains test files and directories for unit or integration testing.
 
 - `vendor/`: Contains third-party dependencies managed by Composer.
 
@@ -116,59 +116,11 @@ The body is a series of rows.
 
 ## Assets
 
-* JavaScript and CSS assets are laid out by page element.
 * Element layouts go into the layout directory.
 * All colors go into the themes directory.
 * All functions go into `pm_functions.js`.
 * Each CSS or JS in each element file starts with a top-level ID or class selector to prevent conflicts.
 * JS has an event queue for structure.
-
-```
-public/styles/pm_normalize.css
-public/scripts/pm_functions.js
-
-public/styles/pm_page_styles.css
-public/scripts/pm_page_events.js
-
-public/styles/pm_body_styles.css
-public/scripts/pm_body_events.js
-
-public/styles/pm_header_styles.css
-public/scripts/pm_header_events.js
-
-public/styles/pm_banner_styles.css
-public/scripts/pm_banner_events.js
-
-public/styles/pm_logo_styles.css
-public/scripts/pm_logo_events.js
-
-public/styles/pm_searchbar_styles.css
-public/scripts/pm_searchbar_events.js
-
-public/styles/pm_iconbar_styles.css
-public/scripts/pm_iconbar_events.js
-
-public/styles/pm_menu_styles.css
-public/scripts/pm_menu_events.js
-
-public/styles/pm_leftnav_styles.css
-public/scripts/pm_leftnav_events.js
-
-public/styles/pm_main_styles.css
-public/scripts/pm_main_events.js
-
-public/styles/pm_section_styles.css
-public/scripts/pm_section_events.js
-
-public/styles/pm_rightnav_styles.css
-public/scripts/pm_rightnav_events.js
-
-public/styles/pm_footer_styles.css
-public/scripts/pm_footer_events.js
-
-public/styles/pm_colors_light.css
-public/styles/pm_colors_dark.css
-```
 
 ## Package structure
 
