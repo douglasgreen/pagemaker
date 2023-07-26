@@ -39,25 +39,32 @@ REST API versioning is a strategy used to manage changes in APIs over time witho
 1. **Maintenance Overhead**: Maintaining multiple versions of an API can be challenging.
 2. **Potential Confusion**: If not documented well, clients might get confused about which version to use.
 
-## Making versioning comprehensive
+## Uniform versioning approach
 
-The same versioning semantics can be applied to all portions of a project.
-* Databases: The Sample database would be versioned as SampleDev, SampleV1, etc.
-* Assets: Asset directories like `images` can be versioned as `images_dev`, `images_v1`, etc.
-* Web document root: The web document can be split into subdirectories like `dev`, `v1`, etc.
+It's essential to maintain consistency in versioning semantics throughout all components of a project. This standard approach ensures clarity and coherence:
 
-The point is that a single system of semantic, incremental versioning is applied across all project features, leading to disciplined, well-defined versioning throughout.
+- **Databases**: For instance, a "Sample" database can adopt versions like `SampleDev`, `SampleV1`, and so forth.
+- **Assets**: Directories containing assets, such as `images`, should follow a naming convention like `images_dev`, `images_v1`, etc.
+- **Web Document Root**: The root can be organized into specific subdirectories based on versions, e.g., `dev`, `v1`, and so on.
 
-## Composer versioning
+The key takeaway is adopting a unified, incremental versioning strategy across the project, ensuring structured and consistent version labeling.
 
-Composer has a limitation: it can only support one version of a library at any given time. This can complicate the upgrade process.
+## Handling versioning with Composer and PageMaker
 
-On the other hand, PageMaker has a built-in library versioning system. It allows both a development version and several release versions of the PageMaker library to coexist within the same project. This flexibility enables developers to upgrade different parts of the project separately.
+### Composer Limitations:
+Composer has an inherent constraint: it can't accommodate multiple versions of a library simultaneously, posing challenges during upgrades.
 
-In composer the PageMaker namespace should be used to mean the latest version. Otherwise a more specific alias like PageMakerV1 should be used.
+### PageMaker's Solution:
+In contrast, PageMaker offers an integrated library versioning mechanism. It permits the coexistence of a development version and multiple release versions of its library in the same project. This versatility facilitates developers in upgrading distinct project segments individually.
 
-On the other hand, versioning doesn't work in the general case because Composer dependencies don't allow versioning.
+For Composer:
+- Using the `PageMaker` namespace signifies the latest version.
+- For specific versions, aliases like `PageMakerV1` should be adopted.
+
+However, a significant limitation arises with Composer dependencies since they don't support multiple versioning.
 
 ## Conclusion
 
-While both internal content versioning for a PHP project and REST API versioning serve the purpose of managing changes over time, their applications are different. The former is more about organizing and managing code and content within a project, while the latter is about ensuring external applications can consistently interact with a service. The choice between them (or the decision to use both) depends on the specific needs of the project and its interaction with external systems.
+Versioning, whether for a PHP project's internal content or a REST API, plays a pivotal role in tracking and managing evolutionary changes. While internal content versioning focuses on orderly code and content arrangement within a project, REST API versioning ensures consistent external application interactions with the service. Opting for one or integrating both hinges on the project's unique requirements and its external system engagements.
+
+<!-- DSG/ChatGPT 7/26/2023 -->

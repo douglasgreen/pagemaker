@@ -15,3 +15,5 @@ According to Naur, when a programmer has this deep knowledge about a program, th
 He believes that programming is mostly about thinking, talking, and agreeing with others. It's more than just what's written down. This idea changes how we think about teaching programming and how we work with software that already exists.
 
 In short, Naur's article tells us that truly understanding a problem and its solution is the heart of good programming. This deep understanding is hard to write down, but it can be passed on by teaching and working together.
+
+<!-- DSG/ChatGPT 7/26/2023 -->
