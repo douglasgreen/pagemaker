@@ -115,12 +115,12 @@ class Head
             $output .= "<link rel='icon' href='$this->favicon' type='image/x-icon'>";
         }
 
-        foreach ($this->styles as $href) {
-            $output .= "<link rel='stylesheet' type='text/css' href='{$href}'>\n";
+        foreach ($this->styles as $name => $href) {
+            $output .= "<link id='$name' rel='stylesheet' type='text/css' href='{$href}'>\n";
         }
 
-        foreach ($this->scripts as $src) {
-            $output .= "<script src='{$src}'></script>\n";
+        foreach ($this->scripts as $name => $src) {
+            $output .= "<script id='$name' src='{$src}'></script>\n";
         }
 
         $output .= "</head>\n";
