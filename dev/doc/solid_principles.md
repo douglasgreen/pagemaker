@@ -25,6 +25,10 @@ Let's delve deeper into each principle and articulate them with clarity.
 
 In the era of modern version control, the original statement of the Single-Responsibility Principle (SRP) suggesting that a class should have only one reason to change may seem outdated. Nevertheless, the core essence of SRP remains pertinent. It advocates for a class to serve a singular purpose, which should be evident from its name, emphasizing high cohesion within its components. Moreover, aligning a class's purpose with unit testing practices bolsters this principle. This alignment necessitates separating easily testable functionalities, such as application logic and domain calculations, from more intricate testing areas like input, output, and storage.
 
+SRP is often stated as "A class should only have one reason to change." However, this phrasing might be viewed as limited for the following reasons:
+* **Predicting Change**: Defining a single "reason to change" can be challenging as it attempts to anticipate future needs, which are inherently unpredictable.
+* **Modern Development Practices**: In contemporary development environments, having multiple reasons for a class to change is less of an issue. Robust version control systems can efficiently handle and reconcile these changes.
+
 ## Open-Closed Principle (OCP)
 
 ### Original statement
