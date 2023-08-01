@@ -27,4 +27,6 @@ Both use cases and user stories are tools utilized in the software development p
 
 In practice, some projects might use a combination of both. For example, during initial brainstorming, user stories can be rapidly created to get a sense of user needs. As the project progresses and more detail is needed, use cases can be developed to provide that detailed specification for design and testing.
 
+An example of a user story for PageMaker would be, "As a developer, I want to use an organized page building system so that I can copy front-end code between projects". The user story would be implemented in use cases that show how a page module, called a widget, is defined and copied between projects.
+
 <!-- DSG/ChatGPT 8/1/23 -->
