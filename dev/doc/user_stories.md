@@ -26,3 +26,5 @@ Both use cases and user stories are tools utilized in the software development p
    - **Use Case**: Can encompass a broader set of actions or interactions within a system, often covering multiple related user goals.
 
 In practice, some projects might use a combination of both. For example, during initial brainstorming, user stories can be rapidly created to get a sense of user needs. As the project progresses and more detail is needed, use cases can be developed to provide that detailed specification for design and testing.
+
+<!-- DSG/ChatGPT 8/1/23 -->
