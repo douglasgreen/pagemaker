@@ -1,4 +1,4 @@
-# Library vs. Framework: Understanding the Difference
+# Code Libraries vs. Frameworks: Understanding the Difference
 
 "PageMaker" is a library, not a framework. To understand the distinction, it's crucial to define what libraries and frameworks are and how they function within software development.
 
