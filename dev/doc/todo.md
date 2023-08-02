@@ -21,3 +21,25 @@ https://www.loggly.com/ultimate-guide/php-logging-basics/
 * Use PMException everywhere in library so its exceptions can be distinguished. Document this.
 * Provide usage examples including how to use with Symfony and Vue so that people can see how they're compatible.
 * Discuss types of testing in Steve McConnell's Code Complete (mature, multidimensional, balanced, factual, statistical thinking vs. one-dimensionality and excess).
+
+## Other possible topics
+* web development
+* debugging techniques
+* frontend vs backend
+* refactoring
+* software architecture
+* database design
+* API design
+* Scrum methodology
+* JavaScript frameworks (React, Angular, Vue)
+* responsive web design
+* microservices architecture
+* Continuous Integration/Continuous Deployment (CI/CD)
+* PHP scripting language
+* cybersecurity protocols
+* data structures and algorithms
+* workflow management systems
+* HTML semantics
+* programming paradigms
+* integration testing
+* source control with git
