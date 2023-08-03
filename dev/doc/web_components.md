@@ -1,7 +1,23 @@
-# Web Components
+# Understanding Web Components and PageMaker
 
-PageMaker tries to solve a similar problem as web components. Web components solve it with cooperation from the browser makers. They use JavaScript to define independent area of the page that reset their styles so that they can add new styles. This is an attempt to add modularity to the webpage and compensate for the defects in the CSS design.
+Web components and PageMaker both address the challenge of creating modular web content, though they approach the problem differently.
 
-Web components were only recently implemented in browsers. They have a reputation for being slow and having a poor API.
+## Web Components
 
-Page Maker solves the same problem with logical organization so that web components are needed. This is faster and doesn't require a special API. It is done with native CSS, HTML, and JavaScript. Each of these are separated into containers labeled by a widget class. Because the page is organized in layers in a modular fashion, the styles don't conflict with each other and don't require a reset. So web components aren't needed.
+Web components allow developers to encapsulate functionality into custom, reusable elements. This is achieved with the collaboration of browser vendors. Here's a brief overview:
+
+- **Modularity**: Web components use JavaScript to define distinct sections of a webpage. These sections can "reset" their styles, which means they start with a clean slate and apply their own specific styles without being affected by global styles.
+- **Integration**: The major advantage is that web components are natively supported by browsers. This means that they work in close conjunction with the browser's rendering engine.
+- **Challenges**: Although they provide a solution for modularity, they've been criticized for their performance and the perceived complexities of their API. It's worth noting, however, that as with any technology, there have been advancements and improvements since their inception.
+
+## PageMaker
+
+PageMaker presents an alternative solution to the modularity problem, emphasizing logical organization over encapsulation:
+
+- **Native Technologies**: PageMaker uses standard CSS, HTML, and JavaScript. No additional APIs or special browser support is required.
+- **Organizational Structure**: Content is segmented into containers, each identified by a 'widget' class. This structured layering ensures styles are applied in a modular manner.
+- **Advantages**: Since styles are organized and applied in a layered fashion, there's no need for style resets. The architecture inherently prevents style conflicts, eliminating the need for the encapsulation provided by web components.
+
+In summary, while web components offer encapsulation through browser-supported custom elements, PageMaker achieves modularity through well-organized, native web technologies. Depending on the project's requirements, developers might choose one approach over the other.
+
+<!-- DSG/ChatGPT 8/3/2023 -->
