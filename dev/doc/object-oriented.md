@@ -30,6 +30,18 @@ Object-oriented design (OOD) is a methodology that revolves around designing sof
 
 In conclusion, object-oriented design is about creating clear, maintainable, and scalable systems by thinking in terms of objects, their responsibilities, and their interactions. Adopting these best practices can ensure that designs are robust and sustainable over time.
 
+## Inheritance of features
+
+Object-oriented inheritance can be problematic for designing features because it enforces a rigid hierarchy for adding new features. Each set of new features must strictly build upon an existing set of features, making it challenging to define features as independent collections.
+
+For instance, suppose you have features A, B, and C, and you add each new feature through an inheritance chain with a class of the same name. In that case, you cannot access feature C without inheriting features B and A. However, if you opt for a simple class D with features A, B, and C, each feature can be toggled on or off as required. This example demonstrates how inheritance is often overused as a design solution.
+
+To avoid such limitations and foster more flexibility, it is crucial to consider alternative approaches like composition or interfaces. These methodologies allow you to create feature modules that can be combined in various ways, enabling a more modular and adaptable design.
+
+By using composition, you can build classes with a collection of features, where each feature operates independently and can be used in different combinations as needed. This way, you have the freedom to assemble features in any manner without being bound by a strict hierarchy.
+
+In summary, while object-oriented inheritance has its advantages, it is essential for professional programmers to be cautious about its use and consider other design patterns that offer greater flexibility and modularity for feature implementation. By doing so, you can create more maintainable and adaptable software systems.
+
 ### Occam's Razor
 
 Occam's Razor is a philosophical and scientific principle that suggests that given multiple explanations for a phenomenon, the simplest one is likely the correct one, as long as it fully explains the observed data. In other words, one should not make more assumptions than are necessary.
