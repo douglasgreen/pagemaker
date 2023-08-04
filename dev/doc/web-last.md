@@ -1,25 +1,38 @@
 # Web-Last Architecture
 
-Most architecture puts the web first nowadays. I recommend an architecture that puts the web last. That means that your program should fully work without needing to be passed across the network. The first layer of design should be a complete command-line application. The command should be able to do all basic program functionality. This allows your program to be scripted by writing scripts with series of commands. And it allows for more full automated testing.
+In contemporary software design, web-centric architectures dominate. However, I propose a paradigm shift: prioritize the command-line over the web interface. By doing so, you ensure that the core functionality of your program operates independently of network transmission.
 
-The reasons why the web should be put last are:
-* It is designed for simple commands that time out.
-* An HTML page can't accept more than a limited number of data inputs.
-* The PHP session inappropriately serializes data and creates long-term state.
-* JavaScript turns your app into a single-page app with needlessly maintained long-term state.
-* JavaScript tries to build functionality on an already rendered HTML document layer.
-* CSS is poorly designed and not modular so it does not allow for a well-designed style later and third-party style sharing.
-* REST APIs fragment your data and needlessly transport it across the network resulting in bottlenecks, delays, and unreliability.
-* The full stack pulls in a large amount of needless dependencies resulting in complexity, bloat, and constant upgrades.
+## Design philosophy
 
-In contrast, the command line:
-* Doesn't time out so you can process large amounts of data.
-* Accepts an unlimited number of data inputs.
-* Doesn't maintain a session between requests.
-* Doesn't use single-page app architecture.
-* Doesn't try to build on an already-rendered document layer. 
-* Focuses on data processing rather than on style rendering.
-* Doesn't needlessly introduce extra network layers.
-* Doesn't require large amount of bloated web dependencies.
+1. **Command-Line Centricity**: Begin with a comprehensive command-line application. This application should encapsulate all the primary functionalities of your program. Such an approach facilitates
+    - Scripting capabilities by stringing together command sequences.
+    - Comprehensive automated testing.
+2. **Web Layer as an Add-On**: Once your command-line base is solid, introduce the web layer. This ensures that the core logic remains unaffected by the constraints and peculiarities of web design and operations.
 
-The model and controllers should therefore be a command-line only. Then you can build the web layer last when everything is finished.
+## Rationale
+
+### Limitations of web-centric design
+
+- **Simplicity and Time-outs**: Web architectures are tailored for straightforward commands and are prone to time-outs.
+- **Data Input Constraints**: HTML forms have restrictions on the volume of input data.
+- **PHP Session Issues**: PHP sessions can complicate matters by serializing data and inadvertently creating persistent state.
+- **JavaScript Challenges**: 
+  - Transforming your application into a single-page app often introduces unnecessary long-term state maintenance.
+  - It superimposes functionality on pre-rendered HTML layers.
+- **CSS Concerns**: CSS lacks modularity, which hinders advanced styling and sharing third-party styles.
+- **REST API Pitfalls**: These can segment data and cause undue data transport across networks, leading to latency and unpredictability.
+- **Complexity and Bloat**: The comprehensive web stack frequently introduces extraneous dependencies, resulting in unwarranted complexity, bloat, and frequent updates.
+
+### Merits of command-line first design
+
+- **No Time-out Issues**: Allows processing of substantial data volumes without timing out.
+- **Unbounded Data Inputs**: Accepts data without inherent limitations.
+- **Session Independence**: Avoids persistent state across requests.
+- **Architectural Simplicity**: Omits single-page app structure and doesn't try to manipulate a pre-rendered document layer.
+- **Emphasis on Data Processing**: Prioritizes data operations over stylistic rendering.
+- **Network Efficiency**: Sidesteps unnecessary network layers.
+- **Minimized Dependencies**: Bypasses the bulk of web dependencies, keeping the architecture lean.
+
+In summary, focus initially on building a robust command-line model and controllers. The web layer should be an afterthought, ensuring the primary functions are not compromised by web-based challenges.
+
+<!-- DSG/ChatGPT 8/4/2023 -->
