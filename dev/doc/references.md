@@ -6,6 +6,28 @@
 * https://beamtic.com/creating-a-router-in-php
 * https://www.bbkane.com/blog/software-engineering-ideas-that-influence-me/
 
+## Wikipedia links
+
+* https://en.wikipedia.org/wiki/Agile_software_development
+* https://en.wikipedia.org/wiki/Anti-pattern
+* https://en.wikipedia.org/wiki/Code_reuse
+* https://en.wikipedia.org/wiki/Don%27t_repeat_yourself
+* https://en.wikipedia.org/wiki/Encapsulation_(computer_programming)
+* https://en.wikipedia.org/wiki/Feature_creep
+* https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)
+* https://en.wikipedia.org/wiki/Incrementalism
+* https://en.wikipedia.org/wiki/Information_hiding
+* https://en.wikipedia.org/wiki/Inner-platform_effect
+* https://en.wikipedia.org/wiki/KISS_principle
+* https://en.wikipedia.org/wiki/Minimum_viable_product
+* https://en.wikipedia.org/wiki/Not_invented_here
+* https://en.wikipedia.org/wiki/Overengineering
+* https://en.wikipedia.org/wiki/Second-system_effect
+* https://en.wikipedia.org/wiki/Single-responsibility_principle
+* https://en.wikipedia.org/wiki/Software_entropy
+* https://en.wikipedia.org/wiki/SOLID
+* https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it
+
 ## User-Centered API design
 
 > Before we take a look at the actual Event Tracing for Windows API, I want to walk the walk here and do exactly what I said to do in last week’s lecture: write the usage code first. Whenever you evaluate an API, or create a new one, you must always, always, ALWAYS start by writing some code as if you were a user trying to do the thing that the API is supposed to do. This is the only way to get a nice, clean perspective on how the API would work if it had no constraints on it whatsoever. If it was “magical”, as it were. And then, once you have that, you can move forward and start thinking about the practical problems, and what the best way is for you to get to something implementable. [The Worst API Ever Made, by Casey Muratori](https://caseymuratori.com/blog_0025)
