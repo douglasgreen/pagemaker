@@ -20,7 +20,7 @@ This document provides insights into the strengths and weaknesses of ChatGPT whe
 When leveraging ChatGPT for technical documentation, consider the following prompts:
 
 ### For Rewriting:
-> "This documentation is intended for professional programmers. Please rewrite it for clarity and accuracy, rearranging or rewriting it as needed."
+> "This documentation is intended for professional programmers. Please rewrite it for clarity and accuracy, rearranging, expanding, or rewriting it as needed."
 
 ### For Docblocks:
 > "Add docblock comments to these methods and properties compatible with PHPDocumentor."
