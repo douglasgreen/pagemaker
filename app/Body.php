@@ -28,7 +28,6 @@ class Body
         $output .= $this->renderSection('main', 'pmMain');
         $output .= $this->renderSection('footer', 'pmFooter');
         $output .= "</body>\n";
-        $output .= "</html>\n";
         return $output;
     }
 
@@ -55,7 +54,8 @@ class Body
             } catch (Throwable $e) {
                 $content = '<p style="color: red">Error rendering ' . $widget->getName() . '</p>';
             }
-                $output .= "</$widgetTag>\n";
+            $output .= $content;
+            $output .= "</$widgetTag>\n";
         }
 
         $output .= "</$tag>\n";
