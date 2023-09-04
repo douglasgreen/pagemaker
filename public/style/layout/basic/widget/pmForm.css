@@ -5,7 +5,7 @@
     font-size: 14px;
     text-align: center;
     text-decoration: none;
-    transition: background .3s ease;
+    transition: background 0.3s ease;
 }
 
 @media screen and (max-width: 599px) {
