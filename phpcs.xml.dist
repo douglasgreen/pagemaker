@@ -5,10 +5,10 @@
 
     <rule ref="PSR12">
         <properties>
-            <property name="testVersion" value="7.3" />
+            <property name="testVersion" value="8.1" />
         </properties>
     </rule>
 
-    <file>dev/app/</file>
-    <file>dev/test/</file>
+    <file>app/</file>
+    <file>test/</file>
 </ruleset>

@@ -11,11 +11,11 @@
     ],
     "autoload": {
         "psr-4": {
-            "PageMakerDev\\": "dev/app/"
+            "PageMaker\\": "app/"
         }
     },
     "require": {
-        "php": ">=7.3.0"
+        "php": ">=8.1.0"
     },
     "require-dev": {
         "phpmd/phpmd": "^2.13",
@@ -25,7 +25,7 @@
     "scripts": {
         "fix-js": "npm run fix && npm run format && npx prettier --write .",
         "fix-php": "./vendor/bin/phpcbf",
-        "lint-php": "./vendor/bin/phpcs && ./vendor/bin/phpmd dev/app text phpmd.xml",
-        "test-php": "./vendor/bin/phpunit --bootstrap dev/test/bootstrap.php dev/test"
+        "lint-php": "./vendor/bin/phpcs && ./vendor/bin/phpmd app text phpmd.xml",
+        "test-php": "./vendor/bin/phpunit --bootstrap test/bootstrap.php test"
     }
 }
