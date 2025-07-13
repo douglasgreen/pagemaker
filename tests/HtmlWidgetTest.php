@@ -8,9 +8,6 @@ use DouglasGreen\Utility\Data\ValueException;
 use DouglasGreen\PageMaker\HtmlWidget;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @SuppressWarnings(PHPMD.TooManyPublicMethods)
- */
 class HtmlWidgetTest extends TestCase
 {
     public function testConstructorInvalidClass(): void
@@ -64,12 +61,14 @@ class HtmlWidgetTest extends TestCase
     public function testGetScripts(): void
     {
         $htmlWidget = new HtmlWidget('MyWidget', '1.0.0', 'div', 'my-widget-class');
+        /** @phpstan-ignore method.alreadyNarrowedType */
         $this->assertIsArray($htmlWidget->getScripts());
     }
 
     public function testGetStyles(): void
     {
         $htmlWidget = new HtmlWidget('MyWidget', '1.0.0', 'div', 'my-widget-class');
+        /** @phpstan-ignore method.alreadyNarrowedType */
         $this->assertIsArray($htmlWidget->getStyles());
     }
 
