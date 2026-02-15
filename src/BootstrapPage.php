@@ -4,16 +4,20 @@ namespace App\Layout;
 
 use App\Layout\Components\AlertCollection;
 use App\Layout\Components\AssetManager;
+use App\Layout\Components\RawHtml;
 
 class BootstrapPage
 {
     private ?Renderable $header = null;
 
-    private $leftNav;   // string|Renderable|callable
+    /** @var Renderable|string|callable|null */
+    private $leftNav;
 
-    private $main;      // required
+    /** @var Renderable|string|callable|null */
+    private $main;
 
-    private $rightNav;  // string|Renderable|callable
+    /** @var Renderable|string|callable|null */
+    private $rightNav;
 
     private ?Renderable $footer = null;
 
@@ -21,6 +25,7 @@ class BootstrapPage
 
     private Breakpoint $sidebarBreakpoint = Breakpoint::LG;
 
+    /** @var array{left: int, main: int, right: int} */
     private array $columnWidths = ['left' => 2, 'main' => 8, 'right' => 2];
 
     private readonly AssetManager $assets;
@@ -89,6 +94,9 @@ class BootstrapPage
     }
 
     // Asset management
+    /**
+     * @param array<string, string> $attributes
+     */
     public function addExternalCSS(string $url, array $attributes = []): self
     {
         $this->assets->addCSS($url, false, $attributes);
@@ -101,6 +109,9 @@ class BootstrapPage
         return $this;
     }
 
+    /**
+     * @param array<string, string> $attributes
+     */
     public function addExternalJS(string $url, string $position = 'head', array $attributes = []): self
     {
         $this->assets->addJS($url, $position, false, $attributes);
@@ -121,6 +132,7 @@ class BootstrapPage
         }
 
         $bp = $this->sidebarBreakpoint->value;
+        $w = $this->columnWidths;
 
         ob_start();
         ?><!DOCTYPE html>
@@ -139,29 +151,35 @@ class BootstrapPage
     </div>
     <?php endif; ?>
     
-    <?php if ($this->header instanceof \App\Layout\Renderable): ?>
+    <?php if ($this->header instanceof Renderable): ?>
         <?= $this->header->render(); ?>
     <?php endif; ?>
     
     <?php match ($this->layout) {
-        LayoutType::HOLY_GRAIL => $this->renderHolyGrail($bp),
-        LayoutType::OFFCANVAS_LEFT => $this->renderOffcanvas($bp),
-        LayoutType::STACKED => $this->renderStacked($bp),
+        LayoutType::HOLY_GRAIL => $this->renderHolyGrail($bp, $w),
+        LayoutType::OFFCANVAS_LEFT => $this->renderOffcanvas($bp, $w),
+        LayoutType::STACKED => $this->renderStacked($bp, $w),
     }; ?>
     
-    <?php if ($this->footer instanceof \App\Layout\Renderable): ?>
+    <?php if ($this->footer instanceof Renderable): ?>
         <?= $this->footer->render(); ?>
     <?php endif; ?>
     
     <?= $this->assets->renderJS('body'); ?>
 </body>
 </html><?php
-        return ob_get_clean();
+        $output = ob_get_clean();
+        if ($output === false) {
+            throw new \RuntimeException('Failed to render page');
+        }
+        return $output;
     }
 
-    private function renderHolyGrail(string $bp): void
+    /**
+     * @param array{left: int, main: int, right: int} $w
+     */
+    private function renderHolyGrail(string $bp, array $w): void
     {
-        $w = $this->columnWidths;
         $mainClass = sprintf('col-12 col-%s-%s', $bp, $w['main']);
 
         // If sidebars exist, add responsive classes
@@ -190,9 +208,11 @@ class BootstrapPage
         <?php
     }
 
-    private function renderOffcanvas(string $bp): void
+    /**
+     * @param array{left: int, main: int, right: int} $w
+     */
+    private function renderOffcanvas(string $bp, array $w): void
     {
-        $w = $this->columnWidths;
         // Left nav is 3 cols on desktop, offcanvas on mobile
         // Main takes remaining space
         $mainCols = 12 - ($this->leftNav ? $w['left'] : 0) - ($this->rightNav ? $w['right'] : 0);
@@ -228,9 +248,11 @@ class BootstrapPage
         <?php
     }
 
-    private function renderStacked(string $bp): void
+    /**
+     * @param array{left: int, main: int, right: int} $w
+     */
+    private function renderStacked(string $bp, array $w): void
     {
-        $w = $this->columnWidths;
         // Source order: Main, Left, Right
         // Visual order on desktop: Left (1), Main (2), Right (3)
         ?>
@@ -256,13 +278,16 @@ class BootstrapPage
         <?php
     }
 
-    private function renderContent($content): string
+    /**
+     * @param Renderable|string|callable|null $content
+     */
+    private function renderContent(mixed $content): string
     {
         if ($content instanceof Renderable) {
             return $content->render();
         }
         if (is_callable($content)) {
-            return ($content)();
+            return (string) ($content)();
         }
         return (string) $content;
     }

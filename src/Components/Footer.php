@@ -8,6 +8,7 @@ use App\Layout\Renderable;
 
 class Footer implements Renderable
 {
+    /** @var array<int, Row> */
     private array $rows = [];
 
     private string $classes = 'bg-light py-4 mt-auto border-top';
@@ -31,6 +32,7 @@ class Footer implements Renderable
         foreach ($this->rows as $row) {
             $html .= $row->render();
         }
+
         return $html . '</div></footer>';
     }
 }

@@ -12,7 +12,8 @@ class Header implements Renderable
 
     private ?SearchForm $search = null;
 
-    private ?array $brand = null; // string|array [text, url]
+    /** @var array{text: string, url: string}|null */
+    private ?array $brand = null;
 
     private Breakpoint $expandBreakpoint = Breakpoint::LG;
 
@@ -69,9 +70,9 @@ class Header implements Renderable
                     </button>
                     <?php endif; ?>
                     
-                    <?php if ($this->brand): ?>
-                    <a class="navbar-brand" href="<?= htmlspecialchars((string) $this->brand['url']); ?>">
-                        <?= htmlspecialchars((string) $this->brand['text']); ?>
+                    <?php if ($this->brand !== null): ?>
+                    <a class="navbar-brand" href="<?= htmlspecialchars($this->brand['url']); ?>">
+                        <?= htmlspecialchars($this->brand['text']); ?>
                     </a>
                     <?php endif; ?>
                     
@@ -98,6 +99,6 @@ class Header implements Renderable
             </nav>
         </header>
         <?php
-        return ob_get_clean();
+        return ob_get_clean() ?: '';
     }
 }

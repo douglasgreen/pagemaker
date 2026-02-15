@@ -9,6 +9,7 @@ use App\Layout\Renderable;
 
 class Menu implements Renderable
 {
+    /** @var array<int, MenuItem> */
     private array $items = [];
 
     private MenuStyle $style = MenuStyle::SIDEBAR;
@@ -25,13 +26,14 @@ class Menu implements Renderable
         return $this;
     }
 
+    /**
+     * @param array<int, array{0: string, 1: string}> $links
+     */
     public function addDropdown(string $label, array $links): self
     {
         $dropdown = new Dropdown($label);
         foreach ($links as $link) {
-            if (is_array($link)) {
-                $dropdown->addItem(new Link($link[0], $link[1]));
-            }
+            $dropdown->addItem(new Link($link[0], $link[1]));
         }
 
         $this->items[] = $dropdown;
@@ -53,6 +55,7 @@ class Menu implements Renderable
         foreach ($this->items as $item) {
             $html .= '<li class="nav-item">' . $item->render() . '</li>';
         }
+
         return $html . '</ul>';
     }
 
@@ -67,6 +70,7 @@ class Menu implements Renderable
                 $html .= $item->render();
             }
         }
+
         return $html . '</nav>';
     }
 }

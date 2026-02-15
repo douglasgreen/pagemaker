@@ -9,6 +9,7 @@ use App\Layout\Renderable;
 
 class Row implements Renderable
 {
+    /** @var array<int, array{width: int, content: Renderable|string, breakpoint: Breakpoint|null}> */
     private array $columns = [];
 
     private string $classes = '';
@@ -40,6 +41,7 @@ class Row implements Renderable
                 : $col['content'];
             $html .= sprintf('<div class="%s mb-3">%s</div>', $class, $content);
         }
+
         return $html . '</div>';
     }
 }

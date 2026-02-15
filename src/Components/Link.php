@@ -6,6 +6,9 @@ namespace App\Layout\Components;
 
 class Link implements MenuItem
 {
+    /**
+     * @param array<string, string|int|bool> $attributes
+     */
     public function __construct(
         private readonly string $label,
         private readonly string $url,
@@ -29,7 +32,7 @@ class Link implements MenuItem
     private function renderAttributes(): string
     {
         return implode(' ', array_map(
-            fn (string $k, $v): string => sprintf('%s="%s"', $k, htmlspecialchars((string) $v)),
+            fn (string $k, string|int|bool $v): string => sprintf('%s="%s"', $k, htmlspecialchars((string) $v)),
             array_keys($this->attributes),
             $this->attributes,
         ));

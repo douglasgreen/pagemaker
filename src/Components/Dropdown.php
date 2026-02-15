@@ -4,6 +4,7 @@ namespace App\Layout\Components;
 
 class Dropdown implements MenuItem
 {
+    /** @var array<int, MenuItem> */
     private array $items = [];
 
     public function __construct(
@@ -35,6 +36,6 @@ class Dropdown implements MenuItem
             </ul>
         </li>
         <?php
-        return ob_get_clean();
+        return ob_get_clean() ?: '';
     }
 }

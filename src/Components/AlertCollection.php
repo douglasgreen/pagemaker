@@ -9,6 +9,7 @@ use App\Layout\Renderable;
 // Alert Collection
 class AlertCollection implements Renderable
 {
+    /** @var array<int, array{message: string, type: string, dismissible: bool}> */
     private array $alerts = [];
 
     public function add(string $message, string $type = 'danger', bool $dismissible = true): void
