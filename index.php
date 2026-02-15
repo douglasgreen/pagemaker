@@ -1,8 +1,11 @@
 <?php
 use App\Layout\BootstrapPage;
-use App\Layout\LayoutType;
 use App\Layout\Breakpoint;
-use App\Layout\Components\{Header, Footer, Menu, SearchForm, Row};
+use App\Layout\Components\Footer;
+use App\Layout\Components\Header;
+use App\Layout\Components\Menu;
+use App\Layout\Components\SearchForm;
+use App\Layout\LayoutType;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -19,7 +22,7 @@ $headerMenu->addLink('Home', '/', true)
     ->addDropdown('Products', [
         ['Analytics', '/analytics'],
         ['Reports', '/reports'],
-        ['Export', '/export']
+        ['Export', '/export'],
     ])
     ->addLink('Settings', '/settings');
 
@@ -39,7 +42,7 @@ $leftNav->addLink('Dashboard', '/dash', true)
 $page->setLeftNav($leftNav);
 
 // 4. Main content (can be string, callable, or Renderable)
-$page->setMain(function() {
+$page->setMain(function (): string|false {
     ob_start();
     ?>
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">

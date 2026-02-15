@@ -1,32 +1,36 @@
 <?php
+
 namespace App\Layout\Components;
 
-class Dropdown implements MenuItem {
+class Dropdown implements MenuItem
+{
     private array $items = [];
-    
+
     public function __construct(
         private readonly string $label,
-        private string $id = ''
+        private string $id = '',
     ) {
         $this->id = $id ?: 'dropdown-' . uniqid();
     }
-    
-    public function addItem(MenuItem $item): self {
+
+    public function addItem(MenuItem $item): self
+    {
         $this->items[] = $item;
         return $this;
     }
-    
-    public function render(): string {
+
+    public function render(): string
+    {
         ob_start();
         ?>
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="<?= $this->id ?>" 
+            <a class="nav-link dropdown-toggle" href="#" id="<?= $this->id; ?>" 
                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <?= htmlspecialchars($this->label) ?>
+                <?= htmlspecialchars($this->label); ?>
             </a>
-            <ul class="dropdown-menu" aria-labelledby="<?= $this->id ?>">
+            <ul class="dropdown-menu" aria-labelledby="<?= $this->id; ?>">
                 <?php foreach ($this->items as $item): ?>
-                <li><?= $item->render() ?></li>
+                <li><?= $item->render(); ?></li>
                 <?php endforeach; ?>
             </ul>
         </li>

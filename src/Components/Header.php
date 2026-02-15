@@ -1,64 +1,77 @@
 <?php
+
 namespace App\Layout\Components;
 
 use App\Layout\Breakpoint;
 use App\Layout\MenuStyle;
 use App\Layout\Renderable;
 
-class Header implements Renderable {
+class Header implements Renderable
+{
     private ?Menu $menu = null;
+
     private ?SearchForm $search = null;
-    private $brand = null; // string|array [text, url]
+
+    private ?array $brand = null; // string|array [text, url]
+
     private Breakpoint $expandBreakpoint = Breakpoint::LG;
+
     private bool $hasOffcanvasToggle = false;
+
     private string $offcanvasTarget = '';
-    
-    public function setBrand(string $text, string $url = '/'): self {
+
+    public function setBrand(string $text, string $url = '/'): self
+    {
         $this->brand = ['text' => $text, 'url' => $url];
         return $this;
     }
-    
-    public function setMenu(Menu $menu): self {
+
+    public function setMenu(Menu $menu): self
+    {
         $this->menu = $menu;
         return $this;
     }
-    
-    public function setSearchForm(SearchForm $form): self {
+
+    public function setSearchForm(SearchForm $form): self
+    {
         $this->search = $form;
         return $this;
     }
-    
-    public function setExpandBreakpoint(Breakpoint $bp): self {
+
+    public function setExpandBreakpoint(Breakpoint $bp): self
+    {
         $this->expandBreakpoint = $bp;
         return $this;
     }
-    
+
     // Used by Page when using OFFCANVAS layout
-    public function enableOffcanvasToggle(string $targetId): self {
+    public function enableOffcanvasToggle(string $targetId): self
+    {
         $this->hasOffcanvasToggle = true;
         $this->offcanvasTarget = $targetId;
         return $this;
     }
-    
-    public function render(): string {
+
+    public function render(): string
+    {
         $bp = $this->expandBreakpoint->value;
-        $classes = "navbar navbar-expand-{$bp} navbar-dark bg-dark";
-        
+        $classes = sprintf('navbar navbar-expand-%s navbar-dark bg-dark', $bp);
+
         ob_start();
         ?>
         <header>
-            <nav class="<?= $classes ?>">
+            <nav class="<?= $classes; ?>">
                 <div class="container-fluid">
                     <?php if ($this->hasOffcanvasToggle): ?>
-                    <button class="navbar-toggler d-<?= $bp ?>-none me-2" type="button" 
-                            data-bs-toggle="offcanvas" data-bs-target="#<?= $this->offcanvasTarget ?>">
+                    <button class="navbar-toggler d-<?= $bp; ?>-none me-2" type="button" 
+                            data-bs-toggle="offcanvas" data-bs-target="#<?= $this->offcanvasTarget; ?>">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <?php endif; ?>
                     
                     <?php if ($this->brand): ?>
-                    <a class="navbar-brand" href="<?= htmlspecialchars($this->brand['url']) ?>">
-                        <?= htmlspecialchars($this->brand['text']) ?>
+                    <a class="navbar-brand" href="<?= htmlspecialchars((string) $this->brand['url']); ?>">
+                        <?= htmlspecialchars((string) $this->brand['text']); ?>
                     </a>
                     <?php endif; ?>
                     
@@ -70,13 +83,13 @@ class Header implements Renderable {
                     </button>
                     
                     <div class="collapse navbar-collapse" id="navbarContent">
-                        <?php if ($this->menu): ?>
-                            <?= $this->menu->setStyle(MenuStyle::NAVBAR)->render() ?>
+                        <?php if ($this->menu instanceof \App\Layout\Components\Menu): ?>
+                            <?= $this->menu->setStyle(MenuStyle::NAVBAR)->render(); ?>
                         <?php endif; ?>
                         
-                        <?php if ($this->search): ?>
+                        <?php if ($this->search instanceof \App\Layout\Components\SearchForm): ?>
                             <div class="d-flex ms-auto">
-                                <?= $this->search->render() ?>
+                                <?= $this->search->render(); ?>
                             </div>
                         <?php endif; ?>
                     </div>
