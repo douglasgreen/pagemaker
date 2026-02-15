@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Layout;
+namespace DouglasGreen\PageMaker;
 
 enum LayoutType
 {

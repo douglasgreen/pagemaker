@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Layout\Components;
+namespace DouglasGreen\PageMaker\Components;
 
-use App\Layout\MenuStyle;
-use App\Layout\Renderable;
+use DouglasGreen\PageMaker\MenuStyle;
+use DouglasGreen\PageMaker\Renderable;
 
 class Menu implements Renderable
 {

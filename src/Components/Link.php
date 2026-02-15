@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Layout\Components;
+namespace DouglasGreen\PageMaker\Components;
 
 class Link implements MenuItem
 {

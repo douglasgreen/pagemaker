@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Layout;
+namespace DouglasGreen\PageMaker;
 
-use App\Layout\Components\AlertCollection;
-use App\Layout\Components\AssetManager;
-use App\Layout\Components\RawHtml;
+use DouglasGreen\PageMaker\Components\AlertCollection;
+use DouglasGreen\PageMaker\Components\AssetManager;
+use DouglasGreen\PageMaker\Components\RawHtml;
 
 class BootstrapPage
 {

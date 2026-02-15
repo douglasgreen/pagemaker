@@ -13,8 +13,7 @@
     },
     "autoload": {
         "psr-4": {
-            "DouglasGreen\\PageMaker\\": "src/",
-            "App\\Layout\\": "src/"
+            "DouglasGreen\\PageMaker\\": "src/"
         }
     },
     "config": {

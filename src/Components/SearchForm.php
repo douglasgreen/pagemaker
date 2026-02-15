@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Layout\Components;
+namespace DouglasGreen\PageMaker\Components;
 
-use App\Layout\Renderable;
+use DouglasGreen\PageMaker\Renderable;
 
 // Search Form Component
 class SearchForm implements Renderable

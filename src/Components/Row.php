@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Layout\Components;
+namespace DouglasGreen\PageMaker\Components;
 
-use App\Layout\Breakpoint;
-use App\Layout\Renderable;
+use DouglasGreen\PageMaker\Breakpoint;
+use DouglasGreen\PageMaker\Renderable;
 
 class Row implements Renderable
 {

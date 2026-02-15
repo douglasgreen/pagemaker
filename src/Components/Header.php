@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Layout\Components;
+namespace DouglasGreen\PageMaker\Components;
 
-use App\Layout\Breakpoint;
-use App\Layout\MenuStyle;
-use App\Layout\Renderable;
+use DouglasGreen\PageMaker\Breakpoint;
+use DouglasGreen\PageMaker\MenuStyle;
+use DouglasGreen\PageMaker\Renderable;
 
 class Header implements Renderable
 {
@@ -84,11 +84,11 @@ class Header implements Renderable
                     </button>
                     
                     <div class="collapse navbar-collapse" id="navbarContent">
-                        <?php if ($this->menu instanceof \App\Layout\Components\Menu): ?>
+                        <?php if ($this->menu instanceof \DouglasGreen\PageMaker\Components\Menu): ?>
                             <?= $this->menu->setStyle(MenuStyle::NAVBAR)->render(); ?>
                         <?php endif; ?>
                         
-                        <?php if ($this->search instanceof \App\Layout\Components\SearchForm): ?>
+                        <?php if ($this->search instanceof \DouglasGreen\PageMaker\Components\SearchForm): ?>
                             <div class="d-flex ms-auto">
                                 <?= $this->search->render(); ?>
                             </div>

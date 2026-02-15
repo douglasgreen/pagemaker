@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Layout\Components;
+namespace DouglasGreen\PageMaker\Components;
 
 class Dropdown implements MenuItem
 {

@@ -1,11 +1,11 @@
 <?php
-use App\Layout\BootstrapPage;
-use App\Layout\Breakpoint;
-use App\Layout\Components\Footer;
-use App\Layout\Components\Header;
-use App\Layout\Components\Menu;
-use App\Layout\Components\SearchForm;
-use App\Layout\LayoutType;
+use DouglasGreen\PageMaker\BootstrapPage;
+use DouglasGreen\PageMaker\Breakpoint;
+use DouglasGreen\PageMaker\Components\Footer;
+use DouglasGreen\PageMaker\Components\Header;
+use DouglasGreen\PageMaker\Components\Menu;
+use DouglasGreen\PageMaker\Components\SearchForm;
+use DouglasGreen\PageMaker\LayoutType;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
