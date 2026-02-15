@@ -13,8 +13,14 @@ require_once __DIR__ . '/vendor/autoload.php';
 $page = new BootstrapPage('Dashboard', 'en', 'UTF-8');
 $page->setLayout(LayoutType::HOLY_GRAIL, Breakpoint::LG)
      ->setColumnWidths(2, 8, 2)  // Left: 2, Main: 8, Right: 2
-     ->addExternalCSS('https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css')
-     ->addExternalJS('https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js', 'head');
+     ->addExternalCSS('https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css', [
+         'integrity' => 'sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN',
+         'crossorigin' => 'anonymous',
+     ])
+     ->addExternalJS('https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js', 'head', [
+         'integrity' => 'sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL',
+         'crossorigin' => 'anonymous',
+     ]);
 
 // 2. Build Header with dropdown menu and search
 $headerMenu = new Menu();

@@ -20,6 +20,10 @@ class Link implements MenuItem
     {
         $active = $this->active ? 'active' : '';
         $attrs = $this->renderAttributes();
+
+        // Auto-add security attributes for external links
+        $attrs .= $this->getExternalLinkAttributes();
+
         return sprintf(
             '<a class="nav-link %s" href="%s" %s>%s</a>',
             $active,
@@ -27,6 +31,16 @@ class Link implements MenuItem
             $attrs,
             htmlspecialchars($this->label),
         );
+    }
+
+    private function getExternalLinkAttributes(): string
+    {
+        // Detect external links (starts with http:// or https:// and not same domain)
+        if (preg_match('#^https?://#', $this->url)) {
+            return ' rel="noopener noreferrer"';
+        }
+
+        return '';
     }
 
     private function renderAttributes(): string

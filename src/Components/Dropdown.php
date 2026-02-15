@@ -25,11 +25,16 @@ class Dropdown implements MenuItem
         ob_start();
         ?>
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="<?= $this->id; ?>" 
-               role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <?= htmlspecialchars($this->label); ?>
+            <a class="nav-link dropdown-toggle"
+               href="#"
+               id="<?= htmlspecialchars($this->id, ENT_QUOTES, 'UTF-8'); ?>"
+               role="button"
+               data-bs-toggle="dropdown"
+               aria-expanded="false"
+               aria-haspopup="true">
+                <?= htmlspecialchars($this->label, ENT_QUOTES, 'UTF-8'); ?>
             </a>
-            <ul class="dropdown-menu" aria-labelledby="<?= $this->id; ?>">
+            <ul class="dropdown-menu" aria-labelledby="<?= htmlspecialchars($this->id, ENT_QUOTES, 'UTF-8'); ?>">
                 <?php foreach ($this->items as $item): ?>
                 <li><?= $item->render(); ?></li>
                 <?php endforeach; ?>

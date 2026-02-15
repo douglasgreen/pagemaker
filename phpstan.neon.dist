@@ -8,7 +8,7 @@ parameters:
   excludePaths:
     - var
     - vendor
-  
+
   # Strict analysis settings
   checkUninitializedProperties: true
   checkExplicitMixed: true

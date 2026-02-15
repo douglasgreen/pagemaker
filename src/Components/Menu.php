@@ -61,7 +61,7 @@ class Menu implements Renderable
 
     private function renderSidebar(): string
     {
-        $html = '<nav class="nav flex-column">';
+        $html = '<nav class="nav flex-column" aria-label="Sidebar navigation">';
         foreach ($this->items as $item) {
             if ($item instanceof Link) {
                 // Replace nav-link with specific sidebar styling if needed

@@ -64,30 +64,30 @@ class Header implements Renderable
             <nav class="<?= $classes; ?>">
                 <div class="container-fluid">
                     <?php if ($this->hasOffcanvasToggle): ?>
-                    <button class="navbar-toggler d-<?= $bp; ?>-none me-2" type="button" 
+                    <button class="navbar-toggler d-<?= $bp; ?>-none me-2" type="button"
                             data-bs-toggle="offcanvas" data-bs-target="#<?= $this->offcanvasTarget; ?>">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <?php endif; ?>
-                    
+
                     <?php if ($this->brand !== null): ?>
                     <a class="navbar-brand" href="<?= htmlspecialchars($this->brand['url']); ?>">
                         <?= htmlspecialchars($this->brand['text']); ?>
                     </a>
                     <?php endif; ?>
-                    
+
                     <?php if ($this->menu || $this->search): ?>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
-                            data-bs-target="#navbarContent" aria-controls="navbarContent" 
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarContent" aria-controls="navbarContent"
                             aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    
+
                     <div class="collapse navbar-collapse" id="navbarContent">
                         <?php if ($this->menu instanceof \DouglasGreen\PageMaker\Components\Menu): ?>
                             <?= $this->menu->setStyle(MenuStyle::NAVBAR)->render(); ?>
                         <?php endif; ?>
-                        
+
                         <?php if ($this->search instanceof \DouglasGreen\PageMaker\Components\SearchForm): ?>
                             <div class="d-flex ms-auto">
                                 <?= $this->search->render(); ?>

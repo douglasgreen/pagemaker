@@ -6,6 +6,21 @@ use DouglasGreen\PageMaker\Components\AlertCollection;
 use DouglasGreen\PageMaker\Components\AssetManager;
 use DouglasGreen\PageMaker\Components\RawHtml;
 
+/**
+ * Bootstrap 5.3 page builder with responsive layout patterns.
+ *
+ * Generates semantic HTML documents with configurable header, footer,
+ * and sidebar layouts following WCAG 2.2 AA accessibility standards.
+ *
+ * @example
+ * ```php
+ * $page = new BootstrapPage('Dashboard', 'en', 'UTF-8');
+ * $page->setLayout(LayoutType::HOLY_GRAIL, Breakpoint::LG)
+ *      ->setColumnWidths(2, 8, 2)
+ *      ->setMain('<h1>Content</h1>');
+ * echo $page->render();
+ * ```
+ */
 class BootstrapPage
 {
     private ?Renderable $header = null;
@@ -40,6 +55,9 @@ class BootstrapPage
         $this->assets = new AssetManager();
         $this->alerts = new AlertCollection();
         $this->validateWidths();
+
+        // Add default accessibility CSS
+        $this->addInlineCSS($this->getDefaultAccessibilityCSS());
     }
 
     // Fluent configuration
@@ -50,6 +68,17 @@ class BootstrapPage
         return $this;
     }
 
+    /**
+     * Sets the responsive column widths for left/main/right sections.
+     *
+     * @param int $left Width of left sidebar (1-11)
+     * @param int $main Width of main content area (1-11)
+     * @param int $right Width of right sidebar (1-11)
+     *
+     * @return self Fluent interface
+     *
+     * @throws \InvalidArgumentException If widths do not sum to 12 or are out of range
+     */
     public function setColumnWidths(int $left, int $main, int $right): self
     {
         $this->columnWidths = ['left' => $left, 'main' => $main, 'right' => $right];
@@ -145,26 +174,30 @@ class BootstrapPage
     <?= $this->assets->renderJS('head'); ?>
 </head>
 <body>
+    <a href="#main-content" class="visually-hidden-focusable position-absolute top-0 start-0 z-3 p-2 bg-primary text-white">
+        Skip to main content
+    </a>
+
     <?php if (!$this->alerts->isEmpty()): ?>
     <div class="container-fluid px-0">
         <?= $this->alerts->render(); ?>
     </div>
     <?php endif; ?>
-    
+
     <?php if ($this->header instanceof Renderable): ?>
         <?= $this->header->render(); ?>
     <?php endif; ?>
-    
+
     <?php match ($this->layout) {
         LayoutType::HOLY_GRAIL => $this->renderHolyGrail($bp, $w),
         LayoutType::OFFCANVAS_LEFT => $this->renderOffcanvas($bp, $w),
         LayoutType::STACKED => $this->renderStacked($bp, $w),
     }; ?>
-    
+
     <?php if ($this->footer instanceof Renderable): ?>
         <?= $this->footer->render(); ?>
     <?php endif; ?>
-    
+
     <?= $this->assets->renderJS('body'); ?>
 </body>
 </html><?php
@@ -193,11 +226,11 @@ class BootstrapPage
                     <?= $this->renderContent($this->leftNav); ?>
                 </aside>
                 <?php endif; ?>
-                
-                <main class="<?= $mainClass; ?>">
+
+                <main id="main-content" class="<?= $mainClass; ?>" tabindex="-1">
                     <?= $this->renderContent($this->main); ?>
                 </main>
-                
+
                 <?php if ($this->rightNav): ?>
                 <aside class="<?= $rightClass; ?> sidebar-right">
                     <?= $this->renderContent($this->rightNav); ?>
@@ -221,11 +254,19 @@ class BootstrapPage
             <div class="row">
                 <?php if ($this->leftNav): ?>
                 <aside class="col-<?= $bp; ?>-<?= $w['left']; ?> p-0">
-                    <div class="offcanvas-<?= $bp; ?> offcanvas-start" tabindex="-1" id="sidebarMenu">
+                    <div class="offcanvas-<?= $bp; ?> offcanvas-start"
+                         tabindex="-1"
+                         id="sidebarMenu"
+                         aria-modal="true"
+                         role="dialog"
+                         aria-labelledby="sidebarMenuLabel">
                         <div class="offcanvas-header">
-                            <h5 class="offcanvas-title">Menu</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" 
-                                    data-bs-target="#sidebarMenu" aria-label="Close"></button>
+                            <h5 class="offcanvas-title" id="sidebarMenuLabel">Menu</h5>
+                            <button type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="offcanvas"
+                                    data-bs-target="#sidebarMenu"
+                                    aria-label="Close menu"></button>
                         </div>
                         <div class="offcanvas-body">
                             <?= $this->renderContent($this->leftNav); ?>
@@ -233,11 +274,11 @@ class BootstrapPage
                     </div>
                 </aside>
                 <?php endif; ?>
-                
-                <main class="col-12 col-<?= $bp; ?>-<?= $mainCols; ?>">
+
+                <main id="main-content" class="col-12 col-<?= $bp; ?>-<?= $mainCols; ?>" tabindex="-1">
                     <?= $this->renderContent($this->main); ?>
                 </main>
-                
+
                 <?php if ($this->rightNav): ?>
                 <aside class="col-<?= $bp; ?>-<?= $w['right']; ?> d-none d-<?= $bp; ?>-block">
                     <?= $this->renderContent($this->rightNav); ?>
@@ -258,16 +299,16 @@ class BootstrapPage
         ?>
         <div class="container-fluid">
             <div class="row">
-                <main class="col-12 col-<?= $bp; ?>-<?= $w['main']; ?> order-<?= $bp; ?>-2">
+                <main id="main-content" class="col-12 col-<?= $bp; ?>-<?= $w['main']; ?> order-<?= $bp; ?>-2" tabindex="-1">
                     <?= $this->renderContent($this->main); ?>
                 </main>
-                
+
                 <?php if ($this->leftNav): ?>
                 <aside class="col-12 col-<?= $bp; ?>-<?= $w['left']; ?> order-<?= $bp; ?>-1 mb-3 mb-<?= $bp; ?>-0">
                     <?= $this->renderContent($this->leftNav); ?>
                 </aside>
                 <?php endif; ?>
-                
+
                 <?php if ($this->rightNav): ?>
                 <aside class="col-12 col-<?= $bp; ?>-<?= $w['right']; ?> order-<?= $bp; ?>-3 mt-3 mt-<?= $bp; ?>-0">
                     <?= $this->renderContent($this->rightNav); ?>
@@ -298,5 +339,38 @@ class BootstrapPage
         if ($sum !== 12) {
             throw new \InvalidArgumentException('Column widths must sum to 12, got ' . $sum);
         }
+
+        foreach ($this->columnWidths as $section => $width) {
+            if ($width < 1 || $width > 11) {
+                throw new \InvalidArgumentException(
+                    sprintf("Column width for '%s' must be between 1 and 11, got %s", $section, $width),
+                );
+            }
+        }
+    }
+
+    private function getDefaultAccessibilityCSS(): string
+    {
+        return '
+            @media (prefers-reduced-motion: reduce) {
+                *, *::before, *::after {
+                    animation-duration: 0.01ms !important;
+                    animation-iteration-count: 1 !important;
+                    transition-duration: 0.01ms !important;
+                }
+            }
+
+            .visually-hidden-focusable:not(:focus):not(:focus-within) {
+                position: absolute !important;
+                width: 1px !important;
+                height: 1px !important;
+                padding: 0 !important;
+                margin: -1px !important;
+                overflow: hidden !important;
+                clip: rect(0, 0, 0, 0) !important;
+                white-space: nowrap !important;
+                border: 0 !important;
+            }
+        ';
     }
 }

@@ -15,6 +15,13 @@ class AssetManager
     /** @var array{head: array<int, array{source: string, inline: bool, attrs: array<string, string>}>, body: array<int, array{source: string, inline: bool, attrs: array<string, string>}>} */
     private array $js = ['head' => [], 'body' => []];
 
+    private ?string $cspNonce = null;
+
+    public function setCspNonce(string $nonce): void
+    {
+        $this->cspNonce = $nonce;
+    }
+
     /**
      * @param array<string, string> $attrs
      */
@@ -41,7 +48,8 @@ class AssetManager
         $html = '';
         foreach ($this->css as $asset) {
             if ($asset['inline']) {
-                $html .= '<style>' . $asset['source'] . '</style>';
+                $nonce = $this->cspNonce ? ' nonce="' . htmlspecialchars($this->cspNonce, ENT_QUOTES, 'UTF-8') . '"' : '';
+                $html .= '<style' . $nonce . '>' . $asset['source'] . '</style>';
             } else {
                 $attrs = $this->attrsToString($asset['attrs']);
                 $html .= sprintf(
@@ -64,7 +72,8 @@ class AssetManager
 
         foreach ($this->js[$position] as $asset) {
             if ($asset['inline']) {
-                $html .= '<script>' . $asset['source'] . '</script>';
+                $nonce = $this->cspNonce ? ' nonce="' . htmlspecialchars($this->cspNonce, ENT_QUOTES, 'UTF-8') . '"' : '';
+                $html .= '<script' . $nonce . '>' . $asset['source'] . '</script>';
             } else {
                 $attrs = $this->attrsToString($asset['attrs']);
                 $html .= sprintf(

@@ -27,12 +27,21 @@ class AlertCollection implements Renderable
         $html = '';
         foreach ($this->alerts as $alert) {
             $dismiss = $alert['dismissible'] ? 'alert-dismissible fade show' : '';
-            $btn = $alert['dismissible'] ? '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' : '';
+            $btn = $alert['dismissible']
+                ? '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Dismiss alert"></button>'
+                : '';
+
+            // Determine appropriate role based on alert type
+            $role = in_array($alert['type'], ['danger', 'warning'], true)
+                ? 'alert'
+                : 'status';
+
             $html .= sprintf(
-                '<div class="alert alert-%s %s rounded-0 mb-0">%s%s</div>',
+                '<div class="alert alert-%s %s rounded-0 mb-0" role="%s" aria-live="polite">%s%s</div>',
                 $alert['type'],
                 $dismiss,
-                htmlspecialchars((string) $alert['message']),
+                $role,
+                htmlspecialchars($alert['message'], ENT_QUOTES, 'UTF-8'),
                 $btn,
             );
         }
