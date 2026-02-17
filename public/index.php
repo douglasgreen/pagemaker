@@ -5,8 +5,15 @@ declare(strict_types=1);
 require_once __DIR__ . '/bootstrap.php';
 
 use DouglasGreen\PageMaker\Enums\LayoutPattern;
+use Symfony\Component\Yaml\Yaml;
+
+// Load configuration
+$configPath = __DIR__ . '/../config/pagemaker.yaml';
+$config = Yaml::parseFile($configPath);
+$baseUrl = $config['base_url'] ?? '';
 
 $page = createPage('PageMaker Demo - Home', $renderer);
+$page->setBaseUrl($baseUrl);
 
 $page->setHeader(createNavbar());
 

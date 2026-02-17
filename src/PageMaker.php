@@ -15,6 +15,7 @@ use InvalidArgumentException;
 class PageMaker
 {
     // ── Metadata ──────────────────────────────────
+    private string $baseUrl = '';
     private string $title = '';
     private string $lang = 'en';
     private array $metaTags = [];
@@ -59,6 +60,12 @@ class PageMaker
     }
 
     // ━━ Metadata setters ━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    public function setBaseUrl(string $baseUrl): static
+    {
+        $this->baseUrl = rtrim($baseUrl, '/') . '/';
+        return $this;
+    }
 
     public function setTitle(string $title): static
     {
@@ -273,6 +280,7 @@ class PageMaker
 
         return [
             // Metadata
+            'base_url' => $this->baseUrl,
             'title' => $this->title,
             'lang' => $this->lang,
             'charset' => $this->charset,
