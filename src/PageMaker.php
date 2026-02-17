@@ -70,8 +70,8 @@ class PageMaker implements Stringable
 
     /**
      * @param callable(string $template, array<string, mixed> $context): string $renderer
-     *                                                                               A function that accepts a template name and context array,
-     *                                                                               returning rendered HTML. Wrap your Twig call here.
+     *                                                                                    A function that accepts a template name and context array,
+     *                                                                                    returning rendered HTML. Wrap your Twig call here.
      */
     public function __construct(callable $renderer)
     {

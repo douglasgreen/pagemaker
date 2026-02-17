@@ -134,8 +134,8 @@ class AssetManager
             $html .= match ($asset['type']) {
                 'css' => "<link rel=\"stylesheet\" href=\"{$key}\"{$attrs}>\n",
                 'js' => "<script src=\"{$key}\"{$attrs}></script>\n",
-                'inline_css' => "<style>{$asset['content'] ?? ''}</style>\n",
-                'inline_js' => "<script>{$asset['content'] ?? ''}</script>\n",
+                'inline_css' => '<style>' . ($asset['content'] ?? '') . "</style>\n",
+                'inline_js' => '<script>' . ($asset['content'] ?? '') . "</script>\n",
                 default => '',
             };
         }
