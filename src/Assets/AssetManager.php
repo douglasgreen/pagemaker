@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DouglasGreen\PageMaker\Assets;
 
 use DouglasGreen\PageMaker\Enums\AssetPosition;
@@ -88,12 +90,12 @@ class AssetManager
     public function addBootstrap(string $version = '5.3.3'): static
     {
         $this->addCss(
-            "https://cdn.jsdelivr.net/npm/bootstrap@{$version}/dist/css/bootstrap.min.css",
+            sprintf('https://cdn.jsdelivr.net/npm/bootstrap@%s/dist/css/bootstrap.min.css', $version),
             AssetPosition::HEAD,
             ['crossorigin' => 'anonymous'],
         );
         $this->addJs(
-            "https://cdn.jsdelivr.net/npm/bootstrap@{$version}/dist/js/bootstrap.bundle.min.js",
+            sprintf('https://cdn.jsdelivr.net/npm/bootstrap@%s/dist/js/bootstrap.bundle.min.js', $version),
             AssetPosition::BODY_END,
             ['crossorigin' => 'anonymous'],
         );
@@ -106,7 +108,7 @@ class AssetManager
     public function addBootstrapIcons(string $version = '1.11.3'): static
     {
         $this->addCss(
-            "https://cdn.jsdelivr.net/npm/bootstrap-icons@{$version}/font/bootstrap-icons.min.css",
+            sprintf('https://cdn.jsdelivr.net/npm/bootstrap-icons@%s/font/bootstrap-icons.min.css', $version),
             AssetPosition::HEAD,
         );
         return $this;

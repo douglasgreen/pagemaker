@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DouglasGreen\PageMaker\Components;
 
 use DouglasGreen\PageMaker\Contracts\Renderable;
@@ -15,7 +17,7 @@ class Breadcrumb implements Renderable
      * @param array<string, string|null> $items label => href (null for current/active)
      */
     public function __construct(
-        private array $items = [],
+        private readonly array $items = [],
     ) {}
 
     public function __toString(): string

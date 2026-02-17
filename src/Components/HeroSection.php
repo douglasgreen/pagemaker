@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DouglasGreen\PageMaker\Components;
 
 use DouglasGreen\PageMaker\Contracts\Renderable;
@@ -12,12 +14,12 @@ class HeroSection implements Renderable
     protected string $template = 'components/hero.html.twig';
 
     public function __construct(
-        private string $title,
-        private string $subtitle = '',
-        private ?string $ctaLabel = null,
-        private ?string $ctaUrl = null,
-        private ?string $backgroundImage = null,
-        private string $theme = 'dark',   // 'dark' overlay | 'light'
+        private readonly string $title,
+        private readonly string $subtitle = '',
+        private readonly ?string $ctaLabel = null,
+        private readonly ?string $ctaUrl = null,
+        private readonly ?string $backgroundImage = null,
+        private readonly string $theme = 'dark',   // 'dark' overlay | 'light'
     ) {}
 
     public function __toString(): string

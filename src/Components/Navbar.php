@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DouglasGreen\PageMaker\Components;
 
 use DouglasGreen\PageMaker\Contracts\Renderable;
@@ -19,13 +21,13 @@ class Navbar implements Renderable
      * @param string $breakpoint Collapse breakpoint infix (e.g. 'lg')
      */
     public function __construct(
-        private string $brandName,
-        private string $brandUrl = '/',
-        private ?string $brandLogo = null,
-        private array $items = [],
-        private string $theme = 'dark',
-        private bool $fixed = true,
-        private string $breakpoint = 'lg',
+        private readonly string $brandName,
+        private readonly string $brandUrl = '/',
+        private readonly ?string $brandLogo = null,
+        private readonly array $items = [],
+        private readonly string $theme = 'dark',
+        private readonly bool $fixed = true,
+        private readonly string $breakpoint = 'lg',
     ) {}
 
     public function __toString(): string

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DouglasGreen\PageMaker\Components;
 
 use DouglasGreen\PageMaker\Contracts\Renderable;
@@ -17,9 +19,9 @@ class Footer implements Renderable
      * @param array<string, string> $socialLinks platform => url
      */
     public function __construct(
-        private array $columns = [],
-        private string $copyright = '',
-        private array $socialLinks = [],
+        private readonly array $columns = [],
+        private readonly string $copyright = '',
+        private readonly array $socialLinks = [],
     ) {}
 
     public function __toString(): string

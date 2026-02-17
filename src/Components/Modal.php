@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DouglasGreen\PageMaker\Components;
 
 use DouglasGreen\PageMaker\Contracts\Renderable;
@@ -22,13 +24,13 @@ class Modal implements Renderable
      * @param string|null $id
      */
     public function __construct(
-        private string $title,
-        private string|Renderable $body,
-        private ?string $footerHtml = null,
-        private string $size = '',
-        private bool $centered = true,
-        private bool $scrollable = false,
-        private bool $staticBackdrop = false,
+        private readonly string $title,
+        private readonly string|Renderable $body,
+        private readonly ?string $footerHtml = null,
+        private readonly string $size = '',
+        private readonly bool $centered = true,
+        private readonly bool $scrollable = false,
+        private readonly bool $staticBackdrop = false,
         private ?string $id = null,
     ) {
         $this->id ??= 'pm-modal-' . bin2hex(random_bytes(4));

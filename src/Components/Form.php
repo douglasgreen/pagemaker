@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DouglasGreen\PageMaker\Components;
 
 use DouglasGreen\PageMaker\Contracts\Renderable;
@@ -19,11 +21,11 @@ class Form implements Renderable
      * @param bool $csrfToken Include a CSRF hidden field placeholder
      */
     public function __construct(
-        private string $action,
-        private string $method = 'POST',
-        private array $fields = [],
-        private string $submitLabel = 'Submit',
-        private bool $csrfToken = true,
+        private readonly string $action,
+        private readonly string $method = 'POST',
+        private readonly array $fields = [],
+        private readonly string $submitLabel = 'Submit',
+        private readonly bool $csrfToken = true,
     ) {}
 
     public function __toString(): string

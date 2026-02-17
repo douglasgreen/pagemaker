@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DouglasGreen\PageMaker;
 
+use Stringable;
 use DouglasGreen\PageMaker\Assets\AssetManager;
 use DouglasGreen\PageMaker\Contracts\Renderable;
 use DouglasGreen\PageMaker\Enums\AssetPosition;
@@ -12,51 +15,71 @@ use InvalidArgumentException;
 /**
  * Central builder for creating Bootstrap-based page layouts.
  */
-class PageMaker
+class PageMaker implements Stringable
 {
     // ── Metadata ──────────────────────────────────
     private string $baseUrl = '';
+
     private string $title = '';
+
     private string $lang = 'en';
+
     private array $metaTags = [];
+
     private string $charset = 'UTF-8';
+
     private string $viewport = 'width=device-width, initial-scale=1';
 
     // ── Layout ────────────────────────────────────
     private LayoutPattern $pattern = LayoutPattern::HOLY_GRAIL;
+
     private Breakpoint $sidebarBreakpoint = Breakpoint::LG;
+
     private array $columnWidths = [3, 6, 3]; // [left, main, right]
 
     // ── Content slots ─────────────────────────────
     private string|Renderable|null $header = null;
+
     private string|Renderable|null $footer = null;
+
     private string|Renderable|null $leftSidebar = null;
+
     private string|Renderable|null $rightSidebar = null;
+
     private string|Renderable|null $mainContent = null;
+
     private string|Renderable|null $heroSection = null;
+
     private string|Renderable|null $breadcrumb = null;
 
     // ── Extras ────────────────────────────────────
     private string $bodyClass = '';
+
     private string $containerId = 'page-wrapper';
+
     private bool $fluidContainer = false;
 
     // ── Assets ────────────────────────────────────
-    private AssetManager $assets;
+    private readonly AssetManager $assets;
 
     // ── Template engine callback ──────────────────
-    /** @var callable(string $template, array $context): string */
+    /** @var callable(string, array): string */
     private $renderer;
 
     /**
      * @param callable(string $template, array $context): string $renderer
-     *        A function that accepts a template name and context array,
-     *        returning rendered HTML. Wrap your Twig call here.
+     *                                                                     A function that accepts a template name and context array,
+     *                                                                     returning rendered HTML. Wrap your Twig call here.
      */
     public function __construct(callable $renderer)
     {
         $this->renderer = $renderer;
         $this->assets = new AssetManager();
+    }
+
+    public function __toString(): string
+    {
+        return $this->render();
     }
 
     // ━━ Metadata setters ━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -101,7 +124,7 @@ class PageMaker
 
     public function setLayout(
         LayoutPattern $pattern,
-        Breakpoint $sidebarBreakpoint = Breakpoint::LG
+        Breakpoint $sidebarBreakpoint = Breakpoint::LG,
     ): static {
         $this->pattern = $pattern;
         $this->sidebarBreakpoint = $sidebarBreakpoint;
@@ -113,8 +136,8 @@ class PageMaker
      * Must sum to 12. For layouts without a particular sidebar,
      * pass 0 for that column.
      *
-     * @param int $left  0–12
-     * @param int $main  1–12
+     * @param int $left 0–12
+     * @param int $main 1–12
      * @param int $right 0–12
      *
      * @throws InvalidArgumentException
@@ -124,14 +147,16 @@ class PageMaker
         $sum = $left + $main + $right;
         if ($sum !== 12) {
             throw new InvalidArgumentException(
-                "Column widths must sum to 12; got {$left}+{$main}+{$right}={$sum}."
+                sprintf('Column widths must sum to 12; got %d+%d+%d=%s.', $left, $main, $right, $sum),
             );
         }
+
         if ($main < 1) {
             throw new InvalidArgumentException(
-                "Main column must be at least 1; got {$main}."
+                sprintf('Main column must be at least 1; got %d.', $main),
             );
         }
+
         $this->columnWidths = [$left, $main, $right];
         return $this;
     }
@@ -150,7 +175,7 @@ class PageMaker
             'both-wide' => $this->setColumnWidths(3, 6, 3),
             'both-unequal' => $this->setColumnWidths(3, 7, 2),
             'no-sidebars' => $this->setColumnWidths(0, 12, 0),
-            default => throw new InvalidArgumentException("Unknown preset: {$preset}"),
+            default => throw new InvalidArgumentException('Unknown preset: ' . $preset),
         };
     }
 
@@ -246,6 +271,17 @@ class PageMaker
         return $this->assets;
     }
 
+    /**
+     * Render the final HTML page.
+     */
+    public function render(): string
+    {
+        return ($this->renderer)(
+            $this->pattern->templateName(),
+            $this->buildContext()
+        );
+    }
+
     // ━━ Resolve & Render ━━━━━━━━━━━━━━━━━━━━━━━━━
 
     /**
@@ -256,16 +292,20 @@ class PageMaker
         if ($slot === null) {
             return '';
         }
+
         if (is_string($slot)) {
             return $slot;
         }
+
         if ($slot instanceof Renderable) {
             return $slot->render();
         }
+
         if (is_callable($slot)) {
             $result = ($slot)();
             return $result instanceof Renderable ? $result->render() : (string) $result;
         }
+
         return '';
     }
 
@@ -314,21 +354,5 @@ class PageMaker
             'body_start_assets' => $this->assets->render(AssetPosition::BODY_START),
             'body_end_assets' => $this->assets->render(AssetPosition::BODY_END),
         ];
-    }
-
-    /**
-     * Render the final HTML page.
-     */
-    public function render(): string
-    {
-        return ($this->renderer)(
-            $this->pattern->templateName(),
-            $this->buildContext()
-        );
-    }
-
-    public function __toString(): string
-    {
-        return $this->render();
     }
 }

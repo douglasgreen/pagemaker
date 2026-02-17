@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DouglasGreen\PageMaker\Components;
 
 use DouglasGreen\PageMaker\Contracts\Renderable;
@@ -18,9 +20,9 @@ class TabSet implements Renderable
      * @param string|null $id Unique ID prefix (auto-generated if null)
      */
     public function __construct(
-        private array $tabs,
-        private string $style = 'tabs',
-        private string $orientation = 'horizontal',
+        private readonly array $tabs,
+        private readonly string $style = 'tabs',
+        private readonly string $orientation = 'horizontal',
         private ?string $id = null,
     ) {
         $this->id ??= 'pm-tabset-' . bin2hex(random_bytes(4));
@@ -46,11 +48,7 @@ class TabSet implements Renderable
         // Resolve any Renderable objects in tabs
         $resolvedTabs = [];
         foreach ($this->tabs as $label => $content) {
-            if ($content instanceof Renderable) {
-                $resolvedTabs[$label] = $content->render();
-            } else {
-                $resolvedTabs[$label] = $content;
-            }
+            $resolvedTabs[$label] = $content instanceof Renderable ? $content->render() : $content;
         }
 
         return [

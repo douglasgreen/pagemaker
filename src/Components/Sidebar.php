@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DouglasGreen\PageMaker\Components;
 
 use DouglasGreen\PageMaker\Contracts\Renderable;
@@ -16,8 +18,8 @@ class Sidebar implements Renderable
      * @param string|null $heading Optional heading above navigation
      */
     public function __construct(
-        private array $navItems = [],
-        private ?string $heading = null,
+        private readonly array $navItems = [],
+        private readonly ?string $heading = null,
     ) {}
 
     public function __toString(): string

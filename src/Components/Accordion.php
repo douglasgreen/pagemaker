@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DouglasGreen\PageMaker\Components;
 
 use DouglasGreen\PageMaker\Contracts\Renderable;
@@ -18,9 +20,9 @@ class Accordion implements Renderable
      * @param string|null $id
      */
     public function __construct(
-        private array $sections,
-        private bool $alwaysOpen = false,
-        private bool $flush = false,
+        private readonly array $sections,
+        private readonly bool $alwaysOpen = false,
+        private readonly bool $flush = false,
         private ?string $id = null,
     ) {
         $this->id ??= 'pm-accordion-' . bin2hex(random_bytes(4));
@@ -46,11 +48,7 @@ class Accordion implements Renderable
         // Resolve any Renderable objects in sections
         $resolvedSections = [];
         foreach ($this->sections as $heading => $body) {
-            if ($body instanceof Renderable) {
-                $resolvedSections[$heading] = $body->render();
-            } else {
-                $resolvedSections[$heading] = $body;
-            }
+            $resolvedSections[$heading] = $body instanceof Renderable ? $body->render() : $body;
         }
 
         return [

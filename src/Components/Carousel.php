@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DouglasGreen\PageMaker\Components;
 
 use DouglasGreen\PageMaker\Contracts\Renderable;
@@ -20,11 +22,11 @@ class Carousel implements Renderable
      * @param string|null $id
      */
     public function __construct(
-        private array $slides,
-        private bool $controls = true,
-        private bool $indicators = true,
-        private bool $fade = false,
-        private int $interval = 5000,
+        private readonly array $slides,
+        private readonly bool $controls = true,
+        private readonly bool $indicators = true,
+        private readonly bool $fade = false,
+        private readonly int $interval = 5000,
         private ?string $id = null,
     ) {
         $this->id ??= 'pm-carousel-' . bin2hex(random_bytes(4));
