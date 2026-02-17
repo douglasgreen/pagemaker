@@ -18,7 +18,6 @@ class Sidebar implements Renderable
      * @param string|null $heading Optional heading above navigation
      */
     public function __construct(
-        /** @var array<array{icon:string, label:string, href:string, active?:bool, children?:array}> */
         private readonly array $navItems = [],
         private readonly ?string $heading = null,
     ) {}
