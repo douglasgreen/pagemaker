@@ -18,6 +18,11 @@ class Breadcrumb implements Renderable
         private array $items = [],
     ) {}
 
+    public function __toString(): string
+    {
+        return $this->render();
+    }
+
     public function render(): string
     {
         return '';
@@ -33,10 +38,5 @@ class Breadcrumb implements Renderable
         return [
             'items' => $this->items,
         ];
-    }
-
-    public function __toString(): string
-    {
-        return $this->render();
     }
 }

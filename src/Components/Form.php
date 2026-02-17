@@ -12,11 +12,11 @@ class Form implements Renderable
     protected string $template = 'components/form.html.twig';
 
     /**
-     * @param string $action      Form action URL
-     * @param string $method      HTTP method
-     * @param array  $fields      Field definitions
+     * @param string $action Form action URL
+     * @param string $method HTTP method
+     * @param array $fields Field definitions
      * @param string $submitLabel
-     * @param bool   $csrfToken   Include a CSRF hidden field placeholder
+     * @param bool $csrfToken Include a CSRF hidden field placeholder
      */
     public function __construct(
         private string $action,
@@ -25,6 +25,11 @@ class Form implements Renderable
         private string $submitLabel = 'Submit',
         private bool $csrfToken = true,
     ) {}
+
+    public function __toString(): string
+    {
+        return $this->render();
+    }
 
     public function render(): string
     {
@@ -45,10 +50,5 @@ class Form implements Renderable
             'submit_label' => $this->submitLabel,
             'csrf_token' => $this->csrfToken,
         ];
-    }
-
-    public function __toString(): string
-    {
-        return $this->render();
     }
 }

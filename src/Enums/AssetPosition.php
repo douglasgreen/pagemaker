@@ -8,6 +8,8 @@ namespace DouglasGreen\PageMaker\Enums;
 enum AssetPosition: string
 {
     case HEAD = 'head';              // Inside <head>
+
     case BODY_START = 'body_start'; // Immediately after <body>
+
     case BODY_END = 'body_end';     // Before </body>
 }

@@ -20,6 +20,11 @@ class HeroSection implements Renderable
         private string $theme = 'dark',   // 'dark' overlay | 'light'
     ) {}
 
+    public function __toString(): string
+    {
+        return $this->render();
+    }
+
     public function render(): string
     {
         return '';
@@ -40,10 +45,5 @@ class HeroSection implements Renderable
             'background_image' => $this->backgroundImage,
             'theme' => $this->theme,
         ];
-    }
-
-    public function __toString(): string
-    {
-        return $this->render();
     }
 }

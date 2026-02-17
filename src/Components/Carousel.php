@@ -13,11 +13,11 @@ class Carousel implements Renderable
 
     /**
      * @param array<array{src:string, alt:string, caption?:string, description?:string}> $slides
-     * @param bool                                                                       $controls   Show prev/next arrows
-     * @param bool                                                                       $indicators Show dot indicators
-     * @param bool                                                                       $fade       Use crossfade instead of slide
-     * @param int                                                                        $interval   Auto-play interval in ms (0 = no auto-play)
-     * @param string|null                                                                $id
+     * @param bool $controls Show prev/next arrows
+     * @param bool $indicators Show dot indicators
+     * @param bool $fade Use crossfade instead of slide
+     * @param int $interval Auto-play interval in ms (0 = no auto-play)
+     * @param string|null $id
      */
     public function __construct(
         private array $slides,
@@ -28,6 +28,11 @@ class Carousel implements Renderable
         private ?string $id = null,
     ) {
         $this->id ??= 'pm-carousel-' . bin2hex(random_bytes(4));
+    }
+
+    public function __toString(): string
+    {
+        return $this->render();
     }
 
     public function render(): string
@@ -50,10 +55,5 @@ class Carousel implements Renderable
             'interval' => $this->interval,
             'id' => $this->id,
         ];
-    }
-
-    public function __toString(): string
-    {
-        return $this->render();
     }
 }

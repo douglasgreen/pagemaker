@@ -12,14 +12,14 @@ class Modal implements Renderable
     protected string $template = 'components/modal.html.twig';
 
     /**
-     * @param string                         $title
-     * @param string|Renderable              $body
-     * @param string|null                    $footerHtml
-     * @param string                         $size            ''|'sm'|'lg'|'xl'|'fullscreen'
-     * @param bool                           $centered
-     * @param bool                           $scrollable
-     * @param bool                           $staticBackdrop
-     * @param string|null                    $id
+     * @param string $title
+     * @param string|Renderable $body
+     * @param string|null $footerHtml
+     * @param string $size ''|'sm'|'lg'|'xl'|'fullscreen'
+     * @param bool $centered
+     * @param bool $scrollable
+     * @param bool $staticBackdrop
+     * @param string|null $id
      */
     public function __construct(
         private string $title,
@@ -34,6 +34,11 @@ class Modal implements Renderable
         $this->id ??= 'pm-modal-' . bin2hex(random_bytes(4));
     }
 
+    public function __toString(): string
+    {
+        return $this->render();
+    }
+
     /**
      * Return the trigger button HTML.
      */
@@ -43,7 +48,7 @@ class Modal implements Renderable
             '<button type="button" class="%s" data-bs-toggle="modal" data-bs-target="#%s">%s</button>',
             $class,
             $this->id,
-            $label
+            $label,
         );
     }
 
@@ -74,10 +79,5 @@ class Modal implements Renderable
             'static_backdrop' => $this->staticBackdrop,
             'id' => $this->id,
         ];
-    }
-
-    public function __toString(): string
-    {
-        return $this->render();
     }
 }

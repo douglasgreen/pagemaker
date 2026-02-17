@@ -7,13 +7,6 @@ namespace DouglasGreen\PageMaker\Enums;
  */
 enum Breakpoint: string
 {
-    case XS = '';      // <576px – no infix
-    case SM = 'sm';    // ≥576px
-    case MD = 'md';    // ≥768px
-    case LG = 'lg';    // ≥992px
-    case XL = 'xl';    // ≥1200px
-    case XXL = 'xxl';  // ≥1400px
-
     /**
      * Pixel value at which this breakpoint activates.
      */
@@ -37,4 +30,16 @@ enum Breakpoint: string
     {
         return $this->value !== '' ? '-' . $this->value : '';
     }
+
+    case XS = '';      // <576px – no infix
+
+    case SM = 'sm';    // ≥576px
+
+    case MD = 'md';    // ≥768px
+
+    case LG = 'lg';    // ≥992px
+
+    case XL = 'xl';    // ≥1200px
+
+    case XXL = 'xxl';  // ≥1400px
 }

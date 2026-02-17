@@ -13,12 +13,17 @@ class Sidebar implements Renderable
 
     /**
      * @param array<array{icon:string, label:string, href:string, active?:bool, children?:array}> $navItems
-     * @param string|null                                                                          $heading Optional heading above navigation
+     * @param string|null $heading Optional heading above navigation
      */
     public function __construct(
         private array $navItems = [],
         private ?string $heading = null,
     ) {}
+
+    public function __toString(): string
+    {
+        return $this->render();
+    }
 
     public function render(): string
     {
@@ -36,10 +41,5 @@ class Sidebar implements Renderable
             'nav_items' => $this->navItems,
             'heading' => $this->heading,
         ];
-    }
-
-    public function __toString(): string
-    {
-        return $this->render();
     }
 }

@@ -12,11 +12,11 @@ class Navbar implements Renderable
     protected string $template = 'components/navbar.html.twig';
 
     /**
-     * @param array<string, string> $items      label => href
-     * @param string|null           $brandLogo  Optional logo URL
-     * @param string                $theme      'light'|'dark'
-     * @param bool                  $fixed      Sticky top?
-     * @param string                $breakpoint Collapse breakpoint infix (e.g. 'lg')
+     * @param array<string, string> $items label => href
+     * @param string|null $brandLogo Optional logo URL
+     * @param string $theme 'light'|'dark'
+     * @param bool $fixed Sticky top?
+     * @param string $breakpoint Collapse breakpoint infix (e.g. 'lg')
      */
     public function __construct(
         private string $brandName,
@@ -27,6 +27,11 @@ class Navbar implements Renderable
         private bool $fixed = true,
         private string $breakpoint = 'lg',
     ) {}
+
+    public function __toString(): string
+    {
+        return $this->render();
+    }
 
     public function render(): string
     {
@@ -50,10 +55,5 @@ class Navbar implements Renderable
             'fixed' => $this->fixed,
             'breakpoint' => $this->breakpoint,
         ];
-    }
-
-    public function __toString(): string
-    {
-        return $this->render();
     }
 }

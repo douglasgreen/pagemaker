@@ -12,10 +12,10 @@ class TabSet implements Renderable
     protected string $template = 'components/tabset.html.twig';
 
     /**
-     * @param array<string, string|Renderable> $tabs        label => content
-     * @param string                           $style       'tabs'|'pills'
-     * @param string                           $orientation 'horizontal'|'vertical'
-     * @param string|null                      $id          Unique ID prefix (auto-generated if null)
+     * @param array<string, string|Renderable> $tabs label => content
+     * @param string $style 'tabs'|'pills'
+     * @param string $orientation 'horizontal'|'vertical'
+     * @param string|null $id Unique ID prefix (auto-generated if null)
      */
     public function __construct(
         private array $tabs,
@@ -24,6 +24,11 @@ class TabSet implements Renderable
         private ?string $id = null,
     ) {
         $this->id ??= 'pm-tabset-' . bin2hex(random_bytes(4));
+    }
+
+    public function __toString(): string
+    {
+        return $this->render();
     }
 
     public function render(): string
@@ -54,10 +59,5 @@ class TabSet implements Renderable
             'orientation' => $this->orientation,
             'id' => $this->id,
         ];
-    }
-
-    public function __toString(): string
-    {
-        return $this->render();
     }
 }

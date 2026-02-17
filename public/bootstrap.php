@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use DouglasGreen\PageMaker\Components\Footer;
+use DouglasGreen\PageMaker\Components\Navbar;
+use DouglasGreen\PageMaker\Components\Sidebar;
 use DouglasGreen\PageMaker\PageMaker;
-use DouglasGreen\PageMaker\Components\{Accordion, Breadcrumb, Carousel, Footer, Form, HeroSection, Modal, Navbar, Sidebar, TabSet};
-use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 // Set up Twig
 $loader = new FilesystemLoader(__DIR__ . '/../templates');
@@ -17,7 +19,7 @@ $twig = new Environment($loader, [
 ]);
 
 // Create renderer closure
-$renderer = fn(string $template, array $context): string => $twig->render($template, $context);
+$renderer = fn (string $template, array $context): string => $twig->render($template, $context);
 
 /**
  * Create a basic PageMaker instance with common assets.
@@ -25,14 +27,14 @@ $renderer = fn(string $template, array $context): string => $twig->render($templ
 function createPage(string $title, callable $renderer): PageMaker
 {
     $page = new PageMaker($renderer);
-    
+
     $page->assets()
         ->addBootstrap()
         ->addBootstrapIcons()
         ->addCss('/css/pagemaker.css');
-    
+
     $page->setTitle($title);
-    
+
     return $page;
 }
 

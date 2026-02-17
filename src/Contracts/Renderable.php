@@ -8,12 +8,12 @@ namespace DouglasGreen\PageMaker\Contracts;
 interface Renderable
 {
     /**
-     * Return the component as an HTML string.
-     */
-    public function render(): string;
-
-    /**
      * Allow echo / string coercion.
      */
     public function __toString(): string;
+
+    /**
+     * Return the component as an HTML string.
+     */
+    public function render(): string;
 }

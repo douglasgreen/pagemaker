@@ -12,10 +12,10 @@ class Accordion implements Renderable
     protected string $template = 'components/accordion.html.twig';
 
     /**
-     * @param array<string, string|Renderable> $sections   heading => body
-     * @param bool                             $alwaysOpen Allow multiple open sections
-     * @param bool                             $flush      Remove borders for edge-to-edge look
-     * @param string|null                      $id
+     * @param array<string, string|Renderable> $sections heading => body
+     * @param bool $alwaysOpen Allow multiple open sections
+     * @param bool $flush Remove borders for edge-to-edge look
+     * @param string|null $id
      */
     public function __construct(
         private array $sections,
@@ -24,6 +24,11 @@ class Accordion implements Renderable
         private ?string $id = null,
     ) {
         $this->id ??= 'pm-accordion-' . bin2hex(random_bytes(4));
+    }
+
+    public function __toString(): string
+    {
+        return $this->render();
     }
 
     public function render(): string
@@ -54,10 +59,5 @@ class Accordion implements Renderable
             'flush' => $this->flush,
             'id' => $this->id,
         ];
-    }
-
-    public function __toString(): string
-    {
-        return $this->render();
     }
 }
