@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../bootstrap.php';
 
+use DouglasGreen\PageMaker\Components\Breadcrumb;
+
 $page = createPage('Breadcrumb Component - PageMaker Demo', $renderer);
 $page->usePreset('no-sidebars');
 

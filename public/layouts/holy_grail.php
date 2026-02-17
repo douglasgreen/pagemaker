@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../bootstrap.php';
 
+use DouglasGreen\PageMaker\Components\Breadcrumb;
+use DouglasGreen\PageMaker\Components\Sidebar;
 use DouglasGreen\PageMaker\Enums\Breakpoint;
 use DouglasGreen\PageMaker\Enums\LayoutPattern;
 

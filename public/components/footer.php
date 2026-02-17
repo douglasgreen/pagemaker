@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../bootstrap.php';
 
+use DouglasGreen\PageMaker\Components\Breadcrumb;
+use DouglasGreen\PageMaker\Components\Footer;
+
 $page = createPage('Footer Component - PageMaker Demo', $renderer);
 $page->usePreset('no-sidebars');
 
