@@ -66,7 +66,7 @@ ob_start();
                                 <?= htmlspecialchars($layout['name']); ?>
                             </h5>
                             <p class="card-text text-muted"><?= htmlspecialchars($layout['desc']); ?></p>
-                            <a href="/layouts/<?= $layout['pattern']->value; ?>.php" class="btn btn-primary">View Demo</a>
+                            <a href="<?= $baseUrl ?>layouts/<?= $layout['pattern']->value; ?>.php" class="btn btn-primary">View Demo</a>
                         </div>
                     </div>
                 </div>
@@ -86,7 +86,7 @@ ob_start();
                                 <?= htmlspecialchars($component['name']); ?>
                             </h5>
                             <p class="card-text text-muted"><?= htmlspecialchars($component['desc']); ?></p>
-                            <a href="<?= $component['url']; ?>" class="btn btn-outline-primary">View Demo</a>
+                            <a href="<?= $baseUrl ?><?= ltrim($component['url'], '/'); ?>" class="btn btn-outline-primary">View Demo</a>
                         </div>
                     </div>
                 </div>
@@ -106,7 +106,7 @@ ob_start();
                                 <?= htmlspecialchars($widget['name']); ?>
                             </h5>
                             <p class="card-text text-muted"><?= htmlspecialchars($widget['desc']); ?></p>
-                            <a href="<?= $widget['url']; ?>" class="btn btn-outline-secondary">View Demo</a>
+                            <a href="<?= $baseUrl ?><?= ltrim($widget['url'], '/'); ?>" class="btn btn-outline-secondary">View Demo</a>
                         </div>
                     </div>
                 </div>
