@@ -27,13 +27,13 @@ class PageMaker
     private array $columnWidths = [3, 6, 3]; // [left, main, right]
 
     // ── Content slots ─────────────────────────────
-    private string|Renderable|callable|null $header = null;
-    private string|Renderable|callable|null $footer = null;
-    private string|Renderable|callable|null $leftSidebar = null;
-    private string|Renderable|callable|null $rightSidebar = null;
-    private string|Renderable|callable|null $mainContent = null;
-    private string|Renderable|callable|null $heroSection = null;
-    private string|Renderable|callable|null $breadcrumb = null;
+    private string|Renderable|null $header = null;
+    private string|Renderable|null $footer = null;
+    private string|Renderable|null $leftSidebar = null;
+    private string|Renderable|null $rightSidebar = null;
+    private string|Renderable|null $mainContent = null;
+    private string|Renderable|null $heroSection = null;
+    private string|Renderable|null $breadcrumb = null;
 
     // ── Extras ────────────────────────────────────
     private string $bodyClass = '';
@@ -149,43 +149,64 @@ class PageMaker
 
     // ━━ Content setters ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-    public function setHeader(string|Renderable|callable $content): static
+    /**
+     * @param string|Renderable|callable $content
+     */
+    public function setHeader(string|Renderable|null $content): static
     {
         $this->header = $content;
         return $this;
     }
 
-    public function setFooter(string|Renderable|callable $content): static
+    /**
+     * @param string|Renderable|callable $content
+     */
+    public function setFooter(string|Renderable|null $content): static
     {
         $this->footer = $content;
         return $this;
     }
 
-    public function setLeftSidebar(string|Renderable|callable $content): static
+    /**
+     * @param string|Renderable|callable $content
+     */
+    public function setLeftSidebar(string|Renderable|null $content): static
     {
         $this->leftSidebar = $content;
         return $this;
     }
 
-    public function setRightSidebar(string|Renderable|callable $content): static
+    /**
+     * @param string|Renderable|callable $content
+     */
+    public function setRightSidebar(string|Renderable|null $content): static
     {
         $this->rightSidebar = $content;
         return $this;
     }
 
-    public function setMainContent(string|Renderable|callable $content): static
+    /**
+     * @param string|Renderable|callable $content
+     */
+    public function setMainContent(string|Renderable|null $content): static
     {
         $this->mainContent = $content;
         return $this;
     }
 
-    public function setHeroSection(string|Renderable|callable $content): static
+    /**
+     * @param string|Renderable|callable $content
+     */
+    public function setHeroSection(string|Renderable|null $content): static
     {
         $this->heroSection = $content;
         return $this;
     }
 
-    public function setBreadcrumb(string|Renderable|callable $content): static
+    /**
+     * @param string|Renderable|callable $content
+     */
+    public function setBreadcrumb(string|Renderable|null $content): static
     {
         $this->breadcrumb = $content;
         return $this;
