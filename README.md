@@ -1,6 +1,6 @@
 # PageMaker — Complete Specification
 
-A mobile-first, responsive page layout system built on **Bootstrap 5.3**, **PHP 8.2+**, and a templating engine (Twig or Blade). This document specifies every class, enum, interface, template, and markup pattern required to build, configure, and render full page layouts from PHP.
+A mobile-first, responsive page layout system built on **Bootstrap 5.3**, **PHP 8.2+**, and the Twig templating engine. This document specifies every class, enum, interface, template, and markup pattern required to build, configure, and render full page layouts from PHP.
 
 ---
 
@@ -39,7 +39,7 @@ The system is **mobile-first**: every template starts with the smallest-viewport
 | Layer | Technology | Role |
 |---|---|---|
 | Runtime | PHP 8.2+ | Class model, enums, interfaces |
-| Templates | Twig 3.x *or* Blade (Laravel 10+) | HTML generation |
+| Templates | Twig 3.x | HTML generation |
 | CSS Framework | Bootstrap 5.3.x | Grid, utilities, components |
 | Icons | Bootstrap Icons 1.11+ | Sidebar/icon-strip icons |
 | JavaScript | Bootstrap 5.3 bundle (Popper included) | Offcanvas, collapse, dropdowns |
@@ -70,7 +70,7 @@ pagemaker/
 │   │   └── AssetManager.php
 │   └── PageMaker.php
 ├── templates/
-│   ├── base.html.twig          (or base.blade.php)
+│   ├── base.html.twig
 │   ├── layouts/
 │   │   ├── holy_grail.html.twig
 │   │   ├── offcanvas_left.html.twig
@@ -144,7 +144,7 @@ enum LayoutPattern: string
     case OVERLAY_DRAWER        = 'overlay_drawer';
     case MINI_ICON_SIDEBAR     = 'mini_icon_sidebar';
 
-    /** Return the Twig/Blade template name for this pattern. */
+    /** Return the Twig template name for this pattern. */
     public function templateName(): string
     {
         return 'layouts/' . $this->value . '.html.twig';
@@ -264,7 +264,7 @@ class PageMaker
     /**
      * @param callable(string $template, array $context): string $renderer
      *        A function that accepts a template name and context array,
-     *        returning rendered HTML. Wrap your Twig/Blade call here.
+     *        returning rendered HTML. Wrap your Twig call here.
      */
     public function __construct(callable $renderer)
     {
@@ -1947,52 +1947,7 @@ All layout templates extend this base, which provides the HTML document shell.
 </html>
 ```
 
-### 9.2 Blade Equivalent
-
-<details>
-<summary>Click to expand the Blade base template</summary>
-
-**`resources/views/pagemaker/base.blade.php`**
-
-```blade
-<!DOCTYPE html>
-<html lang="{{ $lang }}">
-<head>
-    <meta charset="{{ $charset }}">
-    <meta name="viewport" content="{{ $viewport }}">
-    @foreach ($meta_tags as $name => $content)
-    <meta name="{{ $name }}" content="{{ $content }}">
-    @endforeach
-    <title>{{ $title }}</title>
-
-    {!! $head_assets !!}
-</head>
-<body class="{{ $body_class }}">
-    {!! $body_start_assets !!}
-
-    @if ($header)
-    <header class="pm-header" role="banner">
-        {!! $header !!}
-    </header>
-    @endif
-
-    <div class="{{ $fluid_container ? 'container-fluid' : 'container' }} pm-container"
-         id="{{ $container_id }}">
-        @yield('body_content')
-    </div>
-
-    @if ($footer)
-    {!! $footer !!}
-    @endif
-
-    {!! $body_end_assets !!}
-</body>
-</html>
-```
-
-</details>
-
-### 9.3 Template Variable Reference
+### 9.2 Template Variable Reference
 
 Every layout template receives all of these variables from `PageMaker::buildContext()`:
 
@@ -2250,59 +2205,9 @@ $page
 echo $page->render();
 ```
 
-### 10.3 Wiring with Blade (Laravel)
+## 10. Usage Examples
 
-<details>
-<summary>Click to expand the Laravel controller example</summary>
-
-```php
-<?php
-
-namespace App\Http\Controllers;
-
-use PageMaker\PageMaker;
-use PageMaker\Enums\{LayoutPattern, Breakpoint};
-use PageMaker\Components\{Navbar, Sidebar, Footer, Breadcrumb};
-
-class DashboardController extends Controller
-{
-    public function index()
-    {
-        $renderer = fn(string $template, array $context): string
-            => view('pagemaker.' . str_replace(['/', '.html.twig'], ['.', ''], $template), $context)->render();
-
-        $page = new PageMaker($renderer);
-
-        $page->assets()
-            ->addBootstrap()
-            ->addBootstrapIcons()
-            ->addCss(asset('css/pagemaker.css'));
-
-        $page
-            ->setTitle('Dashboard')
-            ->setLayout(LayoutPattern::HOLY_GRAIL, Breakpoint::LG)
-            ->setColumnWidths(2, 8, 2)
-            ->setHeader(new Navbar(brandName: 'Laravel App'))
-            ->setLeftSidebar(new Sidebar(navItems: [
-                ['icon' => 'house-door', 'label' => 'Home', 'href' => '/', 'active' => true],
-                ['icon' => 'gear',       'label' => 'Settings', 'href' => '/settings'],
-            ]))
-            ->setRightSidebar('<div class="p-3"><h6>Recent Activity</h6><p>No recent activity.</p></div>')
-            ->setMainContent(fn() => view('dashboard.content')->render())
-            ->setFooter(new Footer(copyright: '© 2026 Laravel App'));
-
-        return response($page->render());
-    }
-}
-```
-
-</details>
-
----
-
-## 11. Usage Examples
-
-### 11.1 Pattern Selection Quick Reference
+### 10.1 Pattern Selection Quick Reference
 
 | Use Case | Recommended Pattern | Breakpoint | Column Widths |
 |---|---|---|---|
@@ -2316,7 +2221,7 @@ class DashboardController extends Controller
 | Content CMS with deep nav | `ACCORDION_SIDEBAR` | `MD` | `[3, 9, 0]` |
 | Right-panel detail view | `OFFCANVAS_RIGHT` | `LG` | `[0, 8, 4]` |
 
-### 11.2 Composing Widgets Inside Slots
+### 10.2 Composing Widgets Inside Slots
 
 ```php
 $page->setMainContent(function () use ($twig) {
@@ -2342,7 +2247,7 @@ $page->setMainContent(function () use ($twig) {
 });
 ```
 
-### 11.3 Switching Layouts at Runtime
+### 10.3 Switching Layouts at Runtime
 
 Because layout is a simple enum, you can select it dynamically:
 
