@@ -1,6 +1,6 @@
-# PageMaker — Complete Specification
+# PageMaker — System Architecture & Specification
 
-A mobile-first, responsive page layout system built on **Bootstrap 5.3**, **PHP 8.2+**, and the Twig templating engine. This document specifies every class, enum, interface, template, and markup pattern required to build, configure, and render full page layouts from PHP.
+A mobile-first, responsive page layout system built on **Bootstrap 5.3**, **PHP 8.2+**, and the Twig templating engine.
 
 ---
 
@@ -15,8 +15,7 @@ A mobile-first, responsive page layout system built on **Bootstrap 5.3**, **PHP 
 7. [Grid System & Breakpoint Reference](#7-grid-system--breakpoint-reference)
 8. [Asset Management](#8-asset-management)
 9. [Template Specifications](#9-template-specifications)
-10. [Complete PHP Class Listing](#10-complete-php-class-listing)
-11. [Usage Examples](#11-usage-examples)
+10. [Usage Patterns](#10-usage-patterns)
 
 ---
 
@@ -32,7 +31,7 @@ PageMaker treats a web page as a **composition of structural sections** (header,
 | `Renderable` | `new Breadcrumb($items)` | Reusable component objects |
 | `callable` | `fn() => $twig->render(...)` | Lazy evaluation, expensive queries |
 
-The system is **mobile-first**: every template starts with the smallest-viewport layout and layers on complexity at wider breakpoints using Bootstrap's responsive utilities ([weweb.io](https://www.weweb.io/blog/how-to-build-a-responsive-web-app-guide)).
+The system is **mobile-first**: every template starts with the smallest-viewport layout and layers on complexity at wider breakpoints using Bootstrap's responsive utilities.
 
 ### 1.2 Technology Stack
 
@@ -44,7 +43,117 @@ The system is **mobile-first**: every template starts with the smallest-viewport
 | Icons | Bootstrap Icons 1.11+ | Sidebar/icon-strip icons |
 | JavaScript | Bootstrap 5.3 bundle (Popper included) | Offcanvas, collapse, dropdowns |
 
-### 1.3 Directory Structure
+### 1.3 High-Level Architecture
+
+The PageMaker system follows a **builder pattern** with clear separation of concerns:
+
+```mermaid
+graph TB
+    subgraph "Client Code"
+        A[Application Controller]
+    end
+
+    subgraph "Core Layer"
+        B[PageMaker Class]
+        C[AssetManager]
+    end
+
+    subgraph "Type System"
+        D[LayoutPattern Enum]
+        E[Breakpoint Enum]
+        F[AssetPosition Enum]
+        G[Renderable Interface]
+    end
+
+    subgraph "Component Layer"
+        H[Navbar]
+        I[Sidebar]
+        J[Footer]
+        K[Breadcrumb]
+        L[HeroSection]
+        M[TabSet]
+        N[Accordion]
+        O[Modal]
+        P[Carousel]
+        Q[Form]
+    end
+
+    subgraph "Template Layer"
+        R[Twig Environment]
+        S[base.html.twig]
+        T[Layout Templates]
+        U[Component Templates]
+    end
+
+    subgraph "Output"
+        V[HTML Page]
+    end
+
+    A --> B
+    B --> C
+    B --> D
+    B --> E
+    B --> F
+    B --> R
+
+    H --> G
+    I --> G
+    J --> G
+    K --> G
+    L --> G
+    M --> G
+    N --> G
+    O --> G
+    P --> G
+    Q --> G
+
+    B -->|accepts| G
+    B -->|accepts| string
+    B -->|accepts| callable
+
+    R --> S
+    S --> T
+    S --> U
+
+    T --> V
+    U --> V
+    C --> V
+
+    style B fill:#4a90d9,stroke:#2c5aa0,color:#fff
+    style G fill:#50c878,stroke:#2e8b57,color:#fff
+    style R fill:#daa520,stroke:#b8860b,color:#fff
+```
+
+### 1.4 Data Flow
+
+```mermaid
+sequenceDiagram
+    participant App as Application
+    participant PM as PageMaker
+    participant AM as AssetManager
+    participant Comp as Components
+    participant Twig as Twig Engine
+    participant Output as HTML Output
+
+    App->>PM: Create PageMaker instance
+    App->>AM: Register CSS/JS assets
+    App->>PM: Set layout pattern & breakpoint
+    App->>PM: Set column widths
+    App->>Comp: Create component instances
+    Comp-->>PM: Return Renderable objects
+    App->>PM: Populate content slots
+
+    Note over PM: Build template context
+    PM->>PM: Resolve all content slots
+    PM->>PM: Generate context array
+
+    PM->>Twig: Render with template & context
+    Twig-->>PM: Return rendered HTML
+    PM-->>App: Return complete page HTML
+    App-->>Output: Send to browser
+```
+
+### 1.5 Directory Structure
 
 ```
 pagemaker/
@@ -94,7 +203,7 @@ pagemaker/
 │       └── form.html.twig
 ├── public/
 │   └── css/
-│       └── pagemaker.css       (custom overrides)
+│       └── pagemaker.css
 └── tests/
 ```
 
@@ -102,431 +211,168 @@ pagemaker/
 
 ## 2. Core Interfaces and Enums
 
-### 2.1 `Renderable` Interface
+### 2.1 Renderable Interface
 
-Every component that can fill a layout slot implements this interface.
+Every component that can fill a layout slot implements this interface. It defines two methods:
+- `render(): string` — Returns the component as an HTML string
+- `__toString(): string` — Allows echo/string coercion
 
-```php
-<?php
+This enables any component to be used interchangeably in content slots.
 
-namespace PageMaker\Contracts;
+### 2.2 LayoutPattern Enum
 
-interface Renderable
-{
-    /**
-     * Return the component as an HTML string.
-     */
-    public function render(): string;
+Defines the nine available layout patterns, each mapping to a specific Twig template:
 
-    /**
-     * Allow echo / string coercion.
-     */
-    public function __toString(): string;
-}
-```
+| Pattern | Template | Description |
+|---|---|---|
+| `HOLY_GRAIL` | `layouts/holy_grail.html.twig` | Classic three-column layout |
+| `OFFCANVAS_LEFT` | `layouts/offcanvas_left.html.twig` | Left drawer on mobile, inline on desktop |
+| `OFFCANVAS_RIGHT` | `layouts/offcanvas_right.html.twig` | Right drawer on mobile, inline on desktop |
+| `STACKED` | `layouts/stacked.html.twig` | Mobile-first with visual reordering |
+| `FIXED_SIDEBAR` | `layouts/fixed_sidebar.html.twig` | Position-fixed sidebar with mini collapse |
+| `PARTIALLY_COLLAPSING` | `layouts/partially_collapsing.html.twig` | Always-visible narrowing sidebar |
+| `ACCORDION_SIDEBAR` | `layouts/accordion_sidebar.html.twig` | Sidebar with collapsible accordion sections |
+| `OVERLAY_DRAWER` | `layouts/overlay_drawer.html.twig` | Full-screen overlay drawer on mobile |
+| `MINI_ICON_SIDEBAR` | `layouts/mini_icon_sidebar.html.twig` | Icon strip expanding to full sidebar |
 
-### 2.2 `LayoutPattern` Enum
+### 2.3 Breakpoint Enum
 
-```php
-<?php
+Maps Bootstrap 5.3's six breakpoint tiers to PHP constants:
 
-namespace PageMaker\Enums;
+| Enum Case | Class Infix | Min Width | Typical Device |
+|---|---|---|---|
+| `XS` | *(none)* | $0\text{px}$ | Phones (portrait) |
+| `SM` | `-sm` | $\geq 576\text{px}$ | Phones (landscape) |
+| `MD` | `-md` | $\geq 768\text{px}$ | Tablets |
+| `LG` | `-lg` | $\geq 992\text{px}$ | Laptops / small desktops |
+| `XL` | `-xl` | $\geq 1200\text{px}$ | Desktops |
+| `XXL` | `-xxl` | $\geq 1400\text{px}$ | Large desktops / TVs |
 
-enum LayoutPattern: string
-{
-    case HOLY_GRAIL            = 'holy_grail';
-    case OFFCANVAS_LEFT        = 'offcanvas_left';
-    case OFFCANVAS_RIGHT       = 'offcanvas_right';
-    case STACKED               = 'stacked';
-    case FIXED_SIDEBAR         = 'fixed_sidebar';
-    case PARTIALLY_COLLAPSING  = 'partially_collapsing';
-    case ACCORDION_SIDEBAR     = 'accordion_sidebar';
-    case OVERLAY_DRAWER        = 'overlay_drawer';
-    case MINI_ICON_SIDEBAR     = 'mini_icon_sidebar';
+Each breakpoint provides methods to retrieve pixel values and generate Bootstrap class infixes.
 
-    /** Return the Twig template name for this pattern. */
-    public function templateName(): string
-    {
-        return 'layouts/' . $this->value . '.html.twig';
-    }
-}
-```
+### 2.4 AssetPosition Enum
 
-### 2.3 `Breakpoint` Enum
-
-Bootstrap 5.3 defines six breakpoint tiers ([reintech.io](https://reintech.io/blog/bootstrap-5-grid-system-advanced-layout-techniques)). PageMaker uses them to control when sidebars become visible.
-
-```php
-<?php
-
-namespace PageMaker\Enums;
-
-enum Breakpoint: string
-{
-    case XS  = '';      // <576px  – no infix
-    case SM  = 'sm';    // ≥576px
-    case MD  = 'md';    // ≥768px
-    case LG  = 'lg';    // ≥992px
-    case XL  = 'xl';    // ≥1200px
-    case XXL = 'xxl';   // ≥1400px
-
-    /** Pixel value at which this breakpoint activates. */
-    public function minWidth(): int
-    {
-        return match ($this) {
-            self::XS  => 0,
-            self::SM  => 576,
-            self::MD  => 768,
-            self::LG  => 992,
-            self::XL  => 1200,
-            self::XXL => 1400,
-        };
-    }
-
-    /** Return the Bootstrap class infix (e.g. "-lg"). Empty string for XS. */
-    public function infix(): string
-    {
-        return $this->value !== '' ? '-' . $this->value : '';
-    }
-}
-```
-
-### 2.4 `AssetPosition` Enum
-
-```php
-<?php
-
-namespace PageMaker\Enums;
-
-enum AssetPosition: string
-{
-    case HEAD       = 'head';        // Inside <head>
-    case BODY_START = 'body_start';  // Immediately after <body>
-    case BODY_END   = 'body_end';    // Before </body>
-}
-```
+Defines three insertion points for assets:
+- `HEAD` — Inside `<head>` (CSS, meta tags)
+- `BODY_START` — Immediately after `<body>` (early JS, analytics)
+- `BODY_END` — Before `</body>` (main JS bundles)
 
 ---
 
-## 3. The `PageMaker` Class
+## 3. The PageMaker Class
 
-This is the central builder. It collects configuration, resolves content slots, and delegates rendering to the template engine.
+The central builder class collects configuration, resolves content slots, and delegates rendering to the template engine.
 
-### 3.1 Full Class Definition
+### 3.1 Core Responsibilities
 
-```php
-<?php
+```mermaid
+classDiagram
+    class PageMaker {
+        -string title
+        -string lang
+        -array metaTags
+        -LayoutPattern pattern
+        -Breakpoint sidebarBreakpoint
+        -array columnWidths
+        -Renderable header
+        -Renderable footer
+        -Renderable leftSidebar
+        -Renderable rightSidebar
+        -Renderable mainContent
+        -Renderable heroSection
+        -Renderable breadcrumb
+        -AssetManager assets
+        -callable renderer
 
-namespace PageMaker;
-
-use PageMaker\Contracts\Renderable;
-use PageMaker\Enums\AssetPosition;
-use PageMaker\Enums\Breakpoint;
-use PageMaker\Enums\LayoutPattern;
-use PageMaker\Assets\AssetManager;
-use InvalidArgumentException;
-
-class PageMaker
-{
-    // ── Metadata ──────────────────────────────────
-    private string $title = '';
-    private string $lang = 'en';
-    private array  $metaTags = [];
-    private string $charset = 'UTF-8';
-    private string $viewport = 'width=device-width, initial-scale=1';
-
-    // ── Layout ────────────────────────────────────
-    private LayoutPattern $pattern = LayoutPattern::HOLY_GRAIL;
-    private Breakpoint $sidebarBreakpoint = Breakpoint::LG;
-    private array $columnWidths = [3, 6, 3]; // [left, main, right]
-
-    // ── Content slots ─────────────────────────────
-    private string|Renderable|callable|null $header      = null;
-    private string|Renderable|callable|null $footer      = null;
-    private string|Renderable|callable|null $leftSidebar = null;
-    private string|Renderable|callable|null $rightSidebar = null;
-    private string|Renderable|callable|null $mainContent = null;
-    private string|Renderable|callable|null $heroSection = null;
-    private string|Renderable|callable|null $breadcrumb  = null;
-
-    // ── Extras ────────────────────────────────────
-    private string $bodyClass = '';
-    private string $containerId = 'page-wrapper';
-    private bool   $fluidContainer = false;
-
-    // ── Assets ────────────────────────────────────
-    private AssetManager $assets;
-
-    // ── Template engine callback ──────────────────
-    /** @var callable(string $template, array $context): string */
-    private $renderer;
-
-    /**
-     * @param callable(string $template, array $context): string $renderer
-     *        A function that accepts a template name and context array,
-     *        returning rendered HTML. Wrap your Twig call here.
-     */
-    public function __construct(callable $renderer)
-    {
-        $this->renderer = $renderer;
-        $this->assets = new AssetManager();
+        +setTitle(string) PageMaker
+        +setLayout(LayoutPattern, Breakpoint) PageMaker
+        +setColumnWidths(int, int, int) PageMaker
+        +setHeader(Renderable) PageMaker
+        +setFooter(Renderable) PageMaker
+        +setLeftSidebar(Renderable) PageMaker
+        +setRightSidebar(Renderable) PageMaker
+        +setMainContent(Renderable) PageMaker
+        +setHeroSection(Renderable) PageMaker
+        +setBreadcrumb(Renderable) PageMaker
+        +assets() AssetManager
+        +render() string
+        -resolve(slot) string
+        -buildContext() array
     }
 
-    // ━━ Metadata setters ━━━━━━━━━━━━━━━━━━━━━━━━━
-
-    public function setTitle(string $title): static
-    {
-        $this->title = $title;
-        return $this;
+    class AssetManager {
+        -array assets
+        +addCss(string, AssetPosition) AssetManager
+        +addJs(string, AssetPosition) AssetManager
+        +addInlineCss(string, AssetPosition) AssetManager
+        +addInlineJs(string, AssetPosition) AssetManager
+        +addBootstrap(string) AssetManager
+        +addBootstrapIcons(string) AssetManager
+        +render(AssetPosition) string
     }
 
-    public function setLang(string $lang): static
-    {
-        $this->lang = $lang;
-        return $this;
+    class Renderable {
+        <<interface>>
+        +render() string
+        +__toString() string
     }
 
-    public function setCharset(string $charset): static
-    {
-        $this->charset = $charset;
-        return $this;
-    }
-
-    public function setViewport(string $viewport): static
-    {
-        $this->viewport = $viewport;
-        return $this;
-    }
-
-    public function addMeta(string $name, string $content): static
-    {
-        $this->metaTags[$name] = $content;
-        return $this;
-    }
-
-    // ━━ Layout setters ━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-    public function setLayout(
-        LayoutPattern $pattern,
-        Breakpoint $sidebarBreakpoint = Breakpoint::LG
-    ): static {
-        $this->pattern = $pattern;
-        $this->sidebarBreakpoint = $sidebarBreakpoint;
-        return $this;
-    }
-
-    /**
-     * Set Bootstrap grid column widths for [left, main, right].
-     * Must sum to 12. For layouts without a particular sidebar,
-     * pass 0 for that column.
-     *
-     * @param int $left   0–12
-     * @param int $main   1–12
-     * @param int $right  0–12
-     * @throws InvalidArgumentException
-     */
-    public function setColumnWidths(int $left, int $main, int $right): static
-    {
-        $sum = $left + $main + $right;
-        if ($sum !== 12) {
-            throw new InvalidArgumentException(
-                "Column widths must sum to 12; got {$left}+{$main}+{$right}={$sum}."
-            );
-        }
-        if ($main < 1) {
-            throw new InvalidArgumentException(
-                "Main column must be at least 1; got {$main}."
-            );
-        }
-        $this->columnWidths = [$left, $main, $right];
-        return $this;
-    }
-
-    // ━━ Content setters ━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-    public function setHeader(string|Renderable|callable $content): static
-    {
-        $this->header = $content;
-        return $this;
-    }
-
-    public function setFooter(string|Renderable|callable $content): static
-    {
-        $this->footer = $content;
-        return $this;
-    }
-
-    public function setLeftSidebar(string|Renderable|callable $content): static
-    {
-        $this->leftSidebar = $content;
-        return $this;
-    }
-
-    public function setRightSidebar(string|Renderable|callable $content): static
-    {
-        $this->rightSidebar = $content;
-        return $this;
-    }
-
-    public function setMainContent(string|Renderable|callable $content): static
-    {
-        $this->mainContent = $content;
-        return $this;
-    }
-
-    public function setHeroSection(string|Renderable|callable $content): static
-    {
-        $this->heroSection = $content;
-        return $this;
-    }
-
-    public function setBreadcrumb(string|Renderable|callable $content): static
-    {
-        $this->breadcrumb = $content;
-        return $this;
-    }
-
-    // ━━ Extras ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-    public function setBodyClass(string $class): static
-    {
-        $this->bodyClass = $class;
-        return $this;
-    }
-
-    public function setContainerId(string $id): static
-    {
-        $this->containerId = $id;
-        return $this;
-    }
-
-    public function useFluidContainer(bool $fluid = true): static
-    {
-        $this->fluidContainer = $fluid;
-        return $this;
-    }
-
-    // ━━ Asset pass-through ━━━━━━━━━━━━━━━━━━━━━━━
-
-    public function assets(): AssetManager
-    {
-        return $this->assets;
-    }
-
-    // ━━ Resolve & Render ━━━━━━━━━━━━━━━━━━━━━━━━━
-
-    /**
-     * Evaluate a content slot to a string.
-     */
-    private function resolve(string|Renderable|callable|null $slot): string
-    {
-        if ($slot === null) {
-            return '';
-        }
-        if (is_string($slot)) {
-            return $slot;
-        }
-        if ($slot instanceof Renderable) {
-            return $slot->render();
-        }
-        if (is_callable($slot)) {
-            $result = ($slot)();
-            return $result instanceof Renderable ? $result->render() : (string) $result;
-        }
-        return '';
-    }
-
-    /**
-     * Build the full template context array.
-     */
-    private function buildContext(): array
-    {
-        $bp = $this->sidebarBreakpoint;
-
-        return [
-            // Metadata
-            'title'       => $this->title,
-            'lang'        => $this->lang,
-            'charset'     => $this->charset,
-            'viewport'    => $this->viewport,
-            'meta_tags'   => $this->metaTags,
-
-            // Layout
-            'pattern'            => $this->pattern->value,
-            'breakpoint'         => $bp->value,
-            'breakpoint_infix'   => $bp->infix(),
-            'col_left'           => $this->columnWidths[0],
-            'col_main'           => $this->columnWidths[1],
-            'col_right'          => $this->columnWidths[2],
-
-            // Resolved content
-            'header'        => $this->resolve($this->header),
-            'footer'        => $this->resolve($this->footer),
-            'left_sidebar'  => $this->resolve($this->leftSidebar),
-            'right_sidebar' => $this->resolve($this->rightSidebar),
-            'main_content'  => $this->resolve($this->mainContent),
-            'hero_section'  => $this->resolve($this->heroSection),
-            'breadcrumb'    => $this->resolve($this->breadcrumb),
-
-            // Extras
-            'body_class'      => $this->bodyClass,
-            'container_id'    => $this->containerId,
-            'fluid_container' => $this->fluidContainer,
-
-            // Assets
-            'head_assets'       => $this->assets->render(AssetPosition::HEAD),
-            'body_start_assets' => $this->assets->render(AssetPosition::BODY_START),
-            'body_end_assets'   => $this->assets->render(AssetPosition::BODY_END),
-        ];
-    }
-
-    /**
-     * Render the final HTML page.
-     */
-    public function render(): string
-    {
-        return ($this->renderer)(
-            $this->pattern->templateName(),
-            $this->buildContext()
-        );
-    }
-
-    public function __toString(): string
-    {
-        return $this->render();
-    }
-}
+    PageMaker --> AssetManager
+    PageMaker ..> Renderable : accepts
 ```
 
-### 3.2 Column Width Presets
+### 3.2 Content Slot Resolution
 
-For convenience, provide named presets:
+The `resolve()` method handles the three content types:
 
-```php
-// Inside PageMaker or as a helper
-public function usePreset(string $preset): static
-{
-    return match ($preset) {
-        'left-only'    => $this->setColumnWidths(3, 9, 0),
-        'right-only'   => $this->setColumnWidths(0, 9, 3),
-        'both-narrow'  => $this->setColumnWidths(2, 8, 2),
-        'both-wide'    => $this->setColumnWidths(3, 6, 3),
-        'both-unequal' => $this->setColumnWidths(3, 7, 2),
-        'no-sidebars'  => $this->setColumnWidths(0, 12, 0),
-        default        => throw new InvalidArgumentException("Unknown preset: {$preset}"),
-    };
-}
-```
+1. **null** → Returns empty string
+2. **string** → Returns as-is (raw HTML)
+3. **Renderable** → Calls `render()` method
+4. **callable** → Executes and recursively resolves the result
+
+This allows lazy evaluation for expensive operations like database queries.
+
+### 3.3 Template Context Building
+
+The `buildContext()` method assembles all data needed by templates:
+
+| Context Variable | Source | Purpose |
+|---|---|---|
+| Metadata | `$title`, `$lang`, `$metaTags` | HTML head elements |
+| Layout config | `$pattern`, `$breakpoint`, `$columnWidths` | Responsive behavior |
+| Resolved content | Slot resolution results | Body sections |
+| Asset HTML | `AssetManager::render()` | CSS/JS tags |
+
+### 3.4 Column Width Presets
+
+For convenience, named presets simplify common configurations:
+
+| Preset | Column Distribution | Use Case |
+|---|---|---|
+| `left-only` | `[3, 9, 0]` | Admin panels |
+| `right-only` | `[0, 9, 3]` | Blog with sidebar ads |
+| `both-narrow` | `[2, 8, 2]` | Three-column portal |
+| `both-wide` | `[3, 6, 3]` | Traditional portal |
+| `both-unequal` | `[3, 7, 2]` | Documentation with TOC |
+| `no-sidebars` | `[0, 12, 0]` | Landing pages |
+
+### 3.5 Mathematical Constraints
+
+Column widths must satisfy:
+
+$$\text{left} + \text{main} + \text{right} = 12$$
+
+where $\text{main} \geq 1$ and $\text{left}, \text{right} \geq 0$.
 
 ---
 
 ## 4. Layout Patterns
 
-Each pattern defines **how the structural sections behave at the mobile breakpoint vs. the configured sidebar breakpoint**. All patterns share the same base template (`base.html.twig`) and override only the body block.
+Each pattern defines **how structural sections behave at the mobile breakpoint vs. the configured sidebar breakpoint**. All patterns share the same base template and override only the body block.
 
 ### 4.1 Pattern Behavior Matrix
 
-| Pattern | Mobile (below $bp) | At/Above $bp | Key Bootstrap Classes | Sidebars Used |
+| Pattern | Mobile (below $bp$) | At/Above $bp$ | Key Bootstrap Classes | Sidebars Used |
 |---|---|---|---|---|
 | **HOLY_GRAIL** | Single column; sidebars hidden | 3-column grid | `d-none d-{bp}-block`, `col-{bp}-*` | Left, Right |
 | **OFFCANVAS_LEFT** | Hamburger toggles left drawer | Left sidebar visible inline | `offcanvas-{bp} offcanvas-start` | Left |
@@ -538,774 +384,150 @@ Each pattern defines **how the structural sections behave at the mobile breakpoi
 | **OVERLAY_DRAWER** | Full-screen overlay drawer | Sidebar as normal grid column | `offcanvas` + `offcanvas-backdrop` | Left |
 | **MINI_ICON_SIDEBAR** | Narrow icon strip, expand on tap | Full sidebar with text + icons | `sidebar-mini`, `d-none d-{bp}-inline` | Left |
 
-> The variable $bp above refers to `sidebarBreakpoint` — configurable via `setLayout()`.
-
-### 4.2 HOLY_GRAIL
-
-The classic three-column layout. Sidebars are completely hidden on mobile and appear as grid columns at the configured breakpoint ([reintech.io](https://reintech.io/blog/bootstrap-5-grid-system-advanced-layout-techniques)).
-
-**Responsive behavior:**
-
-- **Below** $bp: Single column. `<main>` spans 12 columns. Both sidebars have `d-none`.
-- **At/above** $bp: Three columns. Left sidebar = `col-{bp}-{left}`, main = `col-{bp}-{main}`, right = `col-{bp}-{right}`.
-
-**Template:** `layouts/holy_grail.html.twig`
-
-```twig
-{% extends "base.html.twig" %}
-
-{% block body_content %}
-{# --- Hero (optional, full-width) --- #}
-{% if hero_section %}
-<section class="pm-hero">
-    {{ hero_section|raw }}
-</section>
-{% endif %}
-
-{# --- Breadcrumb (optional) --- #}
-{% if breadcrumb %}
-<nav aria-label="breadcrumb" class="pm-breadcrumb-bar">
-    {{ breadcrumb|raw }}
-</nav>
-{% endif %}
-
-<div class="row g-0">
-    {# LEFT SIDEBAR #}
-    {% if left_sidebar and col_left > 0 %}
-    <aside class="col{{ breakpoint_infix }}-{{ col_left }} d-none d-{{ breakpoint }}-block pm-sidebar pm-sidebar-left"
-           role="complementary" aria-label="Left sidebar">
-        {{ left_sidebar|raw }}
-    </aside>
-    {% endif %}
-
-    {# MAIN CONTENT #}
-    <main class="col-12 col{{ breakpoint_infix }}-{{ col_main }} pm-main"
-          role="main" id="main-content">
-        {{ main_content|raw }}
-    </main>
-
-    {# RIGHT SIDEBAR #}
-    {% if right_sidebar and col_right > 0 %}
-    <aside class="col{{ breakpoint_infix }}-{{ col_right }} d-none d-{{ breakpoint }}-block pm-sidebar pm-sidebar-right"
-           role="complementary" aria-label="Right sidebar">
-        {{ right_sidebar|raw }}
-    </aside>
-    {% endif %}
-</div>
-{% endblock %}
-```
-
-### 4.3 OFFCANVAS_LEFT
-
-Left sidebar content lives inside a Bootstrap **Offcanvas** component. On mobile it slides in from the left when a hamburger button is clicked. At the breakpoint it renders inline as a grid column ([getbootstrap.com](https://getbootstrap.com/docs/5.3/examples/sidebars)).
-
-**Template:** `layouts/offcanvas_left.html.twig`
-
-```twig
-{% extends "base.html.twig" %}
-
-{% block body_content %}
-{% if hero_section %}
-<section class="pm-hero">{{ hero_section|raw }}</section>
-{% endif %}
-
-{% if breadcrumb %}
-<nav aria-label="breadcrumb" class="pm-breadcrumb-bar">{{ breadcrumb|raw }}</nav>
-{% endif %}
-
-{# Hamburger toggle — visible below breakpoint #}
-<button class="btn btn-outline-secondary d-{{ breakpoint }}-none mb-3"
-        type="button"
-        data-bs-toggle="offcanvas"
-        data-bs-target="#pm-offcanvas-left"
-        aria-controls="pm-offcanvas-left"
-        aria-label="Toggle navigation">
-    <i class="bi bi-list"></i> Menu
-</button>
-
-<div class="row g-0">
-    {# LEFT SIDEBAR inside responsive offcanvas #}
-    <div class="offcanvas{{ breakpoint_infix }} offcanvas-start col{{ breakpoint_infix }}-{{ col_left }} pm-sidebar pm-sidebar-left"
-         tabindex="-1"
-         id="pm-offcanvas-left"
-         aria-labelledby="pm-offcanvas-left-label">
-        <div class="offcanvas-header d-{{ breakpoint }}-none">
-            <h5 class="offcanvas-title" id="pm-offcanvas-left-label">Navigation</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            {{ left_sidebar|raw }}
-        </div>
-    </div>
-
-    {# MAIN CONTENT #}
-    <main class="col-12 col{{ breakpoint_infix }}-{{ col_main }} pm-main"
-          role="main" id="main-content">
-        {{ main_content|raw }}
-    </main>
-</div>
-{% endblock %}
-```
-
-### 4.4 OFFCANVAS_RIGHT
-
-Mirror of OFFCANVAS_LEFT but the drawer opens from the right.
-
-**Template:** `layouts/offcanvas_right.html.twig`
-
-```twig
-{% extends "base.html.twig" %}
-
-{% block body_content %}
-{% if hero_section %}
-<section class="pm-hero">{{ hero_section|raw }}</section>
-{% endif %}
-
-{% if breadcrumb %}
-<nav aria-label="breadcrumb" class="pm-breadcrumb-bar">{{ breadcrumb|raw }}</nav>
-{% endif %}
-
-<button class="btn btn-outline-secondary d-{{ breakpoint }}-none mb-3"
-        type="button"
-        data-bs-toggle="offcanvas"
-        data-bs-target="#pm-offcanvas-right"
-        aria-controls="pm-offcanvas-right"
-        aria-label="Toggle sidebar">
-    <i class="bi bi-layout-sidebar-reverse"></i> Sidebar
-</button>
-
-<div class="row g-0">
-    {# MAIN #}
-    <main class="col-12 col{{ breakpoint_infix }}-{{ col_main }} pm-main"
-          role="main" id="main-content">
-        {{ main_content|raw }}
-    </main>
-
-    {# RIGHT SIDEBAR #}
-    <div class="offcanvas{{ breakpoint_infix }} offcanvas-end col{{ breakpoint_infix }}-{{ col_right }} pm-sidebar pm-sidebar-right"
-         tabindex="-1"
-         id="pm-offcanvas-right"
-         aria-labelledby="pm-offcanvas-right-label">
-        <div class="offcanvas-header d-{{ breakpoint }}-none">
-            <h5 class="offcanvas-title" id="pm-offcanvas-right-label">Sidebar</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            {{ right_sidebar|raw }}
-        </div>
-    </div>
-</div>
-{% endblock %}
-```
-
-### 4.5 STACKED
-
-On mobile, content stacks in a single column with **main first** in the source order (for SEO and accessibility). At the breakpoint, `order-{bp}-*` classes visually rearrange columns into left–main–right ([reintech.io](https://reintech.io/blog/bootstrap-5-grid-system-advanced-layout-techniques)).
-
-**Template:** `layouts/stacked.html.twig`
-
-```twig
-{% extends "base.html.twig" %}
-
-{% block body_content %}
-{% if hero_section %}
-<section class="pm-hero">{{ hero_section|raw }}</section>
-{% endif %}
-
-{% if breadcrumb %}
-<nav aria-label="breadcrumb" class="pm-breadcrumb-bar">{{ breadcrumb|raw }}</nav>
-{% endif %}
-
-<div class="row g-0">
-    {# MAIN is first in DOM for mobile stacking & SEO #}
-    <main class="col-12 col{{ breakpoint_infix }}-{{ col_main }} order{{ breakpoint_infix }}-2 pm-main"
-          role="main" id="main-content">
-        {{ main_content|raw }}
-    </main>
-
-    {# LEFT SIDEBAR — appears below main on mobile, left on desktop #}
-    {% if left_sidebar and col_left > 0 %}
-    <aside class="col-12 col{{ breakpoint_infix }}-{{ col_left }} order{{ breakpoint_infix }}-1 pm-sidebar pm-sidebar-left"
-           role="complementary" aria-label="Left sidebar">
-        {{ left_sidebar|raw }}
-    </aside>
-    {% endif %}
-
-    {# RIGHT SIDEBAR — appears below left sidebar on mobile, right on desktop #}
-    {% if right_sidebar and col_right > 0 %}
-    <aside class="col-12 col{{ breakpoint_infix }}-{{ col_right }} order{{ breakpoint_infix }}-3 pm-sidebar pm-sidebar-right"
-           role="complementary" aria-label="Right sidebar">
-        {{ right_sidebar|raw }}
-    </aside>
-    {% endif %}
-</div>
-{% endblock %}
-```
-
-### 4.6 FIXED_SIDEBAR
-
-The left sidebar is **position-fixed** and scrolls independently of the main content. On mobile it collapses to a narrow icon strip (`sidebar-mini` class) ([getbootstrap.com](https://getbootstrap.com/docs/5.3/examples/sidebars)).
-
-**Template:** `layouts/fixed_sidebar.html.twig`
-
-```twig
-{% extends "base.html.twig" %}
-
-{% block body_content %}
-{% if hero_section %}
-<section class="pm-hero">{{ hero_section|raw }}</section>
-{% endif %}
-
-<div class="d-flex" id="pm-fixed-layout">
-    {# FIXED SIDEBAR #}
-    <aside class="pm-sidebar pm-sidebar-fixed pm-sidebar-left"
-           id="pm-sidebar-fixed"
-           role="complementary"
-           aria-label="Fixed sidebar">
-        <div class="d-flex flex-column flex-shrink-0 vh-100 position-fixed overflow-auto"
-             style="width: var(--pm-sidebar-width);">
-            {{ left_sidebar|raw }}
-        </div>
-    </aside>
-
-    {# MAIN #}
-    <main class="pm-main flex-grow-1" role="main" id="main-content"
-          style="margin-left: var(--pm-sidebar-width);">
-        {% if breadcrumb %}
-        <nav aria-label="breadcrumb" class="pm-breadcrumb-bar">{{ breadcrumb|raw }}</nav>
-        {% endif %}
-        {{ main_content|raw }}
-    </main>
-</div>
-{% endblock %}
-```
-
-**Required CSS variables** (in `pagemaker.css`):
-
-```css
-:root {
-    --pm-sidebar-width: 280px;
-    --pm-sidebar-mini-width: 64px;
-}
-
-/* Below breakpoint: collapse to mini */
-@media (max-width: 991.98px) {
-    .pm-sidebar-fixed > div {
-        width: var(--pm-sidebar-mini-width) !important;
-    }
-    .pm-sidebar-fixed .pm-sidebar-label {
-        display: none;
-    }
-    .pm-main {
-        margin-left: var(--pm-sidebar-mini-width) !important;
-    }
-}
-```
-
-### 4.7 PARTIALLY_COLLAPSING
-
-Similar to FIXED_SIDEBAR but the sidebar **always remains visible**. On mobile it narrows to icons only; labels appear on hover via CSS transition or on tap.
-
-**Template:** `layouts/partially_collapsing.html.twig`
-
-```twig
-{% extends "base.html.twig" %}
-
-{% block body_content %}
-<div class="d-flex" id="pm-partial-layout">
-    <aside class="pm-sidebar pm-sidebar-partial pm-sidebar-left d-flex flex-column flex-shrink-0 vh-100 position-sticky top-0 overflow-auto"
-           id="pm-sidebar-partial"
-           role="complementary"
-           aria-label="Navigation sidebar">
-        {{ left_sidebar|raw }}
-    </aside>
-
-    <main class="pm-main flex-grow-1" role="main" id="main-content">
-        {% if breadcrumb %}
-        <nav aria-label="breadcrumb" class="pm-breadcrumb-bar">{{ breadcrumb|raw }}</nav>
-        {% endif %}
-        {{ main_content|raw }}
-    </main>
-</div>
-{% endblock %}
-```
-
-**CSS:**
-
-```css
-.pm-sidebar-partial {
-    width: var(--pm-sidebar-width);
-    transition: width 0.25s ease;
-}
-
-/* Narrow mode on mobile */
-@media (max-width: 991.98px) {
-    .pm-sidebar-partial {
-        width: var(--pm-sidebar-mini-width);
-    }
-    .pm-sidebar-partial .pm-sidebar-label {
-        opacity: 0;
-        width: 0;
-        overflow: hidden;
-        transition: opacity 0.2s;
-    }
-    .pm-sidebar-partial:hover {
-        width: var(--pm-sidebar-width);
-    }
-    .pm-sidebar-partial:hover .pm-sidebar-label {
-        opacity: 1;
-        width: auto;
-    }
-}
-```
-
-### 4.8 ACCORDION_SIDEBAR
-
-The sidebar contains an **accordion** component. Deep navigation hierarchies collapse into sections that expand/collapse on click — especially useful on mobile ([reintech.io](https://reintech.io/blog/navigation-patterns-bootstrap-5-tabs-pills-navbars)).
-
-**Template:** `layouts/accordion_sidebar.html.twig`
-
-```twig
-{% extends "base.html.twig" %}
-
-{% block body_content %}
-{% if hero_section %}
-<section class="pm-hero">{{ hero_section|raw }}</section>
-{% endif %}
-
-<div class="row g-0">
-    {# ACCORDION SIDEBAR #}
-    {% if left_sidebar and col_left > 0 %}
-    <aside class="col-12 col{{ breakpoint_infix }}-{{ col_left }} pm-sidebar pm-sidebar-left"
-           role="complementary" aria-label="Accordion navigation">
-        <div class="accordion" id="pm-sidebar-accordion">
-            {{ left_sidebar|raw }}
-        </div>
-    </aside>
-    {% endif %}
-
-    <main class="col-12 col{{ breakpoint_infix }}-{{ col_main }} pm-main"
-          role="main" id="main-content">
-        {% if breadcrumb %}
-        <nav aria-label="breadcrumb" class="pm-breadcrumb-bar">{{ breadcrumb|raw }}</nav>
-        {% endif %}
-        {{ main_content|raw }}
-    </main>
-</div>
-{% endblock %}
-```
-
-### 4.9 OVERLAY_DRAWER
-
-On mobile a **full-screen overlay** drawer covers the content (with a backdrop). On desktop the sidebar renders as a standard grid column.
-
-**Template:** `layouts/overlay_drawer.html.twig`
-
-```twig
-{% extends "base.html.twig" %}
-
-{% block body_content %}
-{# Toggle button — mobile only #}
-<button class="btn btn-dark d-{{ breakpoint }}-none mb-3"
-        type="button"
-        data-bs-toggle="offcanvas"
-        data-bs-target="#pm-overlay-drawer"
-        aria-controls="pm-overlay-drawer"
-        aria-label="Open menu">
-    <i class="bi bi-list"></i>
-</button>
-
-{# Drawer (offcanvas for mobile, grid col for desktop) #}
-<div class="offcanvas offcanvas-start d-{{ breakpoint }}-none"
-     data-bs-backdrop="true"
-     data-bs-scroll="false"
-     tabindex="-1"
-     id="pm-overlay-drawer"
-     aria-labelledby="pm-overlay-drawer-label">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="pm-overlay-drawer-label">Menu</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-        {{ left_sidebar|raw }}
-    </div>
-</div>
-
-<div class="row g-0">
-    {# Desktop sidebar #}
-    {% if left_sidebar and col_left > 0 %}
-    <aside class="d-none d-{{ breakpoint }}-block col{{ breakpoint_infix }}-{{ col_left }} pm-sidebar pm-sidebar-left"
-           role="complementary">
-        {{ left_sidebar|raw }}
-    </aside>
-    {% endif %}
-
-    <main class="col-12 col{{ breakpoint_infix }}-{{ col_main }} pm-main"
-          role="main" id="main-content">
-        {% if breadcrumb %}
-        <nav aria-label="breadcrumb" class="pm-breadcrumb-bar">{{ breadcrumb|raw }}</nav>
-        {% endif %}
-        {{ main_content|raw }}
-    </main>
-</div>
-{% endblock %}
-```
-
-### 4.10 MINI_ICON_SIDEBAR
-
-A narrow icon strip is always visible. On mobile only icons show; at the breakpoint text labels appear beside them.
-
-**Template:** `layouts/mini_icon_sidebar.html.twig`
-
-```twig
-{% extends "base.html.twig" %}
-
-{% block body_content %}
-<div class="d-flex" id="pm-mini-icon-layout">
-    <aside class="pm-sidebar pm-sidebar-mini d-flex flex-column flex-shrink-0 vh-100 position-sticky top-0 overflow-auto"
-           id="pm-sidebar-mini"
-           role="complementary"
-           aria-label="Icon sidebar">
-        {{ left_sidebar|raw }}
-    </aside>
-
-    <main class="pm-main flex-grow-1" role="main" id="main-content">
-        {% if breadcrumb %}
-        <nav aria-label="breadcrumb" class="pm-breadcrumb-bar">{{ breadcrumb|raw }}</nav>
-        {% endif %}
-        {{ main_content|raw }}
-    </main>
-</div>
-{% endblock %}
-```
-
-**CSS:**
-
-```css
-.pm-sidebar-mini {
-    width: var(--pm-sidebar-mini-width);
-    transition: width 0.3s ease;
-}
-
-.pm-sidebar-mini .pm-sidebar-label {
-    display: none;
-}
-
-/* At breakpoint: expand */
-@media (min-width: 992px) {
-    .pm-sidebar-mini {
-        width: var(--pm-sidebar-width);
-    }
-    .pm-sidebar-mini .pm-sidebar-label {
-        display: inline;
-    }
-}
-
-/* Expand on hover (all viewports) */
-.pm-sidebar-mini:hover {
-    width: var(--pm-sidebar-width);
-}
-.pm-sidebar-mini:hover .pm-sidebar-label {
-    display: inline;
-}
+### 4.2 Pattern Selection Guide
+
+```mermaid
+graph TD
+    Start[Need to choose a layout?] --> Q1{Need sidebars on mobile?}
+
+    Q1 -->|No| Q2{Sidebars on desktop?}
+    Q1 -->|Yes| Q3{How should sidebars appear?}
+
+    Q2 -->|No| HolyGrail[HOLY_GRAIL<br/>Classic hidden sidebars]
+    Q2 -->|Yes, fixed| Fixed[FIXED_SIDEBAR<br/>Always visible, mini on mobile]
+    Q2 -->|Yes, collapsing| Partial[PARTIALLY_COLLAPSING<br/>Narrows but stays visible]
+
+    Q3 -->|Slide-in drawer| Q4{Which side?}
+    Q3 -->|Full overlay| Overlay[OVERLAY_DRAWER<br/>Full-screen drawer]
+    Q3 -->|Stacked below content| Stacked[STACKED<br/>Main first in DOM]
+    Q3 -->|Accordion navigation| Accordion[ACCORDION_SIDEBAR<br/>Collapsible nav sections]
+
+    Q4 -->|Left| OffLeft[OFFCANVAS_LEFT<br/>Left drawer]
+    Q4 -->|Right| OffRight[OFFCANVAS_RIGHT<br/>Right drawer]
+
+    Q5{Need icon-only mode?} -->|Yes, with expansion| Mini[MINI_ICON_SIDEBAR<br/>Icon strip → full sidebar]
+    Q5 -->|No| HolyGrail
+
+    style HolyGrail fill:#90EE90
+    style OffLeft fill:#87CEEB
+    style OffRight fill:#87CEEB
+    style Stacked fill:#DDA0DD
+    style Fixed fill:#FFB6C1
+    style Partial fill:#FFD700
+    style Accordion fill:#F0E68C
+    style Overlay fill:#E6E6FA
+    style Mini fill:#98FB98
 ```
 
 ---
 
 ## 5. Structural Sections
 
-These are the major semantic areas of every page. Each has a dedicated component class that implements `Renderable`.
+These are the major semantic areas of every page. Each has a dedicated component class implementing `Renderable`.
 
-### 5.1 Header / Navbar
+### 5.1 Component Architecture
 
-```php
-<?php
+```mermaid
+graph LR
+    subgraph "Structural Components"
+        A[Navbar]
+        B[HeroSection]
+        C[Sidebar]
+        D[Breadcrumb]
+        E[Footer]
+    end
 
-namespace PageMaker\Components;
+    subgraph "Widget Components"
+        F[TabSet]
+        G[Accordion]
+        H[Modal]
+        I[Carousel]
+        J[Form]
+    end
 
-use PageMaker\Contracts\Renderable;
+    subgraph "Slots"
+        K[header]
+        L[heroSection]
+        M[leftSidebar]
+        N[rightSidebar]
+        O[breadcrumb]
+        P[mainContent]
+        Q[footer]
+    end
 
-class Navbar implements Renderable
-{
-    /**
-     * @param string              $brandName  Site name
-     * @param string              $brandUrl   Link for brand
-     * @param string|null         $brandLogo  Optional logo URL
-     * @param array<string,string> $items     label => href
-     * @param string              $theme      'light'|'dark'
-     * @param bool                $fixed      Sticky top?
-     * @param string              $breakpoint Collapse breakpoint infix (e.g. 'lg')
-     */
-    public function __construct(
-        private string  $brandName,
-        private string  $brandUrl = '/',
-        private ?string $brandLogo = null,
-        private array   $items = [],
-        private string  $theme = 'dark',
-        private bool    $fixed = true,
-        private string  $breakpoint = 'lg',
-    ) {}
+    A --> K
+    B --> L
+    C --> M
+    C --> N
+    D --> O
+    E --> Q
 
-    public function render(): string { /* delegate to template */ }
-    public function __toString(): string { return $this->render(); }
-}
+    F --> P
+    G --> P
+    H --> P
+    I --> P
+    J --> P
+
+    style A fill:#4a90d9,color:#fff
+    style B fill:#4a90d9,color:#fff
+    style C fill:#4a90d9,color:#fff
+    style D fill:#4a90d9,color:#fff
+    style E fill:#4a90d9,color:#fff
+    style F fill:#50c878,color:#fff
+    style G fill:#50c878,color:#fff
+    style H fill:#50c878,color:#fff
+    style I fill:#50c878,color:#fff
+    style J fill:#50c878,color:#fff
 ```
 
-**Template:** `components/navbar.html.twig`
+### 5.2 Navbar Component
 
-```twig
-<nav class="navbar navbar-expand-{{ breakpoint }} {% if theme == 'dark' %}navbar-dark bg-dark{% else %}navbar-light bg-light{% endif %}{% if fixed %} sticky-top{% endif %}"
-     role="navigation" aria-label="Main navigation">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="{{ brand_url }}">
-            {% if brand_logo %}
-            <img src="{{ brand_logo }}" alt="{{ brand_name }}" height="30" class="d-inline-block align-text-top me-2">
-            {% endif %}
-            {{ brand_name }}
-        </a>
+**Properties:**
+- Brand configuration (name, URL, optional logo)
+- Navigation items (label → href mapping)
+- Theme selection (light/dark)
+- Positioning (static or sticky-top)
+- Collapse breakpoint
 
-        <button class="navbar-toggler" type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#pm-navbar-collapse"
-                aria-controls="pm-navbar-collapse"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+**Accessibility:** Includes proper ARIA labels, keyboard navigation, and mobile-friendly hamburger toggle.
 
-        <div class="collapse navbar-collapse" id="pm-navbar-collapse">
-            <ul class="navbar-nav ms-auto mb-2 mb-{{ breakpoint }}-0">
-                {% for label, href in items %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ href }}">{{ label }}</a>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-</nav>
-```
+### 5.3 Hero Section Component
 
-### 5.2 Hero Section
+**Properties:**
+- Title and subtitle
+- Optional call-to-action button
+- Background image with overlay support
+- Theme-aware text coloring
 
-```php
-<?php
+**Use Cases:** Landing page headers, section separators, feature announcements.
 
-namespace PageMaker\Components;
+### 5.4 Sidebar Component
 
-use PageMaker\Contracts\Renderable;
+**Properties:**
+- Navigation items with icons and labels
+- Optional heading section
+- Support for nested children (multi-level navigation)
+- Active state highlighting
 
-class HeroSection implements Renderable
-{
-    public function __construct(
-        private string  $title,
-        private string  $subtitle = '',
-        private ?string $ctaLabel = null,
-        private ?string $ctaUrl = null,
-        private ?string $backgroundImage = null,
-        private string  $theme = 'dark',   // 'dark' overlay | 'light'
-    ) {}
+**Critical Implementation Note:** The `<span class="pm-sidebar-label">` wrapper is essential. Patterns like MINI_ICON_SIDEBAR, FIXED_SIDEBAR, and PARTIALLY_COLLAPSING hide this span below the breakpoint to achieve icon-only mode.
 
-    public function render(): string { /* delegate to template */ }
-    public function __toString(): string { return $this->render(); }
-}
-```
+### 5.5 Footer Component
 
-**Template:** `components/hero.html.twig`
+**Properties:**
+- Multiple columns of link groups
+- Copyright text
+- Social media icon links
 
-```twig
-<div class="pm-hero-section p-5 mb-4 rounded-3 text-{{ theme == 'dark' ? 'white' : 'dark' }}"
-     {% if background_image %}
-     style="background: url('{{ background_image }}') center/cover no-repeat;
-            position: relative;"
-     {% endif %}>
+**Layout:** Responsive grid that stacks on mobile.
 
-    {% if background_image and theme == 'dark' %}
-    <div style="position:absolute;inset:0;background:rgba(0,0,0,0.55);border-radius:inherit;"></div>
-    {% endif %}
+### 5.6 Breadcrumb Component
 
-    <div class="container-fluid py-5" style="position:relative;z-index:1;">
-        <h1 class="display-4 fw-bold">{{ title }}</h1>
-        {% if subtitle %}
-        <p class="col-md-8 fs-4">{{ subtitle }}</p>
-        {% endif %}
-        {% if cta_label and cta_url %}
-        <a href="{{ cta_url }}" class="btn btn-{{ theme == 'dark' ? 'light' : 'primary' }} btn-lg mt-3">
-            {{ cta_label }}
-        </a>
-        {% endif %}
-    </div>
-</div>
-```
+**Properties:**
+- Hierarchical navigation items
+- Current page indicator (null href)
+- Bootstrap breadcrumb styling
 
-### 5.3 Sidebar
-
-```php
-<?php
-
-namespace PageMaker\Components;
-
-use PageMaker\Contracts\Renderable;
-
-class Sidebar implements Renderable
-{
-    /**
-     * @param array<array{icon:string, label:string, href:string, active?:bool, children?:array}> $navItems
-     * @param string|null $heading Optional heading above navigation
-     */
-    public function __construct(
-        private array   $navItems = [],
-        private ?string $heading = null,
-    ) {}
-
-    public function render(): string { /* delegate to template */ }
-    public function __toString(): string { return $this->render(); }
-}
-```
-
-**Template:** `components/sidebar.html.twig`
-
-```twig
-{% if heading %}
-<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">
-    <span>{{ heading }}</span>
-</h6>
-{% endif %}
-
-<ul class="nav nav-pills flex-column mb-auto">
-    {% for item in nav_items %}
-    <li class="nav-item">
-        <a href="{{ item.href }}"
-           class="nav-link{% if item.active|default(false) %} active{% endif %}"
-           {% if item.active|default(false) %}aria-current="page"{% endif %}>
-            <i class="bi bi-{{ item.icon }} me-2"></i>
-            <span class="pm-sidebar-label">{{ item.label }}</span>
-        </a>
-
-        {# Nested children #}
-        {% if item.children|default([]) is not empty %}
-        <ul class="nav flex-column ms-3">
-            {% for child in item.children %}
-            <li class="nav-item">
-                <a href="{{ child.href }}" class="nav-link{% if child.active|default(false) %} active{% endif %}">
-                    <i class="bi bi-{{ child.icon }} me-2"></i>
-                    <span class="pm-sidebar-label">{{ child.label }}</span>
-                </a>
-            </li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    </li>
-    {% endfor %}
-</ul>
-```
-
-> **Note:** The `<span class="pm-sidebar-label">` wrapper is critical. The MINI_ICON_SIDEBAR, FIXED_SIDEBAR, and PARTIALLY_COLLAPSING patterns hide this span below the breakpoint to achieve icon-only mode.
-
-### 5.4 Footer
-
-```php
-<?php
-
-namespace PageMaker\Components;
-
-use PageMaker\Contracts\Renderable;
-
-class Footer implements Renderable
-{
-    /**
-     * @param array<string, array<string,string>> $columns  heading => [label => href]
-     * @param string $copyright  e.g. "© 2026 Acme Inc."
-     * @param array<string,string> $socialLinks  platform => url
-     */
-    public function __construct(
-        private array  $columns = [],
-        private string $copyright = '',
-        private array  $socialLinks = [],
-    ) {}
-
-    public function render(): string { /* delegate to template */ }
-    public function __toString(): string { return $this->render(); }
-}
-```
-
-**Template:** `components/footer.html.twig`
-
-```twig
-<footer class="pm-footer py-5 bg-dark text-light">
-    <div class="container">
-        <div class="row">
-            {% for heading, links in columns %}
-            <div class="col-6 col-md-{{ (12 / columns|length)|round(0, 'floor') }}">
-                <h5>{{ heading }}</h5>
-                <ul class="nav flex-column">
-                    {% for label, href in links %}
-                    <li class="nav-item mb-2">
-                        <a href="{{ href }}" class="nav-link p-0 text-muted">{{ label }}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            {% endfor %}
-        </div>
-
-        <div class="d-flex flex-column flex-sm-row justify-content-between pt-4 mt-4 border-top border-secondary">
-            <p class="mb-0 text-muted">{{ copyright }}</p>
-            <ul class="list-unstyled d-flex mb-0">
-                {% for platform, url in social_links %}
-                <li class="ms-3">
-                    <a class="text-muted" href="{{ url }}" aria-label="{{ platform }}">
-                        <i class="bi bi-{{ platform }}"></i>
-                    </a>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-</footer>
-```
-
-### 5.5 Breadcrumb
-
-```php
-<?php
-
-namespace PageMaker\Components;
-
-use PageMaker\Contracts\Renderable;
-
-class Breadcrumb implements Renderable
-{
-    /**
-     * @param array<string,string|null> $items  label => href (null for current/active)
-     */
-    public function __construct(
-        private array $items = [],
-    ) {}
-
-    public function render(): string { /* delegate to template */ }
-    public function __toString(): string { return $this->render(); }
-}
-```
-
-**Template:** `components/breadcrumb.html.twig`
-
-```twig
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        {% for label, href in items %}
-        {% if href is not null %}
-        <li class="breadcrumb-item"><a href="{{ href }}">{{ label }}</a></li>
-        {% else %}
-        <li class="breadcrumb-item active" aria-current="page">{{ label }}</li>
-        {% endif %}
-        {% endfor %}
-    </ol>
-</nav>
-```
+**Accessibility:** Includes `aria-label` and `aria-current` attributes.
 
 ---
 
@@ -1313,393 +535,71 @@ class Breadcrumb implements Renderable
 
 Each widget implements `Renderable` and can be placed in any content slot.
 
-### 6.1 TabSet
+### 6.1 Widget Feature Matrix
 
-Organize related content sections within a single slot ([reintech.io](https://reintech.io/blog/navigation-patterns-bootstrap-5-tabs-pills-navbars)).
-
-```php
-<?php
-
-namespace PageMaker\Components;
-
-use PageMaker\Contracts\Renderable;
-
-class TabSet implements Renderable
-{
-    /**
-     * @param array<string,string|Renderable> $tabs  label => content
-     * @param string $style  'tabs'|'pills'
-     * @param string $orientation  'horizontal'|'vertical'
-     * @param string|null $id  Unique ID prefix (auto-generated if null)
-     */
-    public function __construct(
-        private array   $tabs,
-        private string  $style = 'tabs',
-        private string  $orientation = 'horizontal',
-        private ?string $id = null,
-    ) {
-        $this->id ??= 'pm-tabset-' . bin2hex(random_bytes(4));
-    }
-
-    public function render(): string { /* delegate to template */ }
-    public function __toString(): string { return $this->render(); }
-}
-```
-
-**Template:** `components/tabset.html.twig`
-
-```twig
-{% set is_vertical = orientation == 'vertical' %}
-
-<div class="{% if is_vertical %}d-flex align-items-start{% endif %}">
-    <ul class="nav nav-{{ style }}{% if is_vertical %} flex-column me-3{% endif %} mb-3"
-        id="{{ id }}" role="tablist"
-        {% if is_vertical %}aria-orientation="vertical"{% endif %}>
-        {% for label, content in tabs %}
-        {% set tab_id = id ~ '-' ~ loop.index %}
-        <li class="nav-item" role="presentation">
-            <button class="nav-link{% if loop.first %} active{% endif %}"
-                    id="{{ tab_id }}-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#{{ tab_id }}-pane"
-                    type="button" role="tab"
-                    aria-controls="{{ tab_id }}-pane"
-                    aria-selected="{{ loop.first ? 'true' : 'false' }}">
-                {{ label }}
-            </button>
-        </li>
-        {% endfor %}
-    </ul>
-
-    <div class="tab-content{% if is_vertical %} flex-grow-1{% endif %}" id="{{ id }}-content">
-        {% for label, content in tabs %}
-        {% set tab_id = id ~ '-' ~ loop.index %}
-        <div class="tab-pane fade{% if loop.first %} show active{% endif %}"
-             id="{{ tab_id }}-pane" role="tabpanel"
-             aria-labelledby="{{ tab_id }}-tab" tabindex="0">
-            {{ content is iterable ? '' : content|raw }}
-        </div>
-        {% endfor %}
-    </div>
-</div>
-```
-
-### 6.2 Accordion
-
-```php
-<?php
-
-namespace PageMaker\Components;
-
-use PageMaker\Contracts\Renderable;
-
-class Accordion implements Renderable
-{
-    /**
-     * @param array<string,string|Renderable> $sections  heading => body
-     * @param bool $alwaysOpen  Allow multiple open sections
-     * @param bool $flush       Remove borders for edge-to-edge look
-     * @param string|null $id
-     */
-    public function __construct(
-        private array   $sections,
-        private bool    $alwaysOpen = false,
-        private bool    $flush = false,
-        private ?string $id = null,
-    ) {
-        $this->id ??= 'pm-accordion-' . bin2hex(random_bytes(4));
-    }
-
-    public function render(): string { /* delegate to template */ }
-    public function __toString(): string { return $this->render(); }
-}
-```
-
-**Template:** `components/accordion.html.twig`
-
-```twig
-<div class="accordion{% if flush %} accordion-flush{% endif %}" id="{{ id }}">
-    {% for heading, body in sections %}
-    {% set item_id = id ~ '-item-' ~ loop.index %}
-    <div class="accordion-item">
-        <h2 class="accordion-header">
-            <button class="accordion-button{% if not loop.first %} collapsed{% endif %}"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#{{ item_id }}"
-                    aria-expanded="{{ loop.first ? 'true' : 'false' }}"
-                    aria-controls="{{ item_id }}">
-                {{ heading }}
-            </button>
-        </h2>
-        <div id="{{ item_id }}"
-             class="accordion-collapse collapse{% if loop.first %} show{% endif %}"
-             {% if not always_open %}data-bs-parent="#{{ id }}"{% endif %}>
-            <div class="accordion-body">
-                {{ body|raw }}
-            </div>
-        </div>
-    </div>
-    {% endfor %}
-</div>
-```
-
-### 6.3 Modal
-
-```php
-<?php
-
-namespace PageMaker\Components;
-
-use PageMaker\Contracts\Renderable;
-
-class Modal implements Renderable
-{
-    /**
-     * @param string $title
-     * @param string|Renderable $body
-     * @param string|null $footerHtml
-     * @param string $size  ''|'sm'|'lg'|'xl'|'fullscreen'
-     * @param bool $centered
-     * @param bool $scrollable
-     * @param bool $staticBackdrop
-     * @param string|null $id
-     */
-    public function __construct(
-        private string              $title,
-        private string|Renderable   $body,
-        private ?string             $footerHtml = null,
-        private string              $size = '',
-        private bool                $centered = true,
-        private bool                $scrollable = false,
-        private bool                $staticBackdrop = false,
-        private ?string             $id = null,
-    ) {
-        $this->id ??= 'pm-modal-' . bin2hex(random_bytes(4));
-    }
-
-    /** Return the trigger button HTML. */
-    public function triggerButton(string $label, string $class = 'btn btn-primary'): string
-    {
-        return sprintf(
-            '<button type="button" class="%s" data-bs-toggle="modal" data-bs-target="#%s">%s</button>',
-            $class,
-            $this->id,
-            $label
-        );
-    }
-
-    public function render(): string { /* delegate to template */ }
-    public function __toString(): string { return $this->render(); }
-}
-```
-
-**Template:** `components/modal.html.twig`
-
-```twig
-<div class="modal fade" id="{{ id }}" tabindex="-1"
-     aria-labelledby="{{ id }}-label" aria-hidden="true"
-     {% if static_backdrop %}data-bs-backdrop="static" data-bs-keyboard="false"{% endif %}>
-    <div class="modal-dialog
-                {% if size %}modal-{{ size }}{% endif %}
-                {% if centered %}modal-dialog-centered{% endif %}
-                {% if scrollable %}modal-dialog-scrollable{% endif %}">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="{{ id }}-label">{{ title }}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                {{ body|raw }}
-            </div>
-            {% if footer_html %}
-            <div class="modal-footer">
-                {{ footer_html|raw }}
-            </div>
-            {% endif %}
-        </div>
-    </div>
-</div>
-```
-
-### 6.4 Carousel
-
-```php
-<?php
-
-namespace PageMaker\Components;
-
-use PageMaker\Contracts\Renderable;
-
-class Carousel implements Renderable
-{
-    /**
-     * @param array<array{src:string, alt:string, caption?:string, description?:string}> $slides
-     * @param bool $controls  Show prev/next arrows
-     * @param bool $indicators  Show dot indicators
-     * @param bool $fade  Use crossfade instead of slide
-     * @param int $interval  Auto-play interval in ms (0 = no auto-play)
-     * @param string|null $id
-     */
-    public function __construct(
-        private array   $slides,
-        private bool    $controls = true,
-        private bool    $indicators = true,
-        private bool    $fade = false,
-        private int     $interval = 5000,
-        private ?string $id = null,
-    ) {
-        $this->id ??= 'pm-carousel-' . bin2hex(random_bytes(4));
-    }
-
-    public function render(): string { /* delegate to template */ }
-    public function __toString(): string { return $this->render(); }
-}
-```
-
-**Template:** `components/carousel.html.twig`
-
-```twig
-<div id="{{ id }}"
-     class="carousel slide{% if fade %} carousel-fade{% endif %}"
-     {% if interval > 0 %}data-bs-ride="carousel"{% endif %}>
-
-    {% if indicators %}
-    <div class="carousel-indicators">
-        {% for slide in slides %}
-        <button type="button" data-bs-target="#{{ id }}" data-bs-slide-to="{{ loop.index0 }}"
-                {% if loop.first %}class="active" aria-current="true"{% endif %}
-                aria-label="Slide {{ loop.index }}"></button>
-        {% endfor %}
-    </div>
-    {% endif %}
-
-    <div class="carousel-inner">
-        {% for slide in slides %}
-        <div class="carousel-item{% if loop.first %} active{% endif %}"
-             {% if interval > 0 %}data-bs-interval="{{ interval }}"{% endif %}>
-            <img src="{{ slide.src }}" class="d-block w-100" alt="{{ slide.alt }}">
-            {% if slide.caption is defined or slide.description is defined %}
-            <div class="carousel-caption d-none d-md-block">
-                {% if slide.caption is defined %}<h5>{{ slide.caption }}</h5>{% endif %}
-                {% if slide.description is defined %}<p>{{ slide.description }}</p>{% endif %}
-            </div>
-            {% endif %}
-        </div>
-        {% endfor %}
-    </div>
-
-    {% if controls %}
-    <button class="carousel-control-prev" type="button" data-bs-target="#{{ id }}" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#{{ id }}" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-    {% endif %}
-</div>
-```
-
-### 6.5 Form Builder (Minimal)
-
-```php
-<?php
-
-namespace PageMaker\Components;
-
-use PageMaker\Contracts\Renderable;
-
-class Form implements Renderable
-{
-    /**
-     * @param string $action  Form action URL
-     * @param string $method  HTTP method
-     * @param array<array{type:string, name:string, label:string, placeholder?:string,
-     *        required?:bool, options?:array, value?:string}> $fields
-     * @param string $submitLabel
-     * @param bool $csrfToken  Include a CSRF hidden field placeholder
-     */
-    public function __construct(
-        private string $action,
-        private string $method = 'POST',
-        private array  $fields = [],
-        private string $submitLabel = 'Submit',
-        private bool   $csrfToken = true,
-    ) {}
-
-    public function render(): string { /* delegate to template */ }
-    public function __toString(): string { return $this->render(); }
-}
-```
-
-**Template:** `components/form.html.twig`
-
-```twig
-<form action="{{ action }}" method="{{ method }}" class="pm-form">
-    {% if csrf_token %}
-    <input type="hidden" name="_token" value="{{ csrf_token_value|default('') }}">
-    {% endif %}
-
-    {% for field in fields %}
-    <div class="mb-3">
-        <label for="pm-field-{{ field.name }}" class="form-label">{{ field.label }}</label>
-
-        {% if field.type == 'textarea' %}
-        <textarea class="form-control" id="pm-field-{{ field.name }}" name="{{ field.name }}"
-                  placeholder="{{ field.placeholder|default('') }}"
-                  {% if field.required|default(false) %}required{% endif %}
-                  rows="4">{{ field.value|default('') }}</textarea>
-
-        {% elseif field.type == 'select' %}
-        <select class="form-select" id="pm-field-{{ field.name }}" name="{{ field.name }}"
-                {% if field.required|default(false) %}required{% endif %}>
-            {% for optVal, optLabel in field.options|default({}) %}
-            <option value="{{ optVal }}"
-                    {% if field.value|default('') == optVal %}selected{% endif %}>
-                {{ optLabel }}
-            </option>
-            {% endfor %}
-        </select>
-
-        {% elseif field.type == 'checkbox' %}
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="pm-field-{{ field.name }}" name="{{ field.name }}"
-                   {% if field.value|default(false) %}checked{% endif %}
-                   {% if field.required|default(false) %}required{% endif %}>
-            <label class="form-check-label" for="pm-field-{{ field.name }}">{{ field.label }}</label>
-        </div>
-
-        {% else %}
-        <input type="{{ field.type }}" class="form-control" id="pm-field-{{ field.name }}"
-               name="{{ field.name }}"
-               placeholder="{{ field.placeholder|default('') }}"
-               value="{{ field.value|default('') }}"
-               {% if field.required|default(false) %}required{% endif %}>
-        {% endif %}
-    </div>
-    {% endfor %}
-
-    <button type="submit" class="btn btn-primary">{{ submit_label }}</button>
-</form>
-```
-
-### 6.6 Component Summary Table
-
-| Component | Class | Bootstrap Feature | Typical Slot |
+| Component | Bootstrap Feature | Configuration Options | Typical Slot |
 |---|---|---|---|
-| **Navbar** | `Navbar` | Navbar + Collapse | `header` |
-| **HeroSection** | `HeroSection` | Jumbotron pattern | `heroSection` |
-| **Sidebar** | `Sidebar` | Nav pills, flex-column | `leftSidebar` / `rightSidebar` |
-| **Footer** | `Footer` | Grid columns, nav | `footer` |
-| **Breadcrumb** | `Breadcrumb` | Breadcrumb component | `breadcrumb` |
-| **TabSet** | `TabSet` | Tabs / Pills + Tab content | Any content slot |
-| **Accordion** | `Accordion` | Accordion / Collapse | Any content slot |
-| **Modal** | `Modal` | Modal dialog | Any content slot |
-| **Carousel** | `Carousel` | Carousel / Slide | Any content slot |
-| **Form** | `Form` | Form controls, validation | Any content slot |
+| **TabSet** | Tabs / Pills | Style, orientation (horizontal/vertical), auto-generated IDs | Any content slot |
+| **Accordion** | Accordion / Collapse | Multiple open sections, flush styling, auto-generated IDs | Any content slot |
+| **Modal** | Modal dialog | Size variants, centered, scrollable, static backdrop | Any content slot |
+| **Carousel** | Carousel / Slide | Controls, indicators, fade effect, auto-play interval | Any content slot |
+| **Form** | Form controls | Field types, validation, CSRF token placeholder | Any content slot |
+
+### 6.2 TabSet Component
+
+**Purpose:** Organize related content sections within a single slot.
+
+**Configuration:**
+- Tab style: `tabs` or `pills`
+- Orientation: `horizontal` or `vertical`
+- Auto-generated unique IDs for accessibility
+
+**Accessibility:** Full ARIA support with `role="tablist"`, `role="tab"`, `role="tabpanel"`, and `aria-selected` states.
+
+### 6.3 Accordion Component
+
+**Purpose:** Collapsible content sections with expand/collapse functionality.
+
+**Configuration:**
+- Allow multiple open sections
+- Flush styling (edge-to-edge)
+- Auto-generated unique IDs
+
+### 6.4 Modal Component
+
+**Purpose:** Dialog overlays for focused interactions.
+
+**Configuration:**
+- Size variants: default, small, large, extra-large, fullscreen
+- Centered positioning
+- Scrollable content area
+- Static backdrop (prevents dismissal on click outside)
+- Trigger button helper method
+
+### 6.5 Carousel Component
+
+**Purpose:** Image/content sliders with optional captions.
+
+**Configuration:**
+- Show/hide navigation controls
+- Show/hide dot indicators
+- Slide vs. fade transition
+- Auto-play interval (0 = disabled)
+
+### 6.6 Form Component
+
+**Purpose:** Basic form builder with Bootstrap styling.
+
+**Supported Field Types:**
+- Standard inputs (text, email, password, etc.)
+- Textarea
+- Select dropdown
+- Checkbox
+
+**Features:**
+- Label and placeholder support
+- Required field marking
+- CSRF token hidden field placeholder
 
 ---
 
@@ -1707,507 +607,199 @@ class Form implements Renderable
 
 ### 7.1 Bootstrap 5.3 Breakpoints
 
-All responsive behaviors in PageMaker are governed by these tiers ([reintech.io](https://reintech.io/blog/bootstrap-5-grid-system-advanced-layout-techniques), [alpharithms.com](https://www.alpharithms.com/boostrap-responsive-page-layout-guide-501916/)):
+All responsive behaviors are governed by six tier breakpoints:
 
-| Breakpoint | Enum Value | Class Infix | Min Width | Typical Device |
-|---|---|---|---|---|
-| Extra small | `XS` | *(none)* | $0\text{px}$ | Phones (portrait) |
-| Small | `SM` | `-sm` | $\geq 576\text{px}$ | Phones (landscape) |
-| Medium | `MD` | `-md` | $\geq 768\text{px}$ | Tablets |
-| Large | `LG` | `-lg` | $\geq 992\text{px}$ | Laptops / small desktops |
-| Extra large | `XL` | `-xl` | $\geq 1200\text{px}$ | Desktops |
-| Extra extra large | `XXL` | `-xxl` | $\geq 1400\text{px}$ | Large desktops / TVs |
+| Breakpoint | Infix | Min Width | Typical Device |
+|---|---|---|---|
+| Extra small | *(none)* | $0\text{px}$ | Phones (portrait) |
+| Small | `-sm` | $\geq 576\text{px}$ | Phones (landscape) |
+| Medium | `-md` | $\geq 768\text{px}$ | Tablets |
+| Large | `-lg` | $\geq 992\text{px}$ | Laptops / small desktops |
+| Extra large | `-xl` | $\geq 1200\text{px}$ | Desktops |
+| Extra extra large | `-xxl` | $\geq 1400\text{px}$ | Large desktops / TVs |
 
 ### 7.2 Column Arithmetic
 
-Bootstrap uses a **12-column grid**. The `setColumnWidths($left, $main, $right)` method enforces:
+Bootstrap uses a **12-column grid**. The system enforces:
 
 $$\text{left} + \text{main} + \text{right} = 12$$
 
 where $\text{main} \geq 1$ and $\text{left}, \text{right} \geq 0$.
 
-**Mobile behavior** (below the sidebar breakpoint): the main column is always `col-12` (full width). Sidebar columns receive responsive class `col-{bp}-{n}` so they only activate at the breakpoint.
+### 7.3 Responsive Class Generation
 
-### 7.3 Class Generation Logic
-
-For a given `Breakpoint $bp` with infix `$i` and widths `[$l, $m, $r]`:
-
-| Element | Mobile Class | Desktop Class | Visibility (HOLY_GRAIL) |
+| Element | Mobile Class | Desktop Class | Visibility |
 |---|---|---|---|
-| Left sidebar | — | `col{$i}-{$l}` | `d-none d-{$bp}-block` |
-| Main content | `col-12` | `col{$i}-{$m}` | Always visible |
-| Right sidebar | — | `col{$i}-{$r}` | `d-none d-{$bp}-block` |
+| Left sidebar | — | `col-{infix}-{width}` | `d-none d-{bp}-block` |
+| Main content | `col-12` | `col-{infix}-{width}` | Always visible |
+| Right sidebar | — | `col-{infix}-{width}` | `d-none d-{bp}-block` |
 
-For **STACKED**, add `order{$i}-1`, `order{$i}-2`, `order{$i}-3` to control visual order while keeping main first in the DOM ([reintech.io](https://reintech.io/blog/bootstrap-5-grid-system-advanced-layout-techniques)).
+For **STACKED** pattern, `order-{bp}-*` classes control visual order while keeping main content first in DOM for SEO.
 
 ---
 
 ## 8. Asset Management
 
-### 8.1 `AssetManager` Class
+### 8.1 AssetManager Capabilities
 
-```php
-<?php
+```mermaid
+graph LR
+    subgraph "Asset Types"
+        A[External CSS]
+        B[External JS]
+        C[Inline CSS]
+        D[Inline JS]
+    end
 
-namespace PageMaker\Assets;
+    subgraph "Positions"
+        E[HEAD]
+        F[BODY_START]
+        G[BODY_END]
+    end
 
-use PageMaker\Enums\AssetPosition;
+    subgraph "Convenience Methods"
+        H[addBootstrap]
+        I[addBootstrapIcons]
+    end
 
-class AssetManager
-{
-    /** @var array<string, array{type:string, position:AssetPosition, attributes:array}> */
-    private array $assets = [];
+    A --> E
+    B --> G
+    C --> E
+    D --> G
 
-    /**
-     * Add a CSS stylesheet.
-     */
-    public function addCss(
-        string $href,
-        AssetPosition $position = AssetPosition::HEAD,
-        array $attributes = [],
-    ): static {
-        $this->assets[$href] = [
-            'type'       => 'css',
-            'position'   => $position,
-            'attributes' => $attributes,
-        ];
-        return $this;
-    }
+    H --> A
+    H --> B
+    I --> A
 
-    /**
-     * Add a JavaScript file.
-     */
-    public function addJs(
-        string $src,
-        AssetPosition $position = AssetPosition::BODY_END,
-        array $attributes = [],
-    ): static {
-        $this->assets[$src] = [
-            'type'       => 'js',
-            'position'   => $position,
-            'attributes' => $attributes,
-        ];
-        return $this;
-    }
-
-    /**
-     * Add an inline style block.
-     */
-    public function addInlineCss(
-        string $css,
-        AssetPosition $position = AssetPosition::HEAD,
-    ): static {
-        $key = 'inline_css_' . md5($css);
-        $this->assets[$key] = [
-            'type'       => 'inline_css',
-            'content'    => $css,
-            'position'   => $position,
-            'attributes' => [],
-        ];
-        return $this;
-    }
-
-    /**
-     * Add an inline script block.
-     */
-    public function addInlineJs(
-        string $js,
-        AssetPosition $position = AssetPosition::BODY_END,
-    ): static {
-        $key = 'inline_js_' . md5($js);
-        $this->assets[$key] = [
-            'type'       => 'inline_js',
-            'content'    => $js,
-            'position'   => $position,
-            'attributes' => [],
-        ];
-        return $this;
-    }
-
-    /**
-     * Register Bootstrap 5.3 CDN assets (CSS in head, JS bundle at body end).
-     */
-    public function addBootstrap(string $version = '5.3.3'): static
-    {
-        $this->addCss(
-            "https://cdn.jsdelivr.net/npm/bootstrap@{$version}/dist/css/bootstrap.min.css",
-            AssetPosition::HEAD,
-            ['crossorigin' => 'anonymous'],
-        );
-        $this->addJs(
-            "https://cdn.jsdelivr.net/npm/bootstrap@{$version}/dist/js/bootstrap.bundle.min.js",
-            AssetPosition::BODY_END,
-            ['crossorigin' => 'anonymous'],
-        );
-        return $this;
-    }
-
-    /**
-     * Register Bootstrap Icons CDN.
-     */
-    public function addBootstrapIcons(string $version = '1.11.3'): static
-    {
-        $this->addCss(
-            "https://cdn.jsdelivr.net/npm/bootstrap-icons@{$version}/font/bootstrap-icons.min.css",
-            AssetPosition::HEAD,
-        );
-        return $this;
-    }
-
-    /**
-     * Render all assets for a given position as HTML tags.
-     */
-    public function render(AssetPosition $position): string
-    {
-        $html = '';
-
-        foreach ($this->assets as $key => $asset) {
-            if ($asset['position'] !== $position) {
-                continue;
-            }
-
-            $attrs = '';
-            foreach ($asset['attributes'] as $name => $value) {
-                $attrs .= " {$name}=\"" . htmlspecialchars($value, ENT_QUOTES) . '"';
-            }
-
-            $html .= match ($asset['type']) {
-                'css'        => "<link rel=\"stylesheet\" href=\"{$key}\"{$attrs}>\n",
-                'js'         => "<script src=\"{$key}\"{$attrs}></script>\n",
-                'inline_css' => "<style>{$asset['content']}</style>\n",
-                'inline_js'  => "<script>{$asset['content']}</script>\n",
-                default      => '',
-            };
-        }
-
-        return $html;
-    }
-}
+    style E fill:#4a90d9,color:#fff
+    style G fill:#50c878,color:#fff
 ```
 
-### 8.2 Default Asset Stack
+### 8.2 Asset Registration Methods
+
+| Method | Purpose | Default Position |
+|---|---|---|
+| `addCss($href)` | External stylesheet | HEAD |
+| `addJs($src)` | External JavaScript | BODY_END |
+| `addInlineCss($css)` | Inline style block | HEAD |
+| `addInlineJs($js)` | Inline script block | BODY_END |
+| `addBootstrap($version)` | Bootstrap CSS + JS bundle | HEAD + BODY_END |
+| `addBootstrapIcons($version)` | Bootstrap Icons CSS | HEAD |
+
+### 8.3 Default Asset Stack
 
 Every PageMaker page should include at minimum:
 
 | Asset | Position | Purpose |
 |---|---|---|
-| Bootstrap 5.3 CSS | `HEAD` | Grid, utilities, components |
-| Bootstrap Icons CSS | `HEAD` | Sidebar/navigation icons |
-| `pagemaker.css` | `HEAD` | Custom CSS variables + overrides |
-| Bootstrap 5.3 JS bundle | `BODY_END` | Offcanvas, collapse, modal, etc. |
+| Bootstrap 5.3 CSS | HEAD | Grid, utilities, components |
+| Bootstrap Icons CSS | HEAD | Sidebar/navigation icons |
+| `pagemaker.css` | HEAD | Custom CSS variables + overrides |
+| Bootstrap 5.3 JS bundle | BODY_END | Offcanvas, collapse, modal, etc. |
 
 ---
 
 ## 9. Template Specifications
 
-### 9.1 Base Template
+### 9.1 Template Hierarchy
 
-All layout templates extend this base, which provides the HTML document shell.
+```mermaid
+graph TD
+    A[base.html.twig] --> B[layouts/holy_grail.html.twig]
+    A --> C[layouts/offcanvas_left.html.twig]
+    A --> D[layouts/offcanvas_right.html.twig]
+    A --> E[layouts/stacked.html.twig]
+    A --> F[layouts/fixed_sidebar.html.twig]
+    A --> G[layouts/partially_collapsing.html.twig]
+    A --> H[layouts/accordion_sidebar.html.twig]
+    A --> I[layouts/overlay_drawer.html.twig]
+    A --> J[layouts/mini_icon_sidebar.html.twig]
 
-**`templates/base.html.twig`**
+    B --> K[components/navbar.html.twig]
+    B --> L[components/sidebar.html.twig]
+    B --> M[components/footer.html.twig]
 
-```twig
-<!DOCTYPE html>
-<html lang="{{ lang }}">
-<head>
-    <meta charset="{{ charset }}">
-    <meta name="viewport" content="{{ viewport }}">
-    {% for name, content in meta_tags %}
-    <meta name="{{ name }}" content="{{ content }}">
-    {% endfor %}
-    <title>{{ title }}</title>
-
-    {# HEAD assets (CSS, analytics, etc.) #}
-    {{ head_assets|raw }}
-</head>
-<body class="{{ body_class }}">
-    {{ body_start_assets|raw }}
-
-    {# HEADER #}
-    {% if header %}
-    <header class="pm-header" role="banner">
-        {{ header|raw }}
-    </header>
-    {% endif %}
-
-    {# MAIN LAYOUT — overridden by each pattern template #}
-    <div class="{{ fluid_container ? 'container-fluid' : 'container' }} pm-container"
-         id="{{ container_id }}">
-        {% block body_content %}{% endblock %}
-    </div>
-
-    {# FOOTER #}
-    {% if footer %}
-    {{ footer|raw }}
-    {% endif %}
-
-    {# BODY_END assets (JS) #}
-    {{ body_end_assets|raw }}
-</body>
-</html>
+    style A fill:#daa520,stroke:#b8860b,color:#fff
+    style B fill:#87CEEB
+    style C fill:#87CEEB
+    style D fill:#87CEEB
+    style E fill:#87CEEB
+    style F fill:#87CEEB
+    style G fill:#87CEEB
+    style H fill:#87CEEB
+    style I fill:#87CEEB
+    style J fill:#87CEEB
 ```
 
-### 9.2 Template Variable Reference
+### 9.2 Base Template Structure
 
-Every layout template receives all of these variables from `PageMaker::buildContext()`:
+The base template provides:
+- HTML document shell with configurable lang, charset, viewport
+- Dynamic meta tags
+- Title element
+- HEAD assets injection point
+- Header slot
+- Main layout block (overridden by pattern templates)
+- Footer slot
+- BODY_END assets injection point
 
-| Variable | Type | Description |
-|---|---|---|
-| `title` | `string` | HTML `<title>` |
-| `lang` | `string` | `<html lang>` attribute |
-| `charset` | `string` | Character encoding |
-| `viewport` | `string` | Viewport meta content |
-| `meta_tags` | `array<string,string>` | Additional `<meta>` tags |
-| `pattern` | `string` | Layout pattern value (e.g. `'holy_grail'`) |
-| `breakpoint` | `string` | Breakpoint infix value (e.g. `'lg'`) |
-| `breakpoint_infix` | `string` | Prefixed infix (e.g. `'-lg'`) |
-| `col_left` | `int` | Left sidebar column width (0–11) |
-| `col_main` | `int` | Main content column width (1–12) |
-| `col_right` | `int` | Right sidebar column width (0–11) |
-| `header` | `string` | Resolved header HTML |
-| `footer` | `string` | Resolved footer HTML |
-| `left_sidebar` | `string` | Resolved left sidebar HTML |
-| `right_sidebar` | `string` | Resolved right sidebar HTML |
-| `main_content` | `string` | Resolved main content HTML |
-| `hero_section` | `string` | Resolved hero HTML |
-| `breadcrumb` | `string` | Resolved breadcrumb HTML |
-| `body_class` | `string` | Extra `<body>` classes |
-| `container_id` | `string` | Wrapper div ID |
-| `fluid_container` | `bool` | Use `container-fluid`? |
-| `head_assets` | `string` | Pre-rendered `<link>`/`<style>` tags |
-| `body_start_assets` | `string` | Pre-rendered tags after `<body>` |
-| `body_end_assets` | `string` | Pre-rendered `<script>` tags |
+### 9.3 Template Variable Reference
+
+Every layout template receives these variables from `PageMaker::buildContext()`:
+
+**Metadata Variables:**
+- `title` — HTML `<title>` content
+- `lang` — `<html lang>` attribute
+- `charset` — Character encoding
+- `viewport` — Viewport meta content
+- `meta_tags` — Array of additional meta tags
+
+**Layout Variables:**
+- `pattern` — Layout pattern value
+- `breakpoint` — Breakpoint infix value
+- `breakpoint_infix` — Prefixed infix (e.g., `-lg`)
+- `col_left` — Left sidebar column width (0–11)
+- `col_main` — Main content column width (1–12)
+- `col_right` — Right sidebar column width (0–11)
+
+**Content Variables (pre-resolved to HTML strings):**
+- `header`, `footer`, `left_sidebar`, `right_sidebar`
+- `main_content`, `hero_section`, `breadcrumb`
+
+**Configuration Variables:**
+- `body_class` — Extra `<body>` classes
+- `container_id` — Wrapper div ID
+- `fluid_container` — Boolean for fluid container
+
+**Asset Variables:**
+- `head_assets` — Pre-rendered `<link>`/`<style>` tags
+- `body_start_assets` — Pre-rendered tags after `<body>`
+- `body_end_assets` — Pre-rendered `<script>` tags
 
 ---
 
-## 10. Complete PHP Class Listing
+## 10. Usage Patterns
 
-### 10.1 Custom CSS (`public/css/pagemaker.css`)
+### 10.1 Typical Implementation Flow
 
-```css
-/* ═══════════════════════════════════════════
-   PageMaker – Custom CSS Variables & Overrides
-   Requires Bootstrap 5.3+
-   ═══════════════════════════════════════════ */
+```mermaid
+flowchart TD
+    A[1. Set up Twig Environment] --> B[2. Create renderer closure]
+    B --> C[3. Instantiate PageMaker]
+    C --> D[4. Register assets via AssetManager]
+    D --> E[5. Set layout pattern & breakpoint]
+    E --> F[6. Configure column widths]
+    F --> G[7. Create component instances]
+    G --> H[8. Populate content slots]
+    H --> I[9. Call render]
+    I --> J[10. Output HTML]
 
-:root {
-    /* Sidebar dimensions */
-    --pm-sidebar-width: 280px;
-    --pm-sidebar-mini-width: 64px;
-
-    /* Transitions */
-    --pm-transition-speed: 0.25s;
-
-    /* Z-index layering */
-    --pm-z-sidebar: 1030;
-    --pm-z-header: 1040;
-}
-
-/* ── General ──────────────────────────────── */
-.pm-container {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-}
-
-.pm-main {
-    min-height: 60vh;
-}
-
-/* ── Sidebar shared styles ────────────────── */
-.pm-sidebar {
-    background-color: var(--bs-body-bg);
-    border-right: 1px solid var(--bs-border-color);
-}
-
-.pm-sidebar-right {
-    border-right: none;
-    border-left: 1px solid var(--bs-border-color);
-}
-
-.pm-sidebar .nav-link {
-    color: var(--bs-body-color);
-    padding: 0.5rem 1rem;
-    white-space: nowrap;
-}
-
-.pm-sidebar .nav-link.active {
-    background-color: var(--bs-primary);
-    color: #fff;
-    border-radius: var(--bs-border-radius);
-}
-
-.pm-sidebar .nav-link i {
-    width: 1.5rem;
-    text-align: center;
-}
-
-/* ── Fixed sidebar ────────────────────────── */
-.pm-sidebar-fixed > div {
-    background-color: var(--bs-dark-bg-subtle);
-    border-right: 1px solid var(--bs-border-color);
-    z-index: var(--pm-z-sidebar);
-}
-
-/* ── Partially collapsing sidebar ─────────── */
-.pm-sidebar-partial {
-    width: var(--pm-sidebar-width);
-    transition: width var(--pm-transition-speed) ease;
-    background-color: var(--bs-dark-bg-subtle);
-    border-right: 1px solid var(--bs-border-color);
-    z-index: var(--pm-z-sidebar);
-}
-
-@media (max-width: 991.98px) {
-    .pm-sidebar-partial {
-        width: var(--pm-sidebar-mini-width);
-    }
-    .pm-sidebar-partial .pm-sidebar-label {
-        opacity: 0;
-        width: 0;
-        overflow: hidden;
-        transition: opacity 0.2s ease;
-    }
-    .pm-sidebar-partial:hover,
-    .pm-sidebar-partial:focus-within {
-        width: var(--pm-sidebar-width);
-    }
-    .pm-sidebar-partial:hover .pm-sidebar-label,
-    .pm-sidebar-partial:focus-within .pm-sidebar-label {
-        opacity: 1;
-        width: auto;
-    }
-}
-
-/* ── Mini icon sidebar ────────────────────── */
-.pm-sidebar-mini {
-    width: var(--pm-sidebar-mini-width);
-    transition: width var(--pm-transition-speed) ease;
-    background-color: var(--bs-dark-bg-subtle);
-    border-right: 1px solid var(--bs-border-color);
-    z-index: var(--pm-z-sidebar);
-}
-
-.pm-sidebar-mini .pm-sidebar-label {
-    display: none;
-}
-
-@media (min-width: 992px) {
-    .pm-sidebar-mini {
-        width: var(--pm-sidebar-width);
-    }
-    .pm-sidebar-mini .pm-sidebar-label {
-        display: inline;
-    }
-}
-
-/* Expand on hover at any size */
-.pm-sidebar-mini:hover,
-.pm-sidebar-mini:focus-within {
-    width: var(--pm-sidebar-width);
-}
-.pm-sidebar-mini:hover .pm-sidebar-label,
-.pm-sidebar-mini:focus-within .pm-sidebar-label {
-    display: inline;
-}
-
-/* ── Fixed sidebar mobile collapse ────────── */
-@media (max-width: 991.98px) {
-    .pm-sidebar-fixed > div {
-        width: var(--pm-sidebar-mini-width) !important;
-    }
-    .pm-sidebar-fixed .pm-sidebar-label {
-        display: none;
-    }
-    .pm-main[style*="margin-left"] {
-        margin-left: var(--pm-sidebar-mini-width) !important;
-    }
-}
-
-/* ── Hero section ─────────────────────────── */
-.pm-hero-section {
-    border-radius: 0;
-}
-
-/* ── Breadcrumb bar ───────────────────────── */
-.pm-breadcrumb-bar {
-    padding: 0.5rem 0;
-}
-
-/* ── Sticky header offset ──────────────────── */
-body.has-sticky-header .pm-container {
-    padding-top: 4.5rem;
-}
+    style C fill:#4a90d9,color:#fff
+    style D fill:#50c878,color:#fff
+    style I fill:#daa520,color:#fff
 ```
 
-### 10.2 Wiring with Twig
-
-```php
-<?php
-
-require_once __DIR__ . '/vendor/autoload.php';
-
-use PageMaker\PageMaker;
-use PageMaker\Enums\{LayoutPattern, Breakpoint};
-use PageMaker\Components\{Navbar, Sidebar, Footer, Breadcrumb, HeroSection};
-use Twig\Loader\FilesystemLoader;
-use Twig\Environment;
-
-// 1. Set up Twig
-$loader = new FilesystemLoader(__DIR__ . '/templates');
-$twig   = new Environment($loader, ['cache' => __DIR__ . '/cache']);
-
-// 2. Create renderer closure
-$renderer = fn(string $template, array $context): string
-    => $twig->render($template, $context);
-
-// 3. Build the page
-$page = new PageMaker($renderer);
-
-$page->assets()
-    ->addBootstrap()
-    ->addBootstrapIcons()
-    ->addCss('/css/pagemaker.css');
-
-$page
-    ->setTitle('Dashboard — My App')
-    ->setLayout(LayoutPattern::OFFCANVAS_LEFT, Breakpoint::LG)
-    ->setColumnWidths(3, 9, 0)
-    ->setHeader(new Navbar(
-        brandName: 'My App',
-        items: ['Home' => '/', 'About' => '/about', 'Contact' => '/contact'],
-    ))
-    ->setLeftSidebar(new Sidebar(
-        navItems: [
-            ['icon' => 'house-door', 'label' => 'Home',      'href' => '/',          'active' => true],
-            ['icon' => 'speedometer2','label' => 'Dashboard', 'href' => '/dashboard'],
-            ['icon' => 'table',       'label' => 'Orders',    'href' => '/orders'],
-            ['icon' => 'grid',        'label' => 'Products',  'href' => '/products'],
-            ['icon' => 'people',      'label' => 'Customers', 'href' => '/customers'],
-        ],
-        heading: 'Navigation',
-    ))
-    ->setBreadcrumb(new Breadcrumb([
-        'Home' => '/',
-        'Dashboard' => null,
-    ]))
-    ->setMainContent(fn() => '<h1>Welcome to the Dashboard</h1><p>Your main content here.</p>')
-    ->setFooter(new Footer(
-        columns: [
-            'Product'  => ['Features' => '/features', 'Pricing' => '/pricing'],
-            'Company'  => ['About' => '/about', 'Blog' => '/blog'],
-            'Support'  => ['Docs' => '/docs', 'Contact' => '/contact'],
-        ],
-        copyright: '© 2026 My App. All rights reserved.',
-        socialLinks: ['twitter' => '#', 'github' => '#', 'linkedin' => '#'],
-    ));
-
-// 4. Output
-echo $page->render();
-```
-
-## 10. Usage Examples
-
-### 10.1 Pattern Selection Quick Reference
+### 10.2 Pattern Selection Quick Reference
 
 | Use Case | Recommended Pattern | Breakpoint | Column Widths |
 |---|---|---|---|
@@ -2221,42 +813,22 @@ echo $page->render();
 | Content CMS with deep nav | `ACCORDION_SIDEBAR` | `MD` | `[3, 9, 0]` |
 | Right-panel detail view | `OFFCANVAS_RIGHT` | `LG` | `[0, 8, 4]` |
 
-### 10.2 Composing Widgets Inside Slots
+### 10.3 Content Slot Population Strategies
 
-```php
-$page->setMainContent(function () use ($twig) {
-    $tabs = new TabSet(
-        tabs: [
-            'Overview'  => '<p>Product overview content...</p>',
-            'Specs'     => '<table class="table">...</table>',
-            'Reviews'   => '<div class="review-list">...</div>',
-        ],
-        style: 'pills',
-    );
+**Static Content:** Pass raw HTML strings for simple, unchanging content.
 
-    $modal = new Modal(
-        title: 'Confirm Order',
-        body: '<p>Are you sure you want to place this order?</p>',
-        footerHtml: '<button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                     <button class="btn btn-primary">Confirm</button>',
-    );
+**Reusable Components:** Create component instances (implementing `Renderable`) for consistent, reusable UI elements.
 
-    return $tabs->render()
-         . $modal->triggerButton('Place Order', 'btn btn-success mt-3')
-         . $modal->render();
-});
-```
+**Lazy Evaluation:** Use closures for expensive operations that should only execute when the page is actually rendered:
+- Database queries
+- API calls
+- Complex template rendering
 
-### 10.3 Switching Layouts at Runtime
+**Composing Widgets:** Multiple widgets can be combined in a single slot by concatenating rendered output.
 
-Because layout is a simple enum, you can select it dynamically:
+### 10.4 Runtime Layout Switching
 
-```php
-$patternName = $request->query('layout', 'holy_grail');
-$pattern = LayoutPattern::from($patternName);
-
-$page->setLayout($pattern, Breakpoint::LG);
-```
+Layout patterns can be selected dynamically based on user preferences, device detection, or URL parameters. The enum-based system makes this straightforward and type-safe.
 
 ---
 
@@ -2270,7 +842,7 @@ All generated markup follows these ARIA and semantic rules:
 - `<nav aria-label="...">` for every navigation block (navbar, breadcrumb, sidebar nav)
 - Offcanvas/modal elements include `aria-labelledby`, `aria-controls`, and `aria-expanded`
 - Tab panels include `role="tablist"`, `role="tab"`, `role="tabpanel"`, and `aria-selected`
-- Skip-to-content link: add `<a href="#main-content" class="visually-hidden-focusable">Skip to main content</a>` as the first child of `<body>` in `base.html.twig`
+- Skip-to-content link recommended as first child of `<body>`
 
 ## Appendix B: CSS Custom Properties Reference
 
@@ -2283,3 +855,16 @@ All generated markup follows these ARIA and semantic rules:
 | `--pm-z-header` | `1040` | Sticky navbar |
 
 Override these at the `:root` level or on individual elements to customize dimensions without editing the source CSS.
+
+---
+
+## Summary
+
+PageMaker provides a robust, component-based architecture for building responsive web pages:
+
+1. **Clear Separation of Concerns:** PHP classes handle logic, Twig templates handle presentation
+2. **Type-Safe Configuration:** Enums ensure valid layout patterns and breakpoints
+3. **Flexible Content Model:** Multiple content types (string, Renderable, callable) support various use cases
+4. **Mobile-First Approach:** All patterns start with mobile and enhance for larger screens
+5. **Extensible Component System:** New widgets can be added by implementing the Renderable interface
+6. **Comprehensive Asset Management:** Centralized control over CSS/JS insertion points
