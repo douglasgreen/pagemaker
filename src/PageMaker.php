@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace DouglasGreen\PageMaker;
 
-use Stringable;
 use DouglasGreen\PageMaker\Assets\AssetManager;
 use DouglasGreen\PageMaker\Contracts\Renderable;
 use DouglasGreen\PageMaker\Enums\AssetPosition;
 use DouglasGreen\PageMaker\Enums\Breakpoint;
 use DouglasGreen\PageMaker\Enums\LayoutPattern;
 use InvalidArgumentException;
+use Stringable;
 
 /**
  * Central builder for creating Bootstrap-based page layouts.
