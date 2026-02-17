@@ -1,19 +1,21 @@
 parameters:
   level: 8
   paths:
-    - index.php
-    - .php-cs-fixer.php
-    - rector.php
     - src
   excludePaths:
     - var
     - vendor
+  
+  # Framework extensions (uncomment as needed)
+  # symfony:
+  #   container_xml_path: var/cache/dev/App_KernelDevDebugContainer.xml
+  
+  # Doctrine extension (uncomment as needed)
+  # doctrine:
+  #   objectManagerLoader: tests/object-manager.php
 
-  # Strict analysis settings
-  checkUninitializedProperties: true
-  checkExplicitMixed: true
-  reportMaybes: true
-  checkBenevolentUnionTypes: true
-  rememberPossiblyImpureFunctionValues: false
-  reportPossiblyNonexistentGeneralArrayOffset: true
-  reportPossiblyNonexistentConstantArrayOffset: true
+includes:
+  - vendor/phpstan/phpstan-strict-rules/rules.neon
+  - vendor/shipmonk/dead-code-detector/rules.neon
+
+
