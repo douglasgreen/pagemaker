@@ -1,0 +1,41 @@
+{% extends "base.html.twig" %}
+
+{% block body_content %}
+{# --- Hero (optional, full-width) --- #}
+{% if hero_section %}
+<section class="pm-hero">
+    {{ hero_section|raw }}
+</section>
+{% endif %}
+
+{# --- Breadcrumb (optional) --- #}
+{% if breadcrumb %}
+<nav aria-label="breadcrumb" class="pm-breadcrumb-bar">
+    {{ breadcrumb|raw }}
+</nav>
+{% endif %}
+
+<div class="row g-0">
+    {# LEFT SIDEBAR #}
+    {% if left_sidebar and col_left > 0 %}
+    <aside class="col{{ breakpoint_infix }}-{{ col_left }} d-none d-{{ breakpoint }}-block pm-sidebar pm-sidebar-left"
+           role="complementary" aria-label="Left sidebar">
+        {{ left_sidebar|raw }}
+    </aside>
+    {% endif %}
+
+    {# MAIN CONTENT #}
+    <main class="col-12 col{{ breakpoint_infix }}-{{ col_main }} pm-main"
+          role="main" id="main-content">
+        {{ main_content|raw }}
+    </main>
+
+    {# RIGHT SIDEBAR #}
+    {% if right_sidebar and col_right > 0 %}
+    <aside class="col{{ breakpoint_infix }}-{{ col_right }} d-none d-{{ breakpoint }}-block pm-sidebar pm-sidebar-right"
+           role="complementary" aria-label="Right sidebar">
+        {{ right_sidebar|raw }}
+    </aside>
+    {% endif %}
+</div>
+{% endblock %}

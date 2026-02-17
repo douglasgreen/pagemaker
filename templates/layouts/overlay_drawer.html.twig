@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+
+{% block body_content %}
+{# Toggle button — mobile only #}
+<button class="btn btn-dark d-{{ breakpoint }}-none mb-3"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#pm-overlay-drawer"
+        aria-controls="pm-overlay-drawer"
+        aria-label="Open menu">
+    <i class="bi bi-list"></i>
+</button>
+
+{# Drawer (offcanvas for mobile, grid col for desktop) #}
+<div class="offcanvas offcanvas-start d-{{ breakpoint }}-none"
+     data-bs-backdrop="true"
+     data-bs-scroll="false"
+     tabindex="-1"
+     id="pm-overlay-drawer"
+     aria-labelledby="pm-overlay-drawer-label">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="pm-overlay-drawer-label">Menu</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        {{ left_sidebar|raw }}
+    </div>
+</div>
+
+<div class="row g-0">
+    {# Desktop sidebar #}
+    {% if left_sidebar and col_left > 0 %}
+    <aside class="d-none d-{{ breakpoint }}-block col{{ breakpoint_infix }}-{{ col_left }} pm-sidebar pm-sidebar-left"
+           role="complementary">
+        {{ left_sidebar|raw }}
+    </aside>
+    {% endif %}
+
+    <main class="col-12 col{{ breakpoint_infix }}-{{ col_main }} pm-main"
+          role="main" id="main-content">
+        {% if breadcrumb %}
+        <nav aria-label="breadcrumb" class="pm-breadcrumb-bar">{{ breadcrumb|raw }}</nav>
+        {% endif %}
+        {{ main_content|raw }}
+    </main>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+<form action="{{ action }}" method="{{ method }}" class="pm-form">
+    {% if csrf_token %}
+    <input type="hidden" name="_token" value="{{ csrf_token_value|default('') }}">
+    {% endif %}
+
+    {% for field in fields %}
+    <div class="mb-3">
+        <label for="pm-field-{{ field.name }}" class="form-label">{{ field.label }}</label>
+
+        {% if field.type == 'textarea' %}
+        <textarea class="form-control" id="pm-field-{{ field.name }}" name="{{ field.name }}"
+                  placeholder="{{ field.placeholder|default('') }}"
+                  {% if field.required|default(false) %}required{% endif %}
+                  rows="4">{{ field.value|default('') }}</textarea>
+
+        {% elseif field.type == 'select' %}
+        <select class="form-select" id="pm-field-{{ field.name }}" name="{{ field.name }}"
+                {% if field.required|default(false) %}required{% endif %}>
+            {% for optVal, optLabel in field.options|default({}) %}
+            <option value="{{ optVal }}"
+                    {% if field.value|default('') == optVal %}selected{% endif %}>
+                {{ optLabel }}
+            </option>
+            {% endfor %}
+        </select>
+
+        {% elseif field.type == 'checkbox' %}
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="pm-field-{{ field.name }}" name="{{ field.name }}"
+                   {% if field.value|default(false) %}checked{% endif %}
+                   {% if field.required|default(false) %}required{% endif %}>
+            <label class="form-check-label" for="pm-field-{{ field.name }}">{{ field.label }}</label>
+        </div>
+
+        {% else %}
+        <input type="{{ field.type }}" class="form-control" id="pm-field-{{ field.name }}"
+               name="{{ field.name }}"
+               placeholder="{{ field.placeholder|default('') }}"
+               value="{{ field.value|default('') }}"
+               {% if field.required|default(false) %}required{% endif %}>
+        {% endif %}
+    </div>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-primary">{{ submit_label }}</button>
+</form>

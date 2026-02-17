@@ -1,0 +1,22 @@
+<div class="pm-hero-section p-5 mb-4 rounded-3 text-{{ theme == 'dark' ? 'white' : 'dark' }}"
+     {% if background_image %}
+     style="background: url('{{ background_image }}') center/cover no-repeat;
+            position: relative;"
+     {% endif %}>
+
+    {% if background_image and theme == 'dark' %}
+    <div style="position:absolute;inset:0;background:rgba(0,0,0,0.55);border-radius:inherit;"></div>
+    {% endif %}
+
+    <div class="container-fluid py-5" style="position:relative;z-index:1;">
+        <h1 class="display-4 fw-bold">{{ title }}</h1>
+        {% if subtitle %}
+        <p class="col-md-8 fs-4">{{ subtitle }}</p>
+        {% endif %}
+        {% if cta_label and cta_url %}
+        <a href="{{ cta_url }}" class="btn btn-{{ theme == 'dark' ? 'light' : 'primary' }} btn-lg mt-3">
+            {{ cta_label }}
+        </a>
+        {% endif %}
+    </div>
+</div>

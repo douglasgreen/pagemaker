@@ -1,0 +1,44 @@
+{% extends "base.html.twig" %}
+
+{% block body_content %}
+{% if hero_section %}
+<section class="pm-hero">{{ hero_section|raw }}</section>
+{% endif %}
+
+{% if breadcrumb %}
+<nav aria-label="breadcrumb" class="pm-breadcrumb-bar">{{ breadcrumb|raw }}</nav>
+{% endif %}
+
+{# Hamburger toggle — visible below breakpoint #}
+<button class="btn btn-outline-secondary d-{{ breakpoint }}-none mb-3"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#pm-offcanvas-left"
+        aria-controls="pm-offcanvas-left"
+        aria-label="Toggle navigation">
+    <i class="bi bi-list"></i> Menu
+</button>
+
+<div class="row g-0">
+    {# LEFT SIDEBAR inside responsive offcanvas #}
+    <div class="offcanvas{{ breakpoint_infix }} offcanvas-start col{{ breakpoint_infix }}-{{ col_left }} pm-sidebar pm-sidebar-left"
+         tabindex="-1"
+         id="pm-offcanvas-left"
+         aria-labelledby="pm-offcanvas-left-label">
+        <div class="offcanvas-header d-{{ breakpoint }}-none">
+            <h5 class="offcanvas-title" id="pm-offcanvas-left-label">Navigation</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            {{ left_sidebar|raw }}
+        </div>
+    </div>
+
+    {# MAIN CONTENT #}
+    <main class="col-12 col{{ breakpoint_infix }}-{{ col_main }} pm-main"
+          role="main" id="main-content">
+        {{ main_content|raw }}
+    </main>
+</div>
+{% endblock %}

@@ -1,0 +1,152 @@
+/* ═══════════════════════════════════════════
+   PageMaker – Custom CSS Variables & Overrides
+   Requires Bootstrap 5.3+
+   ═══════════════════════════════════════════ */
+
+:root {
+    /* Sidebar dimensions */
+    --pm-sidebar-width: 280px;
+    --pm-sidebar-mini-width: 64px;
+
+    /* Transitions */
+    --pm-transition-speed: 0.25s;
+
+    /* Z-index layering */
+    --pm-z-sidebar: 1030;
+    --pm-z-header: 1040;
+}
+
+/* ── General ──────────────────────────────── */
+.pm-container {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.pm-main {
+    min-height: 60vh;
+}
+
+/* ── Sidebar shared styles ────────────────── */
+.pm-sidebar {
+    background-color: var(--bs-body-bg);
+    border-right: 1px solid var(--bs-border-color);
+}
+
+.pm-sidebar-right {
+    border-right: none;
+    border-left: 1px solid var(--bs-border-color);
+}
+
+.pm-sidebar .nav-link {
+    color: var(--bs-body-color);
+    padding: 0.5rem 1rem;
+    white-space: nowrap;
+}
+
+.pm-sidebar .nav-link.active {
+    background-color: var(--bs-primary);
+    color: #fff;
+    border-radius: var(--bs-border-radius);
+}
+
+.pm-sidebar .nav-link i {
+    width: 1.5rem;
+    text-align: center;
+}
+
+/* ── Fixed sidebar ────────────────────────── */
+.pm-sidebar-fixed > div {
+    background-color: var(--bs-dark-bg-subtle);
+    border-right: 1px solid var(--bs-border-color);
+    z-index: var(--pm-z-sidebar);
+}
+
+/* ── Partially collapsing sidebar ─────────── */
+.pm-sidebar-partial {
+    width: var(--pm-sidebar-width);
+    transition: width var(--pm-transition-speed) ease;
+    background-color: var(--bs-dark-bg-subtle);
+    border-right: 1px solid var(--bs-border-color);
+    z-index: var(--pm-z-sidebar);
+}
+
+@media (max-width: 991.98px) {
+    .pm-sidebar-partial {
+        width: var(--pm-sidebar-mini-width);
+    }
+    .pm-sidebar-partial .pm-sidebar-label {
+        opacity: 0;
+        width: 0;
+        overflow: hidden;
+        transition: opacity 0.2s ease;
+    }
+    .pm-sidebar-partial:hover,
+    .pm-sidebar-partial:focus-within {
+        width: var(--pm-sidebar-width);
+    }
+    .pm-sidebar-partial:hover .pm-sidebar-label,
+    .pm-sidebar-partial:focus-within .pm-sidebar-label {
+        opacity: 1;
+        width: auto;
+    }
+}
+
+/* ── Mini icon sidebar ────────────────────── */
+.pm-sidebar-mini {
+    width: var(--pm-sidebar-mini-width);
+    transition: width var(--pm-transition-speed) ease;
+    background-color: var(--bs-dark-bg-subtle);
+    border-right: 1px solid var(--bs-border-color);
+    z-index: var(--pm-z-sidebar);
+}
+
+.pm-sidebar-mini .pm-sidebar-label {
+    display: none;
+}
+
+@media (min-width: 992px) {
+    .pm-sidebar-mini {
+        width: var(--pm-sidebar-width);
+    }
+    .pm-sidebar-mini .pm-sidebar-label {
+        display: inline;
+    }
+}
+
+/* Expand on hover at any size */
+.pm-sidebar-mini:hover,
+.pm-sidebar-mini:focus-within {
+    width: var(--pm-sidebar-width);
+}
+.pm-sidebar-mini:hover .pm-sidebar-label,
+.pm-sidebar-mini:focus-within .pm-sidebar-label {
+    display: inline;
+}
+
+/* ── Fixed sidebar mobile collapse ────────── */
+@media (max-width: 991.98px) {
+    .pm-sidebar-fixed > div {
+        width: var(--pm-sidebar-mini-width) !important;
+    }
+    .pm-sidebar-fixed .pm-sidebar-label {
+        display: none;
+    }
+    .pm-main[style*="margin-left"] {
+        margin-left: var(--pm-sidebar-mini-width) !important;
+    }
+}
+
+/* ── Hero section ─────────────────────────── */
+.pm-hero-section {
+    border-radius: 0;
+}
+
+/* ── Breadcrumb bar ───────────────────────── */
+.pm-breadcrumb-bar {
+    padding: 0.5rem 0;
+}
+
+/* ── Sticky header offset ──────────────────── */
+body.has-sticky-header .pm-container {
+    padding-top: 4.5rem;
+}

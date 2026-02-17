@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="{{ charset }}">
+    <meta name="viewport" content="{{ viewport }}">
+    {% for name, content in meta_tags %}
+    <meta name="{{ name }}" content="{{ content }}">
+    {% endfor %}
+    <title>{{ title }}</title>
+
+    {# HEAD assets (CSS, analytics, etc.) #}
+    {{ head_assets|raw }}
+</head>
+<body class="{{ body_class }}">
+    <a href="#main-content" class="visually-hidden-focusable">Skip to main content</a>
+
+    {{ body_start_assets|raw }}
+
+    {# HEADER #}
+    {% if header %}
+    <header class="pm-header" role="banner">
+        {{ header|raw }}
+    </header>
+    {% endif %}
+
+    {# MAIN LAYOUT — overridden by each pattern template #}
+    <div class="{{ fluid_container ? 'container-fluid' : 'container' }} pm-container"
+         id="{{ container_id }}">
+        {% block body_content %}{% endblock %}
+    </div>
+
+    {# FOOTER #}
+    {% if footer %}
+    {{ footer|raw }}
+    {% endif %}
+
+    {# BODY_END assets (JS) #}
+    {{ body_end_assets|raw }}
+</body>
+</html>

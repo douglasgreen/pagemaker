@@ -1,0 +1,33 @@
+{% set is_vertical = orientation == 'vertical' %}
+
+<div class="{% if is_vertical %}d-flex align-items-start{% endif %}">
+    <ul class="nav nav-{{ style }}{% if is_vertical %} flex-column me-3{% endif %} mb-3"
+        id="{{ id }}" role="tablist"
+        {% if is_vertical %}aria-orientation="vertical"{% endif %}>
+        {% for label, content in tabs %}
+        {% set tab_id = id ~ '-' ~ loop.index %}
+        <li class="nav-item" role="presentation">
+            <button class="nav-link{% if loop.first %} active{% endif %}"
+                    id="{{ tab_id }}-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#{{ tab_id }}-pane"
+                    type="button" role="tab"
+                    aria-controls="{{ tab_id }}-pane"
+                    aria-selected="{{ loop.first ? 'true' : 'false' }}">
+                {{ label }}
+            </button>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <div class="tab-content{% if is_vertical %} flex-grow-1{% endif %}" id="{{ id }}-content">
+        {% for label, content in tabs %}
+        {% set tab_id = id ~ '-' ~ loop.index %}
+        <div class="tab-pane fade{% if loop.first %} show active{% endif %}"
+             id="{{ tab_id }}-pane" role="tabpanel"
+             aria-labelledby="{{ tab_id }}-tab" tabindex="0">
+            {{ content is iterable ? '' : content|raw }}
+        </div>
+        {% endfor %}
+    </div>
+</div>

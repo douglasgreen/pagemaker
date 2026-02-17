@@ -1,0 +1,35 @@
+{% extends "base.html.twig" %}
+
+{% block body_content %}
+{% if hero_section %}
+<section class="pm-hero">{{ hero_section|raw }}</section>
+{% endif %}
+
+{% if breadcrumb %}
+<nav aria-label="breadcrumb" class="pm-breadcrumb-bar">{{ breadcrumb|raw }}</nav>
+{% endif %}
+
+<div class="row g-0">
+    {# MAIN is first in DOM for mobile stacking & SEO #}
+    <main class="col-12 col{{ breakpoint_infix }}-{{ col_main }} order{{ breakpoint_infix }}-2 pm-main"
+          role="main" id="main-content">
+        {{ main_content|raw }}
+    </main>
+
+    {# LEFT SIDEBAR — appears below main on mobile, left on desktop #}
+    {% if left_sidebar and col_left > 0 %}
+    <aside class="col-12 col{{ breakpoint_infix }}-{{ col_left }} order{{ breakpoint_infix }}-1 pm-sidebar pm-sidebar-left"
+           role="complementary" aria-label="Left sidebar">
+        {{ left_sidebar|raw }}
+    </aside>
+    {% endif %}
+
+    {# RIGHT SIDEBAR — appears below left sidebar on mobile, right on desktop #}
+    {% if right_sidebar and col_right > 0 %}
+    <aside class="col-12 col{{ breakpoint_infix }}-{{ col_right }} order{{ breakpoint_infix }}-3 pm-sidebar pm-sidebar-right"
+           role="complementary" aria-label="Right sidebar">
+        {{ right_sidebar|raw }}
+    </aside>
+    {% endif %}
+</div>
+{% endblock %}

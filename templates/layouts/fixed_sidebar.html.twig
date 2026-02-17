@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+
+{% block body_content %}
+{% if hero_section %}
+<section class="pm-hero">{{ hero_section|raw }}</section>
+{% endif %}
+
+<div class="d-flex" id="pm-fixed-layout">
+    {# FIXED SIDEBAR #}
+    <aside class="pm-sidebar pm-sidebar-fixed pm-sidebar-left"
+           id="pm-sidebar-fixed"
+           role="complementary"
+           aria-label="Fixed sidebar">
+        <div class="d-flex flex-column flex-shrink-0 vh-100 position-fixed overflow-auto"
+             style="width: var(--pm-sidebar-width);">
+            {{ left_sidebar|raw }}
+        </div>
+    </aside>
+
+    {# MAIN #}
+    <main class="pm-main flex-grow-1" role="main" id="main-content"
+          style="margin-left: var(--pm-sidebar-width);">
+        {% if breadcrumb %}
+        <nav aria-label="breadcrumb" class="pm-breadcrumb-bar">{{ breadcrumb|raw }}</nav>
+        {% endif %}
+        {{ main_content|raw }}
+    </main>
+</div>
+{% endblock %}

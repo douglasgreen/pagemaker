@@ -1,0 +1,43 @@
+{% extends "base.html.twig" %}
+
+{% block body_content %}
+{% if hero_section %}
+<section class="pm-hero">{{ hero_section|raw }}</section>
+{% endif %}
+
+{% if breadcrumb %}
+<nav aria-label="breadcrumb" class="pm-breadcrumb-bar">{{ breadcrumb|raw }}</nav>
+{% endif %}
+
+<button class="btn btn-outline-secondary d-{{ breakpoint }}-none mb-3"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#pm-offcanvas-right"
+        aria-controls="pm-offcanvas-right"
+        aria-label="Toggle sidebar">
+    <i class="bi bi-layout-sidebar-reverse"></i> Sidebar
+</button>
+
+<div class="row g-0">
+    {# MAIN #}
+    <main class="col-12 col{{ breakpoint_infix }}-{{ col_main }} pm-main"
+          role="main" id="main-content">
+        {{ main_content|raw }}
+    </main>
+
+    {# RIGHT SIDEBAR #}
+    <div class="offcanvas{{ breakpoint_infix }} offcanvas-end col{{ breakpoint_infix }}-{{ col_right }} pm-sidebar pm-sidebar-right"
+         tabindex="-1"
+         id="pm-offcanvas-right"
+         aria-labelledby="pm-offcanvas-right-label">
+        <div class="offcanvas-header d-{{ breakpoint }}-none">
+            <h5 class="offcanvas-title" id="pm-offcanvas-right-label">Sidebar</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            {{ right_sidebar|raw }}
+        </div>
+    </div>
+</div>
+{% endblock %}

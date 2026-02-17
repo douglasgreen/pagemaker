@@ -1,0 +1,31 @@
+<footer class="pm-footer py-5 bg-dark text-light">
+    <div class="container">
+        <div class="row">
+            {% for heading, links in columns %}
+            <div class="col-6 col-md-{{ (12 / columns|length)|round(0, 'floor') }}">
+                <h5>{{ heading }}</h5>
+                <ul class="nav flex-column">
+                    {% for label, href in links %}
+                    <li class="nav-item mb-2">
+                        <a href="{{ href }}" class="nav-link p-0 text-muted">{{ label }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="d-flex flex-column flex-sm-row justify-content-between pt-4 mt-4 border-top border-secondary">
+            <p class="mb-0 text-muted">{{ copyright }}</p>
+            <ul class="list-unstyled d-flex mb-0">
+                {% for platform, url in social_links %}
+                <li class="ms-3">
+                    <a class="text-muted" href="{{ url }}" aria-label="{{ platform }}">
+                        <i class="bi bi-{{ platform }}"></i>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</footer>

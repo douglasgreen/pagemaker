@@ -1,0 +1,19 @@
+{% extends "base.html.twig" %}
+
+{% block body_content %}
+<div class="d-flex" id="pm-partial-layout">
+    <aside class="pm-sidebar pm-sidebar-partial pm-sidebar-left d-flex flex-column flex-shrink-0 vh-100 position-sticky top-0 overflow-auto"
+           id="pm-sidebar-partial"
+           role="complementary"
+           aria-label="Navigation sidebar">
+        {{ left_sidebar|raw }}
+    </aside>
+
+    <main class="pm-main flex-grow-1" role="main" id="main-content">
+        {% if breadcrumb %}
+        <nav aria-label="breadcrumb" class="pm-breadcrumb-bar">{{ breadcrumb|raw }}</nav>
+        {% endif %}
+        {{ main_content|raw }}
+    </main>
+</div>
+{% endblock %}

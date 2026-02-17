@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-{{ breakpoint }} {% if theme == 'dark' %}navbar-dark bg-dark{% else %}navbar-light bg-light{% endif %}{% if fixed %} sticky-top{% endif %}"
+     role="navigation" aria-label="Main navigation">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ brand_url }}">
+            {% if brand_logo %}
+            <img src="{{ brand_logo }}" alt="{{ brand_name }}" height="30" class="d-inline-block align-text-top me-2">
+            {% endif %}
+            {{ brand_name }}
+        </a>
+
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#pm-navbar-collapse"
+                aria-controls="pm-navbar-collapse"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="pm-navbar-collapse">
+            <ul class="navbar-nav ms-auto mb-2 mb-{{ breakpoint }}-0">
+                {% for label, href in items %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ href }}">{{ label }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</nav>

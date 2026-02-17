@@ -1,0 +1,24 @@
+<div class="accordion{% if flush %} accordion-flush{% endif %}" id="{{ id }}">
+    {% for heading, body in sections %}
+    {% set item_id = id ~ '-item-' ~ loop.index %}
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button{% if not loop.first %} collapsed{% endif %}"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#{{ item_id }}"
+                    aria-expanded="{{ loop.first ? 'true' : 'false' }}"
+                    aria-controls="{{ item_id }}">
+                {{ heading }}
+            </button>
+        </h2>
+        <div id="{{ item_id }}"
+             class="accordion-collapse collapse{% if loop.first %} show{% endif %}"
+             {% if not always_open %}data-bs-parent="#{{ id }}"{% endif %}>
+            <div class="accordion-body">
+                {{ body|raw }}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>

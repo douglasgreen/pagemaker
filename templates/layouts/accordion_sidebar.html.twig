@@ -1,0 +1,27 @@
+{% extends "base.html.twig" %}
+
+{% block body_content %}
+{% if hero_section %}
+<section class="pm-hero">{{ hero_section|raw }}</section>
+{% endif %}
+
+<div class="row g-0">
+    {# ACCORDION SIDEBAR #}
+    {% if left_sidebar and col_left > 0 %}
+    <aside class="col-12 col{{ breakpoint_infix }}-{{ col_left }} pm-sidebar pm-sidebar-left"
+           role="complementary" aria-label="Accordion navigation">
+        <div class="accordion" id="pm-sidebar-accordion">
+            {{ left_sidebar|raw }}
+        </div>
+    </aside>
+    {% endif %}
+
+    <main class="col-12 col{{ breakpoint_infix }}-{{ col_main }} pm-main"
+          role="main" id="main-content">
+        {% if breadcrumb %}
+        <nav aria-label="breadcrumb" class="pm-breadcrumb-bar">{{ breadcrumb|raw }}</nav>
+        {% endif %}
+        {{ main_content|raw }}
+    </main>
+</div>
+{% endblock %}
