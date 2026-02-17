@@ -14,7 +14,7 @@ class Sidebar implements Renderable
     protected string $template = 'components/sidebar.html.twig';
 
     /**
-     * @param array<array{icon:string, label:string, href:string, active?:bool, children?:array}> $navItems
+     * @param list<array{icon:string, label:string, href:string, active?:bool, children?:list<array{icon:string, label:string, href:string, active?:bool}>}> $navItems
      * @param string|null $heading Optional heading above navigation
      */
     public function __construct(
