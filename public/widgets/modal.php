@@ -50,7 +50,7 @@ $content .= $basicModal->render();
 $content .= $formModal->render();
 $content .= $largeModal->render();
 
-$content .= <<<'HTML'
+$content .= <<<'HTML_WRAP'
 <div class="p-4">
     <h3>Configuration Options</h3>
     <table class="table table-bordered">
@@ -76,7 +76,7 @@ $content .= <<<'HTML'
 echo $modal->triggerButton('Open Modal');
 echo $modal->render();</code></pre>
 </div>
-HTML;
+HTML_WRAP;
 
 $page->setMainContent($content);
 

@@ -10,6 +10,7 @@ use Rector\ValueObject\PhpVersion;
 
 return RectorConfig::configure()
     ->withPaths([
+        __DIR__ . '/public',
         __DIR__ . '/src',
     ])
     ->withPhpSets(php83: true)
