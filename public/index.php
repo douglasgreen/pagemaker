@@ -56,10 +56,10 @@ ob_start();
                         <div class="card-body">
                             <h5 class="card-title">
                                 <i class="bi bi-layout-text-window me-2"></i>
-                                <?= htmlspecialchars($layout['name']) ?>
+                                <?= htmlspecialchars($layout['name']); ?>
                             </h5>
-                            <p class="card-text text-muted"><?= htmlspecialchars($layout['desc']) ?></p>
-                            <a href="/layouts/<?= $layout['pattern']->value ?>.php" class="btn btn-primary">View Demo</a>
+                            <p class="card-text text-muted"><?= htmlspecialchars($layout['desc']); ?></p>
+                            <a href="/layouts/<?= $layout['pattern']->value; ?>.php" class="btn btn-primary">View Demo</a>
                         </div>
                     </div>
                 </div>
@@ -76,10 +76,10 @@ ob_start();
                         <div class="card-body">
                             <h5 class="card-title">
                                 <i class="bi bi-puzzle me-2"></i>
-                                <?= htmlspecialchars($component['name']) ?>
+                                <?= htmlspecialchars($component['name']); ?>
                             </h5>
-                            <p class="card-text text-muted"><?= htmlspecialchars($component['desc']) ?></p>
-                            <a href="<?= $component['url'] ?>" class="btn btn-outline-primary">View Demo</a>
+                            <p class="card-text text-muted"><?= htmlspecialchars($component['desc']); ?></p>
+                            <a href="<?= $component['url']; ?>" class="btn btn-outline-primary">View Demo</a>
                         </div>
                     </div>
                 </div>
@@ -96,10 +96,10 @@ ob_start();
                         <div class="card-body">
                             <h5 class="card-title">
                                 <i class="bi bi-box me-2"></i>
-                                <?= htmlspecialchars($widget['name']) ?>
+                                <?= htmlspecialchars($widget['name']); ?>
                             </h5>
-                            <p class="card-text text-muted"><?= htmlspecialchars($widget['desc']) ?></p>
-                            <a href="<?= $widget['url'] ?>" class="btn btn-outline-secondary">View Demo</a>
+                            <p class="card-text text-muted"><?= htmlspecialchars($widget['desc']); ?></p>
+                            <a href="<?= $widget['url']; ?>" class="btn btn-outline-secondary">View Demo</a>
                         </div>
                     </div>
                 </div>
