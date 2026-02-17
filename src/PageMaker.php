@@ -24,6 +24,7 @@ class PageMaker implements Stringable
 
     private string $lang = 'en';
 
+    /** @var array<string, string> */
     private array $metaTags = [];
 
     private string $charset = 'UTF-8';
@@ -35,6 +36,7 @@ class PageMaker implements Stringable
 
     private Breakpoint $sidebarBreakpoint = Breakpoint::LG;
 
+    /** @var array{0: int, 1: int, 2: int} */
     private array $columnWidths = [3, 6, 3]; // [left, main, right]
 
     // ── Content slots ─────────────────────────────
@@ -63,13 +65,13 @@ class PageMaker implements Stringable
     private readonly AssetManager $assets;
 
     // ── Template engine callback ──────────────────
-    /** @var callable(string, array): string */
+    /** @var callable(string, array<string, mixed>): string */
     private $renderer;
 
     /**
-     * @param callable(string $template, array $context): string $renderer
-     *                                                                     A function that accepts a template name and context array,
-     *                                                                     returning rendered HTML. Wrap your Twig call here.
+     * @param callable(string $template, array<string, mixed> $context): string $renderer
+     *                                                                               A function that accepts a template name and context array,
+     *                                                                               returning rendered HTML. Wrap your Twig call here.
      */
     public function __construct(callable $renderer)
     {
@@ -181,63 +183,42 @@ class PageMaker implements Stringable
 
     // ━━ Content setters ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-    /**
-     * @param string|Renderable|callable $content
-     */
     public function setHeader(string|Renderable|null $content): static
     {
         $this->header = $content;
         return $this;
     }
 
-    /**
-     * @param string|Renderable|callable $content
-     */
     public function setFooter(string|Renderable|null $content): static
     {
         $this->footer = $content;
         return $this;
     }
 
-    /**
-     * @param string|Renderable|callable $content
-     */
     public function setLeftSidebar(string|Renderable|null $content): static
     {
         $this->leftSidebar = $content;
         return $this;
     }
 
-    /**
-     * @param string|Renderable|callable $content
-     */
     public function setRightSidebar(string|Renderable|null $content): static
     {
         $this->rightSidebar = $content;
         return $this;
     }
 
-    /**
-     * @param string|Renderable|callable $content
-     */
     public function setMainContent(string|Renderable|null $content): static
     {
         $this->mainContent = $content;
         return $this;
     }
 
-    /**
-     * @param string|Renderable|callable $content
-     */
     public function setHeroSection(string|Renderable|null $content): static
     {
         $this->heroSection = $content;
         return $this;
     }
 
-    /**
-     * @param string|Renderable|callable $content
-     */
     public function setBreadcrumb(string|Renderable|null $content): static
     {
         $this->breadcrumb = $content;
@@ -287,7 +268,7 @@ class PageMaker implements Stringable
     /**
      * Evaluate a content slot to a string.
      */
-    private function resolve(string|Renderable|callable|null $slot): string
+    private function resolve(string|Renderable|null $slot): string
     {
         if ($slot === null) {
             return '';
@@ -297,16 +278,7 @@ class PageMaker implements Stringable
             return $slot;
         }
 
-        if ($slot instanceof Renderable) {
-            return $slot->render();
-        }
-
-        if (is_callable($slot)) {
-            $result = ($slot)();
-            return $result instanceof Renderable ? $result->render() : (string) $result;
-        }
-
-        return '';
+        return $slot->render();
     }
 
     /**

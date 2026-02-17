@@ -16,7 +16,7 @@ class Form implements Renderable
     /**
      * @param string $action Form action URL
      * @param string $method HTTP method
-     * @param array $fields Field definitions
+     * @param array<string, mixed> $fields Field definitions
      * @param string $submitLabel
      * @param bool $csrfToken Include a CSRF hidden field placeholder
      */
