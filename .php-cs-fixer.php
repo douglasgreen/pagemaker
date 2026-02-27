@@ -1,16 +1,15 @@
 <?php
+// modified: 2026-02-26
 
 use PhpCsFixer\Runner\Parallel\ParallelConfigFactory;
 use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
 
 $finder = Finder::create()
-    ->in(__DIR__)
-    ->exclude('vendor')
-    ->exclude('node_modules')
-    ->exclude('var')
-    ->exclude('storage')
-    ->exclude('bootstrap/cache')
+    ->in([
+        __DIR__ . '/public',
+        __DIR__ . '/src',
+    ])
     ->name('*.php')
     ->notName('*.blade.php')
     ->ignoreDotFiles(true)
@@ -23,7 +22,10 @@ return (new Config())
 
         // Strict Type Safety
         'nullable_type_declaration_for_default_null_value' => true,
-        'no_superfluous_phpdoc_tags' => false,
+        'no_superfluous_phpdoc_tags' => [
+            'allow_mixed' => true,
+            'remove_inheritdoc' => false,
+        ],
 
         // Architecture & Design
         'class_attributes_separation' => [
@@ -76,7 +78,7 @@ return (new Config())
             'method' => 'multi',
         ],
         'phpdoc_var_without_name' => true,
-        'phpdoc_no_empty_return' => false,
+        'phpdoc_no_empty_return' => true,
         'phpdoc_separation' => true,
         'phpdoc_types_order' => [
             'null_adjustment' => 'always_last',
